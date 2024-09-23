@@ -21,12 +21,12 @@
     min-width: 0;
     height: 122px;
     color: #f6f6f6;
-    font-family: Inter, var(--default-font-family);
+    font-family: SF pro, sans-serif;
     font-size: 55px;
-    font-weight: 600;
+    font-weight: bold;
     line-height: 61.05px;
     text-align: center;
-    letter-spacing: -2.75px;
+    /* letter-spacing: -2.75px; */
 }
 
 .text2 {
@@ -38,7 +38,7 @@
     width: 580px;
     height: 57px;
     color: #f6f6f6;
-    font-family: Inter, var(--default-font-family);
+    font-family: SF pro, sans-serif;
     font-size: 17px;
     font-weight: 400;
     line-height: 18.87px;

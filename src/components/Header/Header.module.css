@@ -1,7 +1,9 @@
 .headerContainer {
+    display: flex;
     overflow: hidden;
+    justify-content: left;
     position: relative;
-    width: 200px;
+    width: auto;
     height: 37px;
     margin: 0 auto;
     box-sizing: border-box;
