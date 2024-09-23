@@ -1,0 +1,47 @@
+.mainContainer {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 15px;
+    position: relative;
+    width: 738px;
+    margin: 0 auto;
+}
+
+.text {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+    width: 738px;
+    min-width: 0;
+    height: 122px;
+    color: #f6f6f6;
+    font-family: Inter, var(--default-font-family);
+    font-size: 55px;
+    font-weight: 600;
+    line-height: 61.05px;
+    text-align: center;
+    letter-spacing: -2.75px;
+}
+
+.text2 {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    width: 580px;
+    height: 57px;
+    color: #f6f6f6;
+    font-family: Inter, var(--default-font-family);
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 18.87px;
+    text-align: center;
+    z-index: 1;
+}

@@ -1,9 +1,13 @@
+/* Импортируем шрифт SF Pro Display */
+@import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+
 body {
-  width: 100vh;
-  height: auto;
-  position: relative;
-  background: #020102;
-  justify-content: flex-end;
-  align-items: center;
-  display: inline-flex;
+  font-family: "SF Pro Display", sans-serif, var(--default-font-family); /* Устанавливаем шрифт */
+  background: #020102; /* Цвет фона */
+  width: 100vh; /* Ширина */
+  height: auto; /* Автоматическая высота */
+  position: relative; /* Позиционирование */
+  justify-content: flex-end; /* Выравнивание по правому краю */
+  align-items: center; /* Выравнивание по центру по вертикали */
+  display: inline-flex; /* Используем flexbox для расположения */
 }

@@ -1,0 +1,49 @@
+.headerContainer {
+    overflow: hidden;
+    position: relative;
+    width: 200px;
+    height: 37px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 8px;
+    position: absolute;
+    width: 156px;
+    height: 37px;
+    top: 0;
+    left: 0;
+    padding: 10px 15px;
+    border: 1.901px solid #ffffff;
+    z-index: 1;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+.text {
+    flex-shrink: 0;
+    flex-basis: auto;
+    position: relative;
+    height: 20px;
+    color: #ffffff;
+    font-family: SF Pro Display, var(--default-font-family);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 19.98px;
+    text-align: left;
+    white-space: nowrap;
+    z-index: 2;
+}
+
+.imgContainer {
+    position: absolute;
+    top: 0;
+    left: 163px;
+    width: 37px;
+    height: 37px;
+}

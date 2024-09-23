@@ -1,0 +1,27 @@
+<svg width="25" height="27" viewBox="0 0 25 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Frame" clip-path="url(#clip0_3003_523)">
+<g id="Group">
+<g id="Clip path group">
+<mask id="mask0_3003_523" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="1" width="25" height="24">
+<g id="a">
+<path id="Vector" d="M0.811091 2.19474L23.8079 1.80939L24.1765 23.8063L1.17969 24.1917L0.811091 2.19474Z" fill="white"/>
+</g>
+</mask>
+<g mask="url(#mask0_3003_523)">
+<g id="Group_2">
+<path id="Vector_2" d="M12.6191 16.9514L19.6884 16.833C20.9827 16.8113 22.0143 15.7445 21.9926 14.4503L21.9468 11.7163C21.9251 10.4221 20.8583 9.39046 19.5641 9.41215L16.2052 9.46843" stroke="black" stroke-width="1.56" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M12.4954 9.53059L5.4261 9.64905C4.13187 9.67074 3.10026 10.7375 3.12195 12.0317L3.16776 14.7657C3.18945 16.0599 4.25622 17.0915 5.55045 17.0699L8.90934 17.0136" stroke="black" stroke-width="1.56" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M8.78596 9.59295L8.72967 6.23405C8.70799 4.93983 9.73959 3.87306 11.0338 3.85137L13.7678 3.80556C15.062 3.78387 16.1288 4.81548 16.1505 6.10971L16.2689 13.179L8.84813 13.3034L8.96659 20.3727C8.98828 21.6669 10.055 22.6985 11.3493 22.6768L14.0833 22.631C15.3775 22.6093 16.4091 21.5425 16.3874 20.2483L16.3311 16.8894" stroke="black" stroke-width="1.56" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_5" d="M12.1132 7.00582C12.1112 6.88436 12.011 6.7875 11.8896 6.78954C11.7681 6.79158 11.6713 6.89173 11.6733 7.0132C11.6753 7.13466 11.7755 7.23151 11.8969 7.22948C12.0184 7.22744 12.1153 7.12729 12.1132 7.00582Z" fill="black" stroke="black" stroke-width="1.56"/>
+<path id="Vector_6" d="M12.892 19.9946C12.8941 20.1161 12.9942 20.213 13.1157 20.2109C13.2372 20.2089 13.334 20.1087 13.332 19.9873C13.3299 19.8658 13.2298 19.7689 13.1083 19.771C12.9869 19.773 12.89 19.8732 12.892 19.9946Z" fill="black" stroke="black" stroke-width="1.56"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_3003_523">
+<rect width="23" height="25" fill="white" transform="translate(0.822266 1.06519) rotate(-0.96)"/>
+</clipPath>
+</defs>
+</svg>
