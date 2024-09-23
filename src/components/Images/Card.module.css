@@ -1,0 +1,60 @@
+.imageContainer {
+    display: flex;
+    width: fit-content;
+    height: 90px;
+    align-items: center;
+    justify-content: left;
+    position: relative;
+    background: radial-gradient(34.16% 89.89% at 94.13% 87.64%, #282D3E 0%, #0E111D 100%);
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    justify-content: center;
+    position: relative; /* Измените на relative, чтобы карточка позиционировалась нормально */
+    /* margin: 10px; Добавьте отступы между карточками */
+}
+
+.imageWrapper {
+    margin-right: 16px;
+    position: relative;
+    width: 40px; /* Задайте нужный размер */
+    height: 40px; /* Задайте нужный размер */
+    border-radius: 10px;
+    overflow: hidden; /* Обрезка содержимого */
+    background: #ffffff; /* Белый фон для иконок */
+    display: flex;
+    align-items: center; /* Центрирование по вертикали */
+    justify-content: center; /* Центрирование по горизонтали */
+}
+
+.textContainer {
+    font-family: SF pro;
+    text-align: left;
+    font-weight: bold;
+    color: #ffffff; /* Цвет текста */
+}
+
+.header {
+    margin: 0;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.description {
+    max-width: 167px;
+    font-family: SF pro;
+    font-size: 13px;
+    font-weight: medium;
+}
+
+.image {
+    max-width: 100%; /* Чтобы изображение не выходило за пределы контейнера */
+    max-height: 100%; /* Чтобы изображение не выходило за пределы контейнера */
+    object-fit: contain; /* Сохранение пропорций изображения */
+}

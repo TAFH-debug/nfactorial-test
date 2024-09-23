@@ -5,7 +5,8 @@
     position: relative;
     width: auto;
     height: 37px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
+    margin-left: 40px;
     box-sizing: border-box;
 }
 
