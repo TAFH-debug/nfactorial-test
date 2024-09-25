@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Question from '../components/Question/Question';
 import Header from '@/components/Header/Header';
 import Background from '@/components/Background/Background';
-import Result from '../components/Result/Result'; // Import Result component
+import Result from '../components/Result/Result';
 
 export default function Quiz() {
   const [questions, setQuestions] = useState([]);
@@ -11,7 +11,7 @@ export default function Quiz() {
     mob_dev: 0,
     web_dev: 0,
     data_analytics: 0,
-    product_managament: 0,
+    product_management: 0,
   });
   const [showResult, setShowResult] = useState(false);
 
@@ -37,27 +37,33 @@ export default function Quiz() {
     }
   };
 
+  const handleBack = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
+  };
+
   const getTopCategory = () => {
     const sortedCategories = Object.entries(selectedCategories).sort(([, a], [, b]) => b - a);
-    return sortedCategories[0][0]; // Get the category with the highest count
+    return sortedCategories[0][0];
   };
 
   const categoryDescriptions = {
     mob_dev: {
       title: "Мобильная разработка",
-      text: "Это человек, который превращает телефон в универсальный инструмент для заказа еды, общения с друзьями и бесконечных игр в Candy Crush. Ты будешь писать код так, чтобы даже Siri могла гордиться тобой, и делать так, чтобы приложение не падало в самый ответственный момент, как Wi-Fi в алматинском метро.",
+      text: "Описание мобильной разработки...",
     },
     web_dev: {
       title: "Веб-разработка",
-      text: "Вы создаете красивые и функциональные сайты, которые делают жизнь пользователей проще и интереснее. Ваши навыки позволят вам работать с технологиями, которые делают мир более связанным.",
+      text: "Описание веб-разработки...",
     },
     data_analytics: {
       title: "Аналитика данных",
-      text: "Вы будете превращать данные в ценные инсайты, помогая компаниям принимать обоснованные решения. Ваша работа будет иметь большое значение для роста и успеха бизнеса.",
+      text: "Описание аналитики данных...",
     },
-    product_managament: {
+    product_management: {
       title: "Управление продуктом",
-      text: "Вы станете связующим звеном между командой разработки и клиентами, обеспечивая реализацию идей и потребностей пользователей в готовые продукты.",
+      text: "Описание управления продуктом...",
     },
   };
 
@@ -71,7 +77,10 @@ export default function Quiz() {
         {!showResult ? (
           <Question
             question={questions[currentQuestionIndex]}
+            totalQuestions={questions.length}
+            currentQuestion={currentQuestionIndex + 1}
             onAnswer={handleAnswer}
+            onBack={handleBack}
           />
         ) : (
           <Result 

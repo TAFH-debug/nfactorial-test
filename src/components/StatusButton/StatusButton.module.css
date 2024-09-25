@@ -1,38 +1,38 @@
 .button {
-    width: 204px;
-    height: 44px;
-    padding: 15px;
-    border-radius: 34px;
-    font-size: 17px;
-    font-family: 'SF Pro Display', sans-serif;
-    font-weight: 700;
-    cursor: pointer;
-    border: none;
-    transition: background 0.3s;
-  }
-  
-  .back {
-    background: rgba(255, 255, 255, 0.10);
-    color: white;
-  }
-  
-  .next {
-    background: white;
-    color: #222222;
-  }
-  
-  .submit {
-    background: rgba(0, 123, 255, 0.10);
-    color: #007BFF;
-  }
-  
-  .button:hover:not([disabled]) {
-    background: rgba(0, 123, 255, 0.20);
-  }
-  
-  .button:disabled {
-    cursor: not-allowed;
-    background: #d3d3d3;
-    color: #777;
-  }
-  
+  width: 204px;
+  height: 44px;
+  padding: 15px;
+  border-radius: 34px;
+  font-size: 17px;
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
+}
+
+.back {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.next {
+  background: white;
+  color: #222222;
+}
+
+.submit {
+  background: rgba(0, 123, 255, 0.1);
+  color: #007bff;
+}
+
+.button:hover:not([disabled]) {
+  background: rgba(214, 214, 214, 0.2);
+  color: white;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  background: #d3d3d3;
+  color: #777;
+}

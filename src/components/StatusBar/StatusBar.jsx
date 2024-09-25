@@ -6,10 +6,18 @@ export default function StatusBar({ currentQuestion, totalQuestions }) {
 
   return (
     <div className={styles.statusBarContainer}>
-      <div className={styles.progressBar} style={{ width: `${progress}%` }}></div>
-      <span className={styles.statusText}>
-        {currentQuestion} из {totalQuestions}
-      </span>
+      <div className={styles.progressContainer}>
+        <div className={styles.questionText}>
+          Вопрос {currentQuestion} из {totalQuestions}
+        </div>
+        <div className={styles.progressBar}>
+          <div className={styles.progressBackground}></div>
+          <div
+            className={styles.progressFill}
+            style={{ width: `${progress}%` }}
+          ></div>
+        </div>
+      </div>
     </div>
   );
 }

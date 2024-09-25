@@ -1,3 +1,9 @@
+.AllComponent {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
 .QuestionPart {
   display: flex;
   width: auto;
@@ -9,63 +15,166 @@
   background: #fff;
   max-width: 1200px;
 }
-.AllComponent {
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  
-}
-.Answer {
-  text-align: left;
-}
-.AnswerVariants {
-  font-family: Sf pro, sans-serif;
-  display: flex;
-  padding: 5px;
-  align-items: center;
-  gap: 15px;
-  border-radius: 10px;
-}
+
 .QuestionText {
-  font-family: Sf pro, sans-serif;
+  width: 800px; /* Фиксированная ширина или max-width */
+  max-width: 100%; /* Адаптивная ширина */
+  font-family: 'SF Pro', sans-serif;
   color: black;
   font-size: 25px;
   font-weight: 800;
   line-height: 27.75px;
   word-wrap: break-word;
+  text-align: center; /* Центрируем текст вопроса */
 }
 
-.backButton,
-.nextButton,
-.submitButton {
+.Answer {
+  text-align: left; /* Выровнять текст по левому краю */
+  width: 100%; /* Сделать ширину 100%, чтобы занять весь доступный контейнер */
+}
+
+.AnswerVariants {
+  font-family: 'SF Pro', sans-serif;
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  gap: 15px;
+  border-radius: 10px;
+  width: 300px;
+  height: auto; /* Фиксированная ширина или max-width */
+  /* overflow: hidden; */
+  text-overflow: ellipsis;
+  white-space: nowrap; /* Не переносить текст на новую строку */
+}
+
+.buttonStatusContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 800px; /* Ограничение ширины для лучшей структуры */
+  gap: 20px; /* Расстояние между кнопками и статусом */
+  margin-top: 20px;
+}
+
+.statusBarContainer {
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 25px;
+}
+
+.buttonBack,
+.buttonNext {
+  width: 203px;
+  height: 43px;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 34px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.buttonNext {
+  background: white;
+}
+
+.buttonText {
+  text-align: center;
+  color: white;
+  font-size: 17px;
+  font-family: 'SF Pro Display', sans-serif;
+  font-weight: 700;
+  line-height: 18.87px;
+  word-wrap: break-word;
+}
+
+.buttonNext .buttonText {
+  color: #222222;
+}
+
+.progressContainer {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.questionText {
+  text-align: center;
+  color: white;
+  font-size: 10px;
+  font-family: 'SF Pro Display', sans-serif;
+  font-weight: 400;
+  line-height: 11.10px;
+}
+
+.progressBar {
+  width: 430px;
+  height: 9px;
+  position: relative;
+}
+
+.progressBackground {
+  width: 100%;
+  height: 9px;
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.progressFill {
+  height: 9px;
+  background: #7FDC9F;
+  border-radius: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.button {
   width: 204px;
   height: 44px;
   padding: 15px;
   border-radius: 34px;
   font-size: 17px;
-  font-family: 'Sf pro', sans-serif;
+  font-family: 'SF Pro Display', sans-serif;
   font-weight: 700;
   cursor: pointer;
   border: none;
   transition: background 0.3s;
 }
-.backButton {
-  background: rgba(255, 255, 255, 0.10);
+
+.back {
+  background: rgba(255, 255, 255, 0.1);
   color: white;
 }
 
-.nextButton {
+.next {
   background: white;
   color: #222222;
 }
 
-.submitButton {
-  background: rgba(0, 123, 255, 0.10);
-  color: #007BFF;
+.submit {
+  background: rgba(0, 123, 255, 0.1);
+  color: #007bff;
 }
 
-.backButton:hover,
-.nextButton:hover,
-.submitButton:hover {
-  background: rgba(0, 123, 255, 0.20);
+.button:hover:not([disabled]) {
+  background: rgba(214, 214, 214, 0.2);
+  color: white;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  background: #d3d3d3;
+  color: #777;
 }
