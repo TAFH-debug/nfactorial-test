@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
-import Question from '../components/Question';
+import Question from '../components/Question/Question';
+import Header from '@/components/Header/Header';
+import Background from '@/components/Background/Background';
+import Result from '../components/Result/Result'; // Import Result component
 
 export default function Quiz() {
   const [questions, setQuestions] = useState([]);
@@ -13,7 +16,6 @@ export default function Quiz() {
   const [showResult, setShowResult] = useState(false);
 
   useEffect(() => {
-    // Fetch questions from the backend
     const fetchQuestions = async () => {
       const res = await fetch('/api/questions');
       const data = await res.json();
@@ -25,7 +27,7 @@ export default function Quiz() {
   const handleAnswer = (selectedCategory) => {
     setSelectedCategories((prev) => ({
       ...prev,
-      [selectedCategory]: prev[selectedCategory] + 1
+      [selectedCategory]: prev[selectedCategory] + 1,
     }));
 
     if (currentQuestionIndex < questions.length - 1) {
@@ -41,28 +43,43 @@ export default function Quiz() {
   };
 
   const categoryDescriptions = {
-    mob_dev: "You are more interested in Mobile Development.",
-    web_dev: "You seem to love Web Development.",
-    data_analytics: "You are keen on Data Analytics.",
-    product_managament: "You have an interest in Product Management."
+    mob_dev: {
+      title: "Мобильная разработка",
+      text: "Это человек, который превращает телефон в универсальный инструмент для заказа еды, общения с друзьями и бесконечных игр в Candy Crush. Ты будешь писать код так, чтобы даже Siri могла гордиться тобой, и делать так, чтобы приложение не падало в самый ответственный момент, как Wi-Fi в алматинском метро.",
+    },
+    web_dev: {
+      title: "Веб-разработка",
+      text: "Вы создаете красивые и функциональные сайты, которые делают жизнь пользователей проще и интереснее. Ваши навыки позволят вам работать с технологиями, которые делают мир более связанным.",
+    },
+    data_analytics: {
+      title: "Аналитика данных",
+      text: "Вы будете превращать данные в ценные инсайты, помогая компаниям принимать обоснованные решения. Ваша работа будет иметь большое значение для роста и успеха бизнеса.",
+    },
+    product_managament: {
+      title: "Управление продуктом",
+      text: "Вы станете связующим звеном между командой разработки и клиентами, обеспечивая реализацию идей и потребностей пользователей в готовые продукты.",
+    },
   };
 
   if (questions.length === 0) return <p>Loading...</p>;
 
   return (
-    <div style={{ textAlign: 'center', paddingTop: '50px' }}>
-      <h1>Quiz</h1>
-      {!showResult ? (
-        <Question 
-          question={questions[currentQuestionIndex]} 
-          onAnswer={handleAnswer} 
-        />
-      ) : (
-        <div>
-          <h2>Your Result:</h2>
-          <p>{categoryDescriptions[getTopCategory()]}</p>
-        </div>
-      )}
-    </div>
+    <>
+      <Header />
+      <Background />
+      <div style={{ textAlign: 'center', paddingTop: '50px' }}>
+        {!showResult ? (
+          <Question
+            question={questions[currentQuestionIndex]}
+            onAnswer={handleAnswer}
+          />
+        ) : (
+          <Result 
+            category={getTopCategory()} 
+            description={categoryDescriptions[getTopCategory()]} 
+          />
+        )}
+      </div>
+    </>
   );
 }

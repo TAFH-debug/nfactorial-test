@@ -1,0 +1,71 @@
+.QuestionPart {
+  display: flex;
+  width: auto;
+  padding: 35px;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  border-radius: 20px;
+  background: #fff;
+  max-width: 1200px;
+}
+.AllComponent {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  
+}
+.Answer {
+  text-align: left;
+}
+.AnswerVariants {
+  font-family: Sf pro, sans-serif;
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  gap: 15px;
+  border-radius: 10px;
+}
+.QuestionText {
+  font-family: Sf pro, sans-serif;
+  color: black;
+  font-size: 25px;
+  font-weight: 800;
+  line-height: 27.75px;
+  word-wrap: break-word;
+}
+
+.backButton,
+.nextButton,
+.submitButton {
+  width: 204px;
+  height: 44px;
+  padding: 15px;
+  border-radius: 34px;
+  font-size: 17px;
+  font-family: 'Sf pro', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
+}
+.backButton {
+  background: rgba(255, 255, 255, 0.10);
+  color: white;
+}
+
+.nextButton {
+  background: white;
+  color: #222222;
+}
+
+.submitButton {
+  background: rgba(0, 123, 255, 0.10);
+  color: #007BFF;
+}
+
+.backButton:hover,
+.nextButton:hover,
+.submitButton:hover {
+  background: rgba(0, 123, 255, 0.20);
+}

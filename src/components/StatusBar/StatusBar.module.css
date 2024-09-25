@@ -1,0 +1,23 @@
+.statusBarContainer {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  
+  .progressBar {
+    height: 10px;
+    background-color: #007bff;
+    transition: width 0.3s ease;
+  }
+  
+  .statusText {
+    font-family: 'SF Pro Display', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 5px;
+    text-align: center;
+    color: #222;
+  }
+  

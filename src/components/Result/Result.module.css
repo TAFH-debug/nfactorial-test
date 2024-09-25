@@ -1,0 +1,87 @@
+/* Result.module.css */
+
+.container {
+    padding: 35px;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    font-size: 25px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: black;
+    margin-bottom: 20px;
+  }
+  
+  .descriptionTitle {
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #222222;
+  }
+  
+  .descriptionText {
+    font-size: 17px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: #222222;
+    margin-bottom: 20px;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .backButton {
+    background-color: rgba(255, 255, 255, 0.10);
+  }
+  
+  .nextButton {
+    background-color: #7FDC9F;
+  }
+  
+  .backButton:hover {
+    background-color: rgba(255, 255, 255, 0.20);
+  }
+  
+  .nextButton:hover {
+    background-color: #6abc7e;
+  }
+  
+  .progressText {
+    text-align: center;
+    color: white;
+    font-size: 10px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    margin-top: 10px;
+  }
+  
+  .progressBar {
+    width: 100%;
+    height: 9px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.10);
+    border-radius: 20px;
+  }
+  
+  .progressBarFilled {
+    height: 9px;
+    background: #7FDC9F;
+    border-radius: 20px;
+    transition: width 0.3s ease;
+  }
+  
