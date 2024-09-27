@@ -1,0 +1,24 @@
+/* Quiz.module.css */
+.heading {
+    color: #FFF;
+    text-align: center;
+    font-family: "Sf pro";
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 111%; /* 22.2px */
+    letter-spacing: -5%;
+}
+
+@media (max-width: 768px) {
+    .heading {
+        font-size: 20px; /* Adjust for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .heading {
+        font-size: 18px; /* Further adjust for mobile screens */
+        line-height: 130%; /* Adjust line height if necessary */
+    }
+}

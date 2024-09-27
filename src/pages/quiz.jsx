@@ -6,7 +6,7 @@ import Background from "@/components/Background/Background";
 import Result from "../components/Result/Result";
 import CourseRecommendations from "../components/CourseRecommendations/CourseRecommendations";
 import MainForm from "../components/MainForm/MainForm";
-import Badge from "@/components/Badge/Badge";
+import styles from "./Quiz.module.css";
 
 export default function Quiz() {
   const [questions, setQuestions] = useState([]);
@@ -88,7 +88,6 @@ export default function Quiz() {
   return (
     <>
       <Header />
-      <Badge/>
       <Background />
       <div style={{ textAlign: "center",}}>
         {!showResult ? (
@@ -113,18 +112,7 @@ export default function Quiz() {
           />
           <div style={{ maxWidth: "940px", margin: "0 auto", padding: "20px" }}>
             <Image src="image.svg" alt="alt" width={295} height={200} />
-            <h1
-              style={{
-                textAlign: "center",
-                color: "#FFF",
-                fontFamily: "SF Pro, Inter",
-                fontSize: "25px",
-                fontStyle: "normal",
-                fontWeight: 600,
-                lineHeight: "111%",
-                letterSpacing: "-1.25px",
-              }}
-            >
+            <h1 className={styles.heading}>
               Если ты все еще не определился с профессией, то можем провести
               бесплатную карьерную консультацию для старта в IT и расскажем
               какие профессии актуальнее всего для тебя

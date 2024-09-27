@@ -1,3 +1,5 @@
+// MainForm.js
+
 import React, { useState, useEffect } from "react";
 import styles from "./MainForm.module.css"; // Import CSS module
 
@@ -67,11 +69,6 @@ export default function MainForm(props) {
                         placeholder="Имя"
                         required
                         className={styles.input} // Apply CSS module styles
-                        data-formtrack-utm_source="google"
-                        data-formtrack-utm_medium="cpc"
-                        data-formtrack-utm_campaign="{network}"
-                        data-formtrack-utm_content="{creative}"
-                        data-formtrack-utm_term="{keyword}"
                     />
                     <input
                         type="tel"

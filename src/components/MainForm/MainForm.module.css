@@ -1,10 +1,10 @@
-/* CustomForm.module.css */
+/* MainForm.module.css */
 .form {
     display: flex;
     width: 100%;
-    flex-direction: column;
+    flex-direction: column; /* Default to column layout */
     gap: 4px;
-    font-family: 'Sf pro', sans-serif;
+    font-family: 'SF Pro', sans-serif;
     font-size: 13px;
     color: black;
     padding: 5px;
@@ -30,12 +30,11 @@
 
 .inputContainer {
     display: flex;
+    flex-direction: column; /* Change to column by default */
+    align-items: center; /* Center items horizontally */
     width: 100%;
-    align-self: center;
-    justify-content: center;
     max-width: 1200px;
-    flex-direction: row;
-    gap: 8px;
+    gap: 8px; /* Space between inputs */
 }
 
 .input {
@@ -60,5 +59,11 @@
     border-radius: 12px;
     cursor: pointer;
     max-width: 390px;
-    text-align: center;
+}
+
+/* Media query for mobile devices */
+@media (min-width: 768px) {
+    .inputContainer {
+        flex-direction: row; /* Change to row layout for larger screens */
+    }
 }
