@@ -1,5 +1,4 @@
 .container {
-  /* width: 100%; */
   max-width: 940px;
   margin: 0 auto;
   margin-bottom: 50px;
@@ -7,24 +6,21 @@
   background: white;
   border-radius: 20px;
   overflow: hidden;
-  justify-content: flex-start;
-  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
   gap: 20px;
-  display: inline-flex;
-  font-family: 'SF Pro', sans-serif;
+  font-family: "SF Pro", sans-serif;
 }
 
 .imageContainer {
-  width: 190px;
+  width: 100%; /* Full width */
   height: auto;
-  background: white;
   border-radius: 20px;
   overflow: hidden;
-  border: 2px solid #414ad200; /* Бордер вокруг изображения */
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  display: inline-flex;
+  border: 2px solid #414ad200;
+  display: flex;
+  justify-content: center; /* Center the image */
 }
 
 .image {
@@ -33,24 +29,19 @@
 }
 
 .infoContainer {
-  width: 100%;
   padding: 35px;
   background: #f2f2f2;
   border-radius: 20px;
+  display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start; /* Выровняли по левому краю */
   gap: 20px;
-  display: inline-flex;
-  text-align: left; /* Центрируем текст по левому краю */
+  align-items: center; /* Center children horizontally */
 }
 
 .titleContainer {
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start; /* Выровняли по левому краю */
-  gap: 10px;
   display: flex;
+  align-items: center; /* Center title contents */
 }
 
 .title {
@@ -71,11 +62,9 @@
   padding: 5px 9px;
   background: #414ad2;
   border-radius: 30px;
-  font-weight: medium;
-  justify-content: flex-start; /* Выровняли содержимое по левому краю */
+  display: flex;
   align-items: center;
   gap: 5px;
-  display: inline-flex;
 }
 
 .badgeIcon {
@@ -85,7 +74,7 @@
 }
 
 .badgeText {
-  text-align: left; /* Текст в бадже по левому краю */
+  text-align: left;
   color: white;
   font-size: 13px;
   font-weight: 500;
@@ -93,11 +82,41 @@
 }
 
 .descriptionText {
-  align-self: stretch;
   color: #222222;
   font-size: 17px;
   font-weight: 400;
   line-height: 18.87px;
   word-wrap: break-word;
-  text-align: left; /* Описание выровнено по левому краю */
+  text-align: center; /* Center description text */
+}
+
+/* Media queries for smaller screens */
+@media (max-width: 600px) {
+  .container {
+    justify-content: center;
+    padding: 8px;
+    padding-top: 16px; /* Optional, since we already center items */
+  }
+  .infoContainer {
+    justify-content: center; /* Optional, since we're centering items */
+  }
+  .titleContainer {
+    gap: 10px;
+  }
+  .image {
+    width: 120px;
+    height: 150px;
+  }
+  .title {
+    font-size: 18px;
+  }
+
+  .profession {
+    font-size: 40px;
+  }
+
+  .descriptionText {
+    font-size: 14px;
+    text-align: left;
+  }
 }

@@ -5,7 +5,7 @@
   padding: 15px;
   border-radius: 34px;
   font-size: 17px;
-  font-family: 'SF Pro Display', sans-serif;
+  font-family: 'SF pro', sans-serif;
   font-weight: 700;
   cursor: pointer;
   border: none;
@@ -70,7 +70,8 @@
   align-items: center;
   justify-items: center;
   overflow: hidden; /* Hide overflow */
-  height: 100vh-100px; /* Fill the full viewport height */
+  height: calc(100vh - 100px); /* Fill the full viewport height */
+  padding: 0 32px; /* Отступы по бокам */
 }
 
 .QuestionPart {
@@ -86,6 +87,7 @@
   word-wrap: break-word; /* Word wrap */
   flex-grow: 1; /* Allow it to grow and take available space */
 }
+
 /* Question Text Styles */
 .QuestionText {
   width: 100%; /* Ensure 100% width */
@@ -95,7 +97,7 @@
   font-size: 25px;
   font-weight: 800;
   line-height: 27.75px;
-  overflow: hidden; /* Hide overflow *//* Prevent line breaks */
+  overflow: hidden; /* Hide overflow */
   text-overflow: ellipsis; /* Add ellipsis for overflow */
 }
 
@@ -178,4 +180,56 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   max-width: 300px;
   background: white;
+}
+
+/* Aдаптивные стили */
+@media (max-width: 768px) {
+  .button {
+    width: 100%; /* Кнопки занимают 100% ширины на мобильных устройствах */
+    height: auto; /* Высота кнопок адаптируется */
+    font-size: 15px; /* Уменьшаем размер шрифта */
+  }
+
+  .QuestionText {
+    font-size: 20px; /* Уменьшаем размер шрифта для вопроса */
+    line-height: 24px; /* Уменьшаем межстрочный интервал */
+  }
+
+  .QuestionPart {
+    padding: 20px; /* Уменьшаем отступы внутри QuestionPart */
+  }
+
+  .AllComponent {
+    padding: 0 16px;
+    height: auto;
+    padding-top: 10px; /* Уменьшаем отступы по бокам для мобильных */
+  }
+
+  .AnswerVariants {
+    max-width: 100%; /* Максимальная ширина для вариантов ответов */
+  }
+
+  .buttonStatusContainer {
+    flex-direction: row; /* Переключаем кнопки на вертикальную ориентацию */
+    gap: 10px; /* Уменьшаем отступ между кнопками */
+    width: 100%; /* Задаем 100% ширину */
+  }
+
+  .progressBar {
+    width: 100%; /* Прогресс бар занимает 100% ширины */
+  }
+}
+
+@media (max-width: 480px) {
+  .QuestionText {
+    font-size: 18px; /* Дополнительное уменьшение размера шрифта для очень маленьких экранов */
+  }
+
+  .button {
+    padding: 10px; /* Уменьшаем отступы внутри кнопок */
+  }
+
+  .card {
+    max-width: 90%; /* Максимальная ширина карточки на мобильных */
+  }
 }

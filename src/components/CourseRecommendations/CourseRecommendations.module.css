@@ -1,8 +1,4 @@
-/* CourseRecommendations.module.css */
-/* @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600&display=swap'); */
-
 .container {
-    /* width: 100%; */
     max-width: 940px;
     padding: 35px;
     background: white;
@@ -11,28 +7,27 @@
     flex-direction: column;
     gap: 20px;
     text-align: left;
-    margin: 0 auto; /* Center the container */
-    font-family: 'SF Pro', sans-serif; /* Apply SF Pro Display font */
+    margin: 0 auto;
+    font-family: 'SF Pro', sans-serif;
 }
 
 .title {
-    color: #1a1a1a; /* Darker color for better readability */
-    font-size: 36px; /* Adjusted font size */
+    color: #1a1a1a;
+    font-size: 36px;
     font-weight: 800;
-    text-align: left; /* Center the title */
+    text-align: left;
 }
 
 .cardContainer {
     display: flex;
     flex-wrap: wrap; /* Allows cards to wrap on smaller screens */
-    gap: 20px; /* Adjust this value for spacing between cards */
+    gap: 20px; /* Space between cards */
     justify-content: flex-start; /* Align cards to the left */
 }
 
 .card {
-    width: 100%; /* Full width for each card */
-    max-width: 250px; /* Maximum width for cards */
-    height: 400px; /* Full height for each card */
+    width: 250px; /* Fixed width for each card */
+    height: 350px; /* Fixed height for each card */
     padding: 25px;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.49) 66%, rgba(0, 0, 0, 0.75) 100%);
     border-radius: 20px;
@@ -103,4 +98,34 @@
 
 .button:hover {
     background: #444444; /* Darker shade on hover */
+}
+
+/* Media Queries for Mobile */
+@media (max-width: 600px) {
+    .cardContainer {
+        flex-direction: column; /* Stack cards vertically on smaller screens */
+        align-items: center; /* Center cards */
+    }
+
+    .card {
+        width: 250px; /* Maintain width */
+        height: 350px; /* Maintain height */
+        margin-bottom: 20px; /* Space between cards */
+    }
+
+    .title {
+        font-size: 28px; /* Adjust title size */
+    }
+
+    .courseTitle {
+        font-size: 16px; /* Adjust course title size */
+    }
+
+    .tag {
+        font-size: 8px; /* Adjust tag font size */
+    }
+
+    .button {
+        padding: 10px; /* Smaller button padding */
+    }
 }

@@ -1,84 +1,98 @@
+/* Status Bar Container */
 .statusBarContainer {
-    width: 100%;
-    height: 100%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 25px;
-  }
-  
-  .buttonBack,
-  .buttonNext {
-    width: 203px;
-    height: 43px;
-    padding: 15px 20px;
-    background: rgba(255, 255, 255, 0.10);
-    border-radius: 34px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
-  
-  .buttonNext {
-    background: white;
-  }
-  
-  .buttonText {
-    text-align: center;
-    color: white;
-    font-size: 17px;
-    font-family: 'SF Pro Display', sans-serif;
-    font-weight: 700;
-    line-height: 18.87px;
-    word-wrap: break-word;
-  }
-  
-  .buttonNext .buttonText {
-    color: #222222;
-  }
-  
-  .progressContainer {
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 10px;
-  }
+  width: 100%;
+  height: auto; /* Change to auto for better responsiveness */
+  display: flex; /* Use flex for layout */
+  justify-content: center;
+  align-items: flex-start; /* Align items to the start for mobile */
+  gap: 25px;
+  padding: 10px; /* Add some padding */
+}
+
+/* Button Styles */
+.buttonBack,
+.buttonNext {
+  width: 100%; /* Full width for mobile */
+  height: 43px;
+  padding: 15px 20px;
+  border-radius: 34px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 10px 0; /* Space between buttons */
+}
+
+.buttonNext {
+  background: white;
+}
+
+.buttonText {
+  text-align: center;
+  font-size: 17px;
+  font-family: 'SF Pro Display', sans-serif;
+  font-weight: 700;
+  line-height: 18.87px;
+}
+
+.buttonNext .buttonText {
+  color: #222222;
+}
+
+/* Progress Bar Styles */
+.progressContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.questionText {
+  text-align: center;
+  color: white;
+  font-size: 10px;
+  font-family: 'SF Pro Display', sans-serif;
+  font-weight: 400;
+  line-height: 11.10px;
+}
+
+.progressBar {
+  width: 100%; /* Full width for mobile */
+  height: 9px;
+  position: relative;
+}
+
+.progressBackground {
+  width: 100%;
+  height: 9px;
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.progressFill {
+  height: 9px;
+  background: #7FDC9F;
+  border-radius: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: width 0.3s;
+}
+
+/* Media queries for smaller screens */
+@media (max-width: 600px) {
   
   .questionText {
-    text-align: center;
-    color: white;
-    font-size: 10px;
-    font-family: 'SF Pro Display', sans-serif;
-    font-weight: 400;
-    line-height: 11.10px;
+    font-size: 8px; /* Adjust for smaller screens */
   }
-  
-  .progressBar {
-    width: 430px;
-    height: 9px;
-    position: relative;
+
+  .buttonBack,
+  .buttonNext {
+    font-size: 14px; /* Smaller font size for buttons */
   }
-  
-  .progressBackground {
-    width: 100%;
-    height: 9px;
-    background: rgba(255, 255, 255, 0.10);
-    border-radius: 20px;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  
-  .progressFill {
-    height: 9px;
-    background: #7FDC9F;
-    border-radius: 20px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: width 0.3s;
-  }
-  
+}

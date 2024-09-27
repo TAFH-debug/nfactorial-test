@@ -6,6 +6,7 @@ import Background from "@/components/Background/Background";
 import Result from "../components/Result/Result";
 import CourseRecommendations from "../components/CourseRecommendations/CourseRecommendations";
 import MainForm from "../components/MainForm/MainForm";
+import Badge from "@/components/Badge/Badge";
 
 export default function Quiz() {
   const [questions, setQuestions] = useState([]);
@@ -64,7 +65,7 @@ export default function Quiz() {
   // Define category descriptions before using them
   const categoryDescriptions = {
     mob_dev: {
-      title: "iOS/Android-разработчик",
+      title: "iOS/Android-разработчик (мобильная разработка)",
       text: "Это человек, который превращает телефон в универсальный инструмент для заказа еды, общения с друзьями и бесконечных игр в Candy Crush. Ты будешь писать код так, чтобы даже Siri могла гордиться тобой, и делать так, чтобы приложение не падало в самый ответственный момент, как Wi-Fi в алматинском метро. ",
     },
     web_dev: {
@@ -87,6 +88,7 @@ export default function Quiz() {
   return (
     <>
       <Header />
+      <Badge/>
       <Background />
       <div style={{ textAlign: "center", paddingTop: "50px"  }}>
         {!showResult ? (
