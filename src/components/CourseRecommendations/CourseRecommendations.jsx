@@ -1,7 +1,7 @@
-import React from 'react';
-import styles from './CourseRecommendations.module.css';
-import Link from 'next/link';
-import Image from 'next/image';
+import React from "react";
+import styles from "./CourseRecommendations.module.css";
+import Link from "next/link";
+import Image from "next/image";
 
 const CourseRecommendations = ({ selectedCategory }) => {
   const courses = [
@@ -39,7 +39,9 @@ const CourseRecommendations = ({ selectedCategory }) => {
     },
   ];
 
-  const filteredCourses = courses.filter(course => course.name !== selectedCategory);
+  const filteredCourses = courses.filter(
+    (course) => course.name !== selectedCategory
+  );
   const coursesToDisplay = filteredCourses.slice(0, 3);
 
   return (
@@ -55,6 +57,7 @@ const CourseRecommendations = ({ selectedCategory }) => {
                 layout="fill"
                 objectFit="cover"
                 className={styles.image}
+                loading="lazy"
               />
             </div>
             <div className={styles.cardOverlay} />
