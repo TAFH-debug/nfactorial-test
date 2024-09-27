@@ -1,9 +1,9 @@
 // CardsContainer.jsx
 import React from "react";
-import Card from "@/components/Images/Card/Card"; 
-import styles from "./CardsContainer.module.css"; 
-import Card2 from "../Card2/Card2"; 
-import Card3 from "../Card3/Card3"; 
+import Card from "@/components/Images/Card/Card";
+import styles from "./CardsContainer.module.css";
+import Card2 from "../Card2/Card2";
+import Card3 from "../Card3/Card3";
 
 const CardsContainer = () => {
   const cardsData = [
@@ -20,7 +20,8 @@ const CardsContainer = () => {
       src: "/images/da.svg",
       alt: "Icon 2",
       header: "Аналитик данных",
-      description: "Работа с данными: от сбора в Excel, до анализа и визуализации",
+      description:
+        "Работа с данными: от сбора в Excel, до анализа и визуализации",
       position: { top: "10%", left: "22%" }, // Position for Card 2
       rotation: "rotate(7.71deg)", // Rotation for Card 2
       zIndex: 3, // Z-index for Card 2
@@ -29,10 +30,11 @@ const CardsContainer = () => {
       src: "/images/python.svg",
       alt: "Icon 3",
       header: "Введение в Python",
-      description: "Позволяет решать ряд задач и даже создать свое веб-приложение",
+      description:
+        "Позволяет решать ряд задач и даже создать свое веб-приложение",
       position: { top: "25%", left: "35%" }, // Position for Card 3 (slightly overlapping Card 2)
       rotation: "rotate(-0.956deg)", // Rotation for Card 3
-      zIndex: 5 // Z-index for Card 3
+      zIndex: 5, // Z-index for Card 3
     },
     {
       src: "/images/apple.svg",
@@ -47,13 +49,13 @@ const CardsContainer = () => {
 
   return (
     <div className={styles.container}>
-      <div 
-        style={{ 
-          position: "absolute", 
-          top: "32%", 
-          left: "50%", 
+      <div
+        style={{
+          position: "absolute",
+          top: "32%",
+          left: "50%",
           transform: "translate(-50%, -50%) rotate(-6.695deg)", // Center Card3
-          zIndex: 4 
+          zIndex: 4,
         }}
       >
         <Card3 />
@@ -75,16 +77,17 @@ const CardsContainer = () => {
             alt={card.alt}
             header={card.header}
             description={card.description}
+            loading="lazy"
           />
         </div>
       ))}
-      <div 
-        style={{ 
-          position: "absolute", 
-          top: "17%", 
-          left: "51%", 
+      <div
+        style={{
+          position: "absolute",
+          top: "17%",
+          left: "51%",
           // transform: "translate(-50%, -50%)", // Rotate Card2 as needed
-          zIndex: 3
+          zIndex: 3,
         }}
       >
         <Card2 />

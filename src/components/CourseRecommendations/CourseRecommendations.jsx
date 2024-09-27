@@ -1,7 +1,7 @@
-// CourseRecommendations.jsx
 import React from 'react';
 import styles from './CourseRecommendations.module.css';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const CourseRecommendations = ({ selectedCategory }) => {
   const courses = [
@@ -48,10 +48,15 @@ const CourseRecommendations = ({ selectedCategory }) => {
       <div className={styles.cardContainer}>
         {coursesToDisplay.map((course) => (
           <div key={course.id} className={styles.card}>
-            <div 
-              className={styles.cardImage}
-              style={{ backgroundImage: `url(${course.imageUrl})` }}
-            />
+            <div className={styles.cardImage}>
+              <Image
+                src={course.imageUrl}
+                alt={course.name}
+                layout="fill"
+                objectFit="cover"
+                className={styles.image}
+              />
+            </div>
             <div className={styles.cardOverlay} />
             <div className={styles.content}>
               <div className={styles.category}>{course.category}</div>
