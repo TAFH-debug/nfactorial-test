@@ -1,0 +1,72 @@
+// CourseRecommendations.jsx
+import React from 'react';
+import styles from './CourseRecommendations.module.css';
+
+const CourseRecommendations = ({ selectedCategory }) => {
+    const courses = [
+        {
+            id: 1,
+            name: "Введение в мобильную разработку",
+            duration: "6 месяцев",
+            price: "24 500₸ в месяц",
+            imageUrl: "/images/results/mob_dev.png",
+            category: "nFactorial iOS",
+        },
+        {
+            id: 2,
+            name: "Введение в веб разработку",
+            duration: "3 месяца",
+            price: "28 750₸ в месяц",
+            imageUrl: "/images/results/web_dev.png",
+            category: "nFactorial Full Stack",
+        },
+        {
+            id: 3,
+            name: "Введение в анализ данных",
+            duration: "26 недель",
+            price: "от 600 000₸",
+            imageUrl: "/images/results/data_analytics.png",
+            category: "nFactorial Data Analytics",
+        },
+        {
+            id: 4,
+            name: "Продакт-менеджер",
+            duration: "6 месяцев",
+            price: "50 000₸ в месяц",
+            imageUrl: "/images/results/product_management.png",
+            category: "nFactorial Product Manager",
+        },
+    ];
+
+    const filteredCourses = courses.filter(course => course.name !== selectedCategory);
+    const coursesToDisplay = filteredCourses.slice(0, 3);
+
+    return (
+        <div className={styles.container}>
+            <div className={styles.title}>Также тебе подойдет:</div>
+            <div className={styles.cardContainer}>
+                {coursesToDisplay.map((course) => (
+                    <div 
+                        key={course.id} 
+                        className={styles.card} 
+                        style={{ backgroundImage: `url(${course.imageUrl})` }} // Set the background image
+                    >
+                        <div className={styles.content}>
+                            <div className={styles.category}>{course.category}</div>
+                            <div className={styles.courseTitle}>{course.name}</div>
+                            <div className={styles.details}>
+                                <div className={styles.tag}>{course.duration}</div>
+                                <div className={styles.tag}>{course.price}</div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <div className={styles.button}>
+                <div className={styles.buttonText}>Посмотреть все курсы</div>
+            </div>
+        </div>
+    );
+};
+
+export default CourseRecommendations;

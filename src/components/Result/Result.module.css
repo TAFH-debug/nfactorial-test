@@ -1,87 +1,103 @@
-/* Result.module.css */
-
 .container {
-    padding: 35px;
-    border-radius: 20px;
-    background: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .title {
-    font-size: 25px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    color: black;
-    margin-bottom: 20px;
-  }
-  
-  .descriptionTitle {
-    font-size: 20px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    color: #222222;
-  }
-  
-  .descriptionText {
-    font-size: 17px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    color: #222222;
-    margin-bottom: 20px;
-  }
-  
-  .buttonContainer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .button {
-    padding: 10px 20px;
-    border-radius: 10px;
-    border: none;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .backButton {
-    background-color: rgba(255, 255, 255, 0.10);
-  }
-  
-  .nextButton {
-    background-color: #7FDC9F;
-  }
-  
-  .backButton:hover {
-    background-color: rgba(255, 255, 255, 0.20);
-  }
-  
-  .nextButton:hover {
-    background-color: #6abc7e;
-  }
-  
-  .progressText {
-    text-align: center;
-    color: white;
-    font-size: 10px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    margin-top: 10px;
-  }
-  
-  .progressBar {
-    width: 100%;
-    height: 9px;
-    position: relative;
-    background: rgba(255, 255, 255, 0.10);
-    border-radius: 20px;
-  }
-  
-  .progressBarFilled {
-    height: 9px;
-    background: #7FDC9F;
-    border-radius: 20px;
-    transition: width 0.3s ease;
-  }
-  
+  width: 100%;
+  max-width: 940px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  padding: 35px;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  display: inline-flex;
+  font-family: 'SF Pro', sans-serif;
+}
+
+.imageContainer {
+  width: 190px;
+  height: 240px;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid #414ad2; /* Бордер вокруг изображения */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+}
+
+.infoContainer {
+  width: 100%;
+  padding: 35px;
+  background: #f2f2f2;
+  border-radius: 20px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start; /* Выровняли по левому краю */
+  gap: 20px;
+  display: inline-flex;
+  text-align: left; /* Центрируем текст по левому краю */
+}
+
+.titleContainer {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start; /* Выровняли по левому краю */
+  gap: 10px;
+  display: flex;
+}
+
+.title {
+  color: black;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 22.2px;
+}
+
+.profession {
+  color: black;
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 44.4px;
+}
+
+.badge {
+  padding: 5px 9px;
+  background: #414ad2;
+  border-radius: 30px;
+  font-weight: medium;
+  justify-content: flex-start; /* Выровняли содержимое по левому краю */
+  align-items: center;
+  gap: 5px;
+  display: inline-flex;
+}
+
+.badgeIcon {
+  width: 20px;
+  height: 20px;
+  position: relative;
+}
+
+.badgeText {
+  text-align: left; /* Текст в бадже по левому краю */
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 14.43px;
+}
+
+.descriptionText {
+  align-self: stretch;
+  color: #222222;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 18.87px;
+  word-wrap: break-word;
+  text-align: left; /* Описание выровнено по левому краю */
+}

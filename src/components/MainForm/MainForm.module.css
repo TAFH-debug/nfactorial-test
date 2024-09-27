@@ -1,0 +1,64 @@
+/* CustomForm.module.css */
+.form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    color: black;
+    padding: 5px;
+    border-radius: 32px;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.0);
+}
+
+.hiddenInput {
+    display: none; /* Hide hidden inputs */
+}
+
+.errorMessage {
+    color: red;
+    font-weight: 600;
+    text-align: center;
+}
+
+.successMessage {
+    color: black;
+    font-weight: 600;
+    text-align: center;
+}
+
+.inputContainer {
+    display: flex;
+    width: 100%;
+    align-self: center;
+    justify-content: center;
+    max-width: 1200px;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.input {
+    width: 100%;
+    font-size: 18px;
+    color: black;
+    font-weight: 400;
+    padding: 25px 20px;
+    border: 1px solid #EAE7E3;
+    border-radius: 12px;
+    max-width: 390px;
+}
+
+.button {
+    color: white;
+    font-size: 18px;
+    width: 100%;
+    padding: 25px 10px;
+    background-color: #E01424;
+    font-weight: bold;
+    border: 0 solid #FFFFFF;
+    border-radius: 12px;
+    cursor: pointer;
+    max-width: 390px;
+    text-align: center;
+}
