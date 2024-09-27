@@ -1,3 +1,4 @@
+/* CourseRecommendations.module.css */
 .container {
     max-width: 940px;
     padding: 35px;
@@ -9,123 +10,143 @@
     text-align: left;
     margin: 0 auto;
     font-family: 'SF Pro', sans-serif;
-}
-
-.title {
+  }
+  
+  .title {
     color: #1a1a1a;
     font-size: 36px;
     font-weight: 800;
     text-align: left;
-}
-
-.cardContainer {
+  }
+  
+  .cardContainer {
     display: flex;
-    flex-wrap: wrap; /* Allows cards to wrap on smaller screens */
-    gap: 20px; /* Space between cards */
-    justify-content: flex-start; /* Align cards to the left */
-}
-
-.card {
-    width: 250px; /* Fixed width for each card */
-    height: 350px; /* Fixed height for each card */
-    padding: 25px;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.49) 66%, rgba(0, 0, 0, 0.75) 100%);
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .card {
+    width: 250px;
+    height: 350px;
     border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    color: white;
+  }
+  
+  .cardImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+  }
+  
+  .cardOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.49) 66%, rgba(0, 0, 0, 0.75) 100%);
+    z-index: 2;
+  }
+  
+  .content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    padding: 25px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: flex;
     align-items: flex-start;
-    gap: 10px;
-    color: white; /* Default text color */
-    position: relative; /* For layering */
-    background-size: cover; /* Ensure the image covers the card */
-    background-position: center; /* Center the background image */
-}
-
-.content {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 4px; /* Space between content items */
-    position: relative; /* Position for layering with gradient */
-}
-
-.category {
+    gap: 4px;
+  }
+  
+  .category {
     font-size: 10px;
     font-family: 'SF Pro', sans-serif;
     font-weight: 400;
     line-height: 11.10px;
     word-wrap: break-word;
-}
-
-.courseTitle {
+  }
+  
+  .courseTitle {
     font-size: 20px;
     font-family: 'SF Pro', sans-serif;
     font-weight: 600;
     line-height: 22.20px;
     word-wrap: break-word;
-}
-
-.details {
+    margin-top: 4px;
+  }
+  
+  .details {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 4px; /* Space between tags */
-}
-
-.tag {
-    padding: 6.43px 12.86px; /* Padding for tags */
-    border-radius: 38.57px; /* Round tags */
-    border: 1.29px solid white; /* White border for tags */
+    gap: 4px;
+    margin-top: 4px;
+  }
+  
+  .tag {
+    padding: 6.43px 12.86px;
+    border-radius: 38.57px;
+    border: 1.29px solid white;
     font-size: 10px;
     font-family: 'SF Pro', sans-serif;
     font-weight: 400;
     line-height: 11.10px;
-    color: white; /* White text for tags */
-}
-
-.button {
+    color: white;
+  }
+  
+  .button {
     display: flex;
     justify-content: center;
     padding: 15px;
-    background: black; /* Primary button color */
+    background: black;
     border-radius: 34px;
     color: white;
     cursor: pointer;
-    transition: background 0.3s; /* Smooth transition for hover */
-}
-
-.button:hover {
-    background: #444444; /* Darker shade on hover */
-}
-
-/* Media Queries for Mobile */
-@media (max-width: 600px) {
+    transition: background 0.3s;
+  }
+  
+  .button:hover {
+    background: #444444;
+  }
+  
+  /* Media Queries for Mobile */
+  @media (max-width: 600px) {
     .cardContainer {
-        flex-direction: column; /* Stack cards vertically on smaller screens */
-        align-items: center; /* Center cards */
+      flex-direction: column;
+      align-items: center;
     }
-
+    
     .card {
-        width: 250px; /* Maintain width */
-        height: 350px; /* Maintain height */
-        margin-bottom: 20px; /* Space between cards */
+      width: 250px;
+      height: 350px;
+      margin-bottom: 20px;
     }
-
+    
     .title {
-        font-size: 28px; /* Adjust title size */
+      font-size: 28px;
     }
-
+    
     .courseTitle {
-        font-size: 16px; /* Adjust course title size */
+      font-size: 16px;
     }
-
+    
     .tag {
-        font-size: 8px; /* Adjust tag font size */
+      font-size: 8px;
     }
-
+    
     .button {
-        padding: 10px; /* Smaller button padding */
+      padding: 10px;
     }
-}
+  }
