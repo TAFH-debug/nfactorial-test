@@ -14,7 +14,7 @@
 .gradientBackground {
     display: flex;
     flex-direction: row; /* Align icon and text side by side */
-    align-items: center; /* Center items vertically */
+    /* align-items: center; */
     justify-content: flex-start; /* Align items to the start */
     padding: 10px; /* Add padding for spacing */
     border-radius: 10px; /* Rounded corners */
@@ -59,3 +59,13 @@
     max-height: 100%; /* Prevent overflow */
     object-fit: contain; /* Maintain aspect ratio */
 }
+.imageContainer {
+    width: 40px; /* Size of the square */
+    height: 40px; /* Size of the square */
+    background-color: white; /* White background */
+    border-radius: 10px; /* Optional: rounded corners */
+    display: flex; /* Center the icon */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+  }
+  

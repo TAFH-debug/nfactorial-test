@@ -7,14 +7,16 @@ const Card = ({ src, alt, header, description }) => {
   return (
     <div className={styles.gradientBackground}>
       <div className={styles.imageWrapper}>
-        <Image
-          src={src}
-          alt={alt}
-          width={40}
-          height={40}
-          objectFit="contain"
-          className={styles.image}
-        />
+        <div className={styles.imageContainer}>
+          <Image
+            src={src}
+            alt={alt}
+            width={40}
+            height={40}
+            objectFit="contain"
+            className={styles.image}
+          />
+        </div>
       </div>
       <div className={styles.textContainer}>
         <h3 className={styles.header}>{header}</h3>
