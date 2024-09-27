@@ -1,146 +1,4 @@
-.AllComponent {
-  display: grid;
-  align-items: center;
-  justify-items: center;
-}
-
-.QuestionPart {
-  display: flex;
-  width: auto;
-  padding: 35px;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-  border-radius: 20px;
-  background: #fff;
-  max-width: 940px;
-}
-
-.QuestionText {
-  width: 800px; /* Фиксированная ширина или max-width */
-  max-width: 100%; /* Адаптивная ширина */
-  font-family: 'SF Pro', sans-serif;
-  color: black;
-  font-size: 25px;
-  font-weight: 800;
-  line-height: 27.75px;
-  word-wrap: break-word;
-  text-align: center; /* Центрируем текст вопроса */
-}
-
-.Answer {
-  text-align: left; /* Выровнять текст по левому краю */
-  width: 100%; /* Сделать ширину 100%, чтобы занять весь доступный контейнер */
-}
-
-.AnswerVariants {
-  font-family: 'SF Pro', sans-serif;
-  display: flex;
-  padding: 5px;
-  align-items: center;
-  gap: 15px;
-  border-radius: 10px;
-  width: auto;
-  max-width: 800px;
-  height: auto; /* Фиксированная ширина или max-width */
-  /* overflow: hidden; */
-  text-overflow: clip;
-  white-space: nowrap; /* Не переносить текст на новую строку */
-}
-
-.buttonStatusContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 800px; /* Ограничение ширины для лучшей структуры */
-  gap: 20px; /* Расстояние между кнопками и статусом */
-  margin-top: 20px;
-}
-
-.statusBarContainer {
-  width: 100%;
-  height: 100%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 25px;
-}
-
-.buttonBack,
-.buttonNext {
-  width: 203px;
-  height: 43px;
-  padding: 15px 20px;
-  background: rgba(255, 255, 255, 0.10);
-  border-radius: 34px;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-.buttonNext {
-  background: white;
-}
-
-.buttonText {
-  text-align: center;
-  color: white;
-  font-size: 17px;
-  font-family: 'SF Pro Display', sans-serif;
-  font-weight: 700;
-  line-height: 18.87px;
-  word-wrap: break-word;
-}
-
-.buttonNext .buttonText {
-  color: #222222;
-}
-
-.progressContainer {
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 10px;
-}
-
-.questionText {
-  text-align: center;
-  color: white;
-  font-size: 10px;
-  font-family: 'SF Pro Display', sans-serif;
-  font-weight: 400;
-  line-height: 11.10px;
-}
-
-.progressBar {
-  width: 430px;
-  height: 9px;
-  position: relative;
-}
-
-.progressBackground {
-  width: 100%;
-  height: 9px;
-  background: rgba(255, 255, 255, 0.10);
-  border-radius: 20px;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.progressFill {
-  height: 9px;
-  background: #7FDC9F;
-  border-radius: 20px;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
+/* General Button Styles */
 .button {
   width: 204px;
   height: 44px;
@@ -154,21 +12,22 @@
   transition: background 0.3s;
 }
 
-.back {
+.buttonBack {
   background: rgba(255, 255, 255, 0.1);
   color: white;
 }
 
-.next {
+.buttonNext {
   background: white;
   color: #222222;
 }
 
-.submit {
+.button.submit {
   background: rgba(0, 123, 255, 0.1);
   color: #007bff;
 }
 
+/* Hover and Disabled States */
 .button:hover:not([disabled]) {
   background: rgba(214, 214, 214, 0.2);
   color: white;
@@ -178,4 +37,145 @@
   cursor: not-allowed;
   background: #d3d3d3;
   color: #777;
+}
+
+/* Progress Bar Styles */
+.progressBar {
+  width: 430px;
+  height: 9px;
+  position: relative;
+}
+
+.progressBackground,
+.progressFill {
+  height: 9px;
+  border-radius: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.progressBackground {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.progressFill {
+  background: #7FDC9F;
+}
+
+/* Container Styles */
+.AllComponent {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden; /* Hide overflow */
+  height: 100vh-100px; /* Fill the full viewport height */
+}
+
+.QuestionPart {
+  display: flex;
+  width: auto;
+  padding: 35px;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  border-radius: 20px;
+  background: #fff;
+  max-width: 940px;
+  word-wrap: break-word; /* Word wrap */
+  flex-grow: 1; /* Allow it to grow and take available space */
+}
+/* Question Text Styles */
+.QuestionText {
+  width: 100%; /* Ensure 100% width */
+  max-width: 800px;
+  font-family: 'SF Pro', sans-serif;
+  color: black;
+  font-size: 25px;
+  font-weight: 800;
+  line-height: 27.75px;
+  overflow: hidden; /* Hide overflow *//* Prevent line breaks */
+  text-overflow: ellipsis; /* Add ellipsis for overflow */
+}
+
+/* Answer Section Styles */
+.Answer {
+  text-align: left; /* Align text to the left */
+  width: 100%; /* Make width 100% */
+}
+
+.AnswerVariants {
+  font-family: 'SF Pro', sans-serif;
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  gap: 15px;
+  border-radius: 10px;
+  max-width: 800px;
+  cursor: pointer; /* Pointer cursor for clickable items */
+}
+
+.selected {
+  background-color: #F8F8F8; /* Color for selected answer */
+}
+
+/* Checkbox Styles */
+.checkbox {
+  display: inline-flex;
+  padding: 5px;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Button and Status Section */
+.buttonStatusContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 800px; /* Max width for better structure */
+  gap: 20px; /* Space between buttons and status */
+  margin-top: 20px;
+}
+
+.statusBarContainer {
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 25px;
+}
+
+/* Progress Container */
+.progressContainer {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Question Text Styles for Progress */
+.questionText {
+  text-align: center;
+  color: white;
+  font-size: 10px;
+  font-family: 'SF Pro Display', sans-serif;
+  font-weight: 400;
+  line-height: 11.10px;
+}
+
+/* Card Styles */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  background: white;
 }

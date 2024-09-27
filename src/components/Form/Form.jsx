@@ -46,7 +46,7 @@ export default function Form() {
           />
         </div>
         <div className={styles.buttonWrapper}>
-          <button type="submit" className={styles.startButton} disabled={submitting}>
+          <button type="submit" className={`${styles.button} ${styles.startButton}`} disabled={submitting}>
             Начать
           </button>
         </div>

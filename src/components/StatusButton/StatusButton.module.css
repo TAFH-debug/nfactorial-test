@@ -1,10 +1,9 @@
 .button {
   width: 204px;
   height: 44px;
-  padding: 15px;
   border-radius: 34px;
-  font-size: 17px;
-  font-family: "SF Pro Display", sans-serif;
+  font-size: 1rem;
+  font-family: 'SF Pro Display', sans-serif;
   font-weight: 700;
   cursor: pointer;
   border: none;
@@ -22,13 +21,12 @@
 }
 
 .submit {
-  background: rgba(0, 123, 255, 0.1);
-  color: #007bff;
+  background: rgb(255, 255, 255);
+  color: #000000;
 }
 
 .button:hover:not([disabled]) {
   background: rgba(214, 214, 214, 0.2);
-  color: white;
 }
 
 .button:disabled {

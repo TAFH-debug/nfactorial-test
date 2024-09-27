@@ -1,78 +1,102 @@
+/* Form Styles */
 .formContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px;
-    max-width: 800px;
-    margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  /* max-width: 800px; */
+  margin: 0 auto;
 }
 
 .box {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
 }
 
 .line {
-    width: 100%; /* Set to 100% to fill available space */
-    height: 10px; /* Thickness of the line */
-    background-color: grey; /* Line color */
+  width: 100%; /* Set to 100% to fill available space */
+  height: 2px; /* Thickness of the line */
+  background-color: grey; /* Line color */
 }
 
 .inputWrapper {
-    flex: 1; /* Ensure inputs stretch to fill available space */
+  flex: 1; /* Ensure inputs stretch to fill available space */
 }
 
 .input {
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    gap: 10px;
-    position: relative;
-    width: 250px;
-    margin: 0 auto;
-    padding: 15px 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border: none; /* Remove border */
-    border-radius: 37px;
-    color: #ffffff; /* White text color */
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+  font-size: 17px;
+  font-family: "SF Pro Display", sans-serif;
+  position: relative;
+  height: auto;
+  width: 250px;
+  margin: 0 auto;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none; /* Remove border */
+  border-radius: 37px;
+  color: #ffffff; /* White text color */
 }
 
 /* Change placeholder text color */
 .input::placeholder {
-    color: #ffffff; /* White placeholder text */
+  color: #ffffff; /* White placeholder text */
 }
 
 .input:focus {
-    background: rgba(255, 255, 255, 0.2);
-    outline: none;
-    color: #ffffff; /* Keep text color white on focus */
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  color: #ffffff; /* Keep text color white on focus */
 }
 
 .buttonWrapper {
-    display: flex;
-    justify-content: center;
-    margin-left: 10px; /* Add space between inputs and button */
+  display: flex;
+  justify-content: center;
+  margin-left: 10px; /* Add space between inputs and button */
 }
 
-.startButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: nowrap;
-    gap: 10px;
-    position: relative;
-    width: 203px;
-    height: 43px;
-    margin: 0 auto;
-    padding: 15px 20px;
-    background: #ffffff;
-    border: none; /* Optional: remove border */
-    border-radius: 34px;
+/* General Button Styles */
+.button {
+  width: 204px;
+  height: auto;
+  padding: 15px; /* Consistent padding */
+  border-radius: 34px;
+  font-size: 17px;
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
 }
 
-.startButton:hover {
-    background: #f0f0f0;
-    transform: translateY(-2px);
+.buttonBack {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.buttonNext {
+  background: white;
+  color: #222222;
+}
+
+.button.submit {
+  background: rgba(0, 123, 255, 0.1);
+  color: #007bff;
+}
+
+/* Hover and Disabled States */
+.button:hover:not([disabled]) {
+  background: rgba(214, 214, 214, 0.2);
+  color: white;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  background: #d3d3d3;
+  color: #777;
 }

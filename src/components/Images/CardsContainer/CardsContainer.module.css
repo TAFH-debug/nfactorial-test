@@ -1,7 +1,7 @@
 /* CardsContainer.module.css */
 .container {
     position: relative; /* Allow absolute positioning of cards */
-    width: 100%; /* Full width for the container */
+    width: 100%; 
     height: 400px; /* Adjust height based on your layout */
     overflow: hidden; /* Prevent overflow */
     margin: 0 auto; /* Center the container if needed */

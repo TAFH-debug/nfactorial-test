@@ -1,12 +1,12 @@
 .headerContainer {
     display: flex;
-    overflow: hidden;
     justify-content: left;
     position: relative;
-    width: auto;
+    width: calc(100% - 100px); /* 50px left + 50px right */
     height: 37px;
-    /* margin: 0 auto; */
-    margin-left: 40px;
+    margin: 0 auto; /* Center the header */
+    margin-left: 50px;
+    margin-top: 50px; /* Remove this since we have set width */
     box-sizing: border-box;
 }
 

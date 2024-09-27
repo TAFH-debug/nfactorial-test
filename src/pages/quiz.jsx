@@ -88,7 +88,7 @@ export default function Quiz() {
     <>
       <Header />
       <Background />
-      <div style={{ textAlign: "center", paddingTop: "50px" }}>
+      <div style={{ textAlign: "center", paddingTop: "50px"  }}>
         {!showResult ? (
           <Question
             question={questions[currentQuestionIndex]}
@@ -98,27 +98,28 @@ export default function Quiz() {
             onBack={handleBack}
           />
         ) : (
+<div>
+          <Result
+            category={getTopCategory()}
+            description={categoryDescriptions[getTopCategory()]}
+            style={{ marginBottom: "50px" }} // Set margin to 50px for Result card
+          />
+          <CourseRecommendations
+            selectedCategory={getTopCategory()}
+            topCategories={getTopThreeCategories()}
+            style={{ marginBottom: "50px" }} // Set margin to 50px for CourseRecommendations card
+          />
           <div style={{ maxWidth: "940px", margin: "0 auto", padding: "20px" }}>
-            <Result
-              category={getTopCategory()}
-              description={categoryDescriptions[getTopCategory()]}
-              style={{ marginBottom: "50px" }} // Set margin to 50px for Result card
-            />
-            <CourseRecommendations
-              selectedCategory={getTopCategory()}
-              topCategories={getTopThreeCategories()}
-              style={{ marginBottom: "50px" }} // Set margin to 50px for CourseRecommendations card
-            />
             <Image src="image.svg" alt="alt" width={295} height={200} />
             <h1
               style={{
                 textAlign: "center",
                 color: "#FFF",
-                fontFamily: "SF Pro, Inter", // Using both fonts for fallback
+                fontFamily: "SF Pro, Inter",
                 fontSize: "25px",
                 fontStyle: "normal",
                 fontWeight: 600,
-                lineHeight: "111%", // You can also use '27.75px' if preferred
+                lineHeight: "111%",
                 letterSpacing: "-1.25px",
               }}
             >
@@ -126,11 +127,11 @@ export default function Quiz() {
               бесплатную карьерную консультацию для старта в IT и расскажем
               какие профессии актуальнее всего для тебя
             </h1>
-
             <MainForm />
           </div>
-        )}
-      </div>
-    </>
+        </div>
+      )}
+    </div>
+  </>
   );
 }
