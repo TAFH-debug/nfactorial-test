@@ -10,14 +10,15 @@ import CardsContainer from '@/components/Images/CardsContainer/CardsContainer';
 
 export default function Home() {
   return (
-    <div style={{ textAlign: 'center', paddingTop: '50px' }}>
+    <div style={{ height: '100vh', textAlign: 'center' }}>
       <Background />
       <Header />
       <Main />
       <Form />
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'fit-content' }}>
         <CardsContainer />
       </div>
     </div>
   );
 }
+
