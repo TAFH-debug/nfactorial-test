@@ -173,7 +173,6 @@
 }
 
 
-/* Media Queries for Responsive Design */
 @media (max-width: 768px) {
   .buttonStatusContainer {
     flex-direction: column; /* Stack buttons vertically on mobile */
@@ -192,12 +191,15 @@
   .button {
     width: 100%; /* Full width on mobile */
     height: 40px; /* Adjust height for mobile */
+    margin-bottom: 10px; /* Add margin between buttons */
   }
-  .buttons{
+  
+  .buttons {
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    margin:10px;
-    gap: 10px;
+    margin: 10px;
+    gap: 10px; /* Adjust the gap between buttons */
   }
 }
