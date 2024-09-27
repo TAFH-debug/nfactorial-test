@@ -1,6 +1,7 @@
 // CourseRecommendations.jsx
 import React from 'react';
 import styles from './CourseRecommendations.module.css';
+import Link from 'next/link'; // Import Link
 
 const CourseRecommendations = ({ selectedCategory }) => {
     const courses = [
@@ -9,7 +10,7 @@ const CourseRecommendations = ({ selectedCategory }) => {
             name: "Введение в мобильную разработку",
             duration: "6 месяцев",
             price: "24 500₸ в месяц",
-            imageUrl: "/images/results/mob_dev.png",
+            imageUrl: "/images/results/mob_dev.webp",
             category: "nFactorial iOS",
         },
         {
@@ -17,7 +18,7 @@ const CourseRecommendations = ({ selectedCategory }) => {
             name: "Введение в веб разработку",
             duration: "3 месяца",
             price: "28 750₸ в месяц",
-            imageUrl: "/images/results/web_dev.png",
+            imageUrl: "/images/results/web_dev.webp",
             category: "nFactorial Full Stack",
         },
         {
@@ -25,7 +26,7 @@ const CourseRecommendations = ({ selectedCategory }) => {
             name: "Введение в анализ данных",
             duration: "26 недель",
             price: "от 600 000₸",
-            imageUrl: "/images/results/data_analytics.png",
+            imageUrl: "/images/results/data_analytics.webp",
             category: "nFactorial Data Analytics",
         },
         {
@@ -33,7 +34,7 @@ const CourseRecommendations = ({ selectedCategory }) => {
             name: "Продакт-менеджер",
             duration: "6 месяцев",
             price: "50 000₸ в месяц",
-            imageUrl: "/images/results/product_management.png",
+            imageUrl: "/images/results/product_management.webp",
             category: "nFactorial Product Manager",
         },
     ];
@@ -62,9 +63,11 @@ const CourseRecommendations = ({ selectedCategory }) => {
                     </div>
                 ))}
             </div>
-            <div className={styles.button}>
-                <div className={styles.buttonText}>Посмотреть все курсы</div>
-            </div>
+            <Link href="https://nfactorial.school/courses"> {/* Wrap the button in a Link component */}
+                <div className={styles.button}>
+                    <div className={styles.buttonText}>Посмотреть все курсы</div>
+                </div>
+            </Link>
         </div>
     );
 };

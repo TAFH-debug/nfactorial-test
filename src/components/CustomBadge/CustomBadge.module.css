@@ -1,0 +1,39 @@
+.badgeContainer {
+    display: flex;
+    align-items: center;  /* Vertically center items */
+    justify-content: center; /* Horizontally center items */
+    width: fit-content;
+    padding: 5px 9px;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    border-radius: 30px;
+    gap: 5px; /* Space between icon and text */
+    position: relative; /* Position relative for placement */
+}
+
+.iconContainer {
+    width: 25px; /* Icon container size */
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.iconInner {
+    width: 100%; /* Full width of the icon container */
+    height: 100%; /* Full height of the icon container */
+    border-radius: 50%; /* Circular shape */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center icon */
+}
+
+.badgeText {
+    color: white; /* Text color */
+    font-size: 13px; /* Text size */
+    font-family: 'SF Pro', sans-serif; /* Font family */
+    font-weight: 400; /* Font weight */
+    line-height: 14.43px; /* Line height */
+    text-align: center; /* Center text */
+    word-wrap: break-word; /* Allow text wrapping */
+}

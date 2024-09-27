@@ -1,12 +1,23 @@
 .headerContainer {
     display: flex;
-    justify-content: center; /* Center the contents horizontally */
+    justify-content: flex-start; /* Align items to the left on desktop */
     align-items: center; /* Center the contents vertically */
     position: relative;
     width: 100%; /* Full width */
-    height: auto; /* Allow height to adjust based on content */
+    height: 37px; /* Set height for desktop */
     margin: 50px auto; /* Center the header with top margin */
     box-sizing: border-box;
+    padding-left: 50px;
+    gap: 8px;
+}
+
+/* Center the header on mobile */
+@media (max-width: 768px) {
+    .headerContainer {
+        justify-content: center; /* Center the items horizontally */
+        margin: 20px auto; /* Less margin for mobile */
+        height: 20px; /* Set height for mobile */
+    }
 }
 
 .section {
@@ -23,24 +34,19 @@
 .text {
     color: #ffffff;
     font-family: 'SF Pro', sans-serif;
-    font-size: 12px; /* Adjusted font size */
+    font-size: 18px; /* Adjusted font size */
     font-weight: 400;
     line-height: 1.5; /* Adjust line-height for better spacing */
     white-space: nowrap; /* Prevent text wrapping */
 }
 
 .imgContainer {
-    width: 37px;
-    height: 37px;
+    width: 39px;
+    height: 39px;
 }
 
 /* Mobile styles */
 @media (max-width: 768px) {
-    .headerContainer {
-        margin: 20px auto;
-        gap:4px; /* Less margin for mobile */
-    }
-
     .section {
         padding: 5px 8px;
         gap: 4px; /* Maintain padding for mobile */

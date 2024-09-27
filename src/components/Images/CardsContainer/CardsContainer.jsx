@@ -50,7 +50,7 @@ const CardsContainer = () => {
       <div 
         style={{ 
           position: "absolute", 
-          top: "20%", 
+          top: "32%", 
           left: "50%", 
           transform: "translate(-50%, -50%) rotate(-6.695deg)", // Center Card3
           zIndex: 4 
@@ -81,8 +81,8 @@ const CardsContainer = () => {
       <div 
         style={{ 
           position: "absolute", 
-          top: "15%", 
-          left: "50%", 
+          top: "17%", 
+          left: "51%", 
           // transform: "translate(-50%, -50%)", // Rotate Card2 as needed
           zIndex: 3
         }}
