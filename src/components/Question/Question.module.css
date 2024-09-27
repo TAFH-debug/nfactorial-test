@@ -141,6 +141,10 @@
   margin-top: 20px;
 }
 
+.mobileButtonStatusContainer {
+  display: none; /* Hidden by default */
+}
+
 .statusBarContainer {
   width: 100%;
   height: 100%;
@@ -188,6 +192,13 @@
     width: 100%; /* Кнопки занимают 100% ширины на мобильных устройствах */
     height: auto; /* Высота кнопок адаптируется */
     font-size: 15px; /* Уменьшаем размер шрифта */
+  }
+
+  .mobileButtonStatusContainer {
+    display: flex; /* Show mobile layout */
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
 
   .QuestionText {

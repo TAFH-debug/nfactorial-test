@@ -7,14 +7,15 @@
   border-radius: 20px;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center; /* Center horizontally */
   gap: 20px;
   font-family: "SF Pro", sans-serif;
 }
 
 .imageContainer {
-  width: 100%; /* Full width */
+  width: 100%;
+  max-width: 480px;
   height: auto;
   border-radius: 20px;
   overflow: hidden;
@@ -94,6 +95,7 @@
 @media (max-width: 600px) {
   .container {
     justify-content: center;
+    flex-direction: column; /* Adjust padding for tablet */
     padding: 8px;
     padding-top: 16px; /* Optional, since we already center items */
   }
@@ -104,8 +106,10 @@
     gap: 10px;
   }
   .image {
-    width: 120px;
-    height: 150px;
+    max-width: 190px;
+    max-height: 250px;
+    width: 100%;
+    border-radius: 20px;
   }
   .title {
     font-size: 18px;
@@ -118,5 +122,26 @@
   .descriptionText {
     font-size: 14px;
     text-align: left;
+  }
+}
+
+/* Media queries for tablet screens */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .container {
+    padding: 20px;
+    flex-direction: column; /* Adjust padding for tablet */
+  }
+  .title {
+    font-size: 19px; /* Slightly reduce font size for tablet */
+  }
+  .profession {
+    font-size: 35px; /* Adjust font size for tablet */
+  }
+  .image {
+    width: 180px; /* Adjust image size for tablet */
+    height: 220px; /* Adjust height accordingly */
+  }
+  .descriptionText {
+    font-size: 16px; /* Adjust font size for tablet */
   }
 }

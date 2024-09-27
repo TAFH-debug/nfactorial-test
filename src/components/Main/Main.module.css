@@ -46,7 +46,8 @@
 /* Mobile styles */
 @media (max-width: 768px) {
     .mainContainer {
-        max-width: 100%; /* Full width for mobile */
+        max-width: 100%;
+        padding-top: 12px; /* Full width for mobile */
         padding: 32px;
         justify-content: center; /* Extra padding for mobile */
     }

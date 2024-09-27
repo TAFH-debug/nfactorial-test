@@ -90,7 +90,7 @@ export default function Quiz() {
       <Header />
       <Badge/>
       <Background />
-      <div style={{ textAlign: "center", paddingTop: "50px"  }}>
+      <div style={{ textAlign: "center",}}>
         {!showResult ? (
           <Question
             question={questions[currentQuestionIndex]}

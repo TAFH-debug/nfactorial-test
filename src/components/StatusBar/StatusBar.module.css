@@ -1,98 +1,113 @@
 /* Status Bar Container */
 .statusBarContainer {
   width: 100%;
-  height: auto; /* Change to auto for better responsiveness */
-  display: flex; /* Use flex for layout */
-  justify-content: center;
-  align-items: flex-start; /* Align items to the start for mobile */
-  gap: 25px;
-  padding: 10px; /* Add some padding */
+  height: auto; /* Automatic height for better responsiveness */
+  display: block; /* Use block element */
+  padding: 10px; /* Add padding */
+  text-align: center; /* Center text inside container */
 }
 
 /* Button Styles */
 .buttonBack,
-.buttonNext {
-  width: 100%; /* Full width for mobile */
-  height: 43px;
-  padding: 15px 20px;
-  border-radius: 34px;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  margin: 10px 0; /* Space between buttons */
+.buttonNext,
+.buttonSubmit {
+  width: 100%; /* Full width on mobile devices */
+  height: 43px; /* Height of buttons */
+  border-radius: 34px; /* Rounded corners */
+  display: block; /* Block element for buttons */
+  margin: 10px 0; /* Margin between buttons */
+  font-size: 17px; /* Standard font size */
+  font-family: 'SF Pro Display', sans-serif; /* Font */
+  font-weight: 700; /* Bold font */
+  cursor: pointer; /* Pointer cursor */
+  border: none; /* Remove default border */
+}
+
+/* Specific styles for different button types */
+.buttonBack {
+  background: rgba(255, 255, 255, 0.1); /* Background for "Back" button */
+  color: white; /* Text color */
 }
 
 .buttonNext {
-  background: white;
+  background: white; /* Background for "Next" button */
+  color: #222222; /* Text color */
 }
 
-.buttonText {
-  text-align: center;
-  font-size: 17px;
-  font-family: 'SF Pro Display', sans-serif;
-  font-weight: 700;
-  line-height: 18.87px;
+.buttonSubmit {
+  background: rgba(0, 123, 255, 0.1); /* Background for "Submit" button */
+  color: #007bff; /* Text color */
 }
 
-.buttonNext .buttonText {
-  color: #222222;
+.button:hover:not([disabled]) {
+  background: rgba(214, 214, 214, 0.2); /* Hover effect */
+}
+
+.button:disabled {
+  cursor: not-allowed; /* Cursor for disabled buttons */
+  background: #d3d3d3; /* Background for disabled buttons */
+  color: #777; /* Text color for disabled buttons */
 }
 
 /* Progress Bar Styles */
 .progressContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 10px;
+  display: block; /* Block element for progress container */
+  margin-top: 10px; /* Margin on top */
 }
 
 .questionText {
-  text-align: center;
-  color: white;
-  font-size: 10px;
-  font-family: 'SF Pro Display', sans-serif;
-  font-weight: 400;
-  line-height: 11.10px;
+  text-align: center; /* Center question text */
+  color: white; /* Text color */
+  font-size: 10px; /* Font size for question text */
+  font-family: 'SF Pro Display', sans-serif; /* Font */
+  font-weight: 400; /* Normal font */
 }
 
 .progressBar {
-  width: 100%; /* Full width for mobile */
-  height: 9px;
-  position: relative;
+  width: 100%; /* Full width for progress bar */
+  height: 9px; /* Height of progress bar */
+  position: relative; /* Positioning relative to parent */
+  margin-top: 5px; /* Margin on top */
 }
 
 .progressBackground {
-  width: 100%;
+  width: 100%; /* Full width for background */
   height: 9px;
-  background: rgba(255, 255, 255, 0.10);
-  border-radius: 20px;
-  position: absolute;
-  top: 0;
-  left: 0;
+  background: rgba(255, 255, 255, 0.10); /* Background for progress bar */
+  border-radius: 20px; /* Rounded corners */
 }
 
 .progressFill {
   height: 9px;
-  background: #7FDC9F;
-  border-radius: 20px;
+  background: #7FDC9F; /* Color for filled part of progress bar */
+  border-radius: 20px; /* Rounded corners */
   position: absolute;
   top: 0;
   left: 0;
-  transition: width 0.3s;
+  transition: width 0.3s; /* Width animation */
 }
 
-/* Media queries for smaller screens */
+/* Media queries for mobile devices */
 @media (max-width: 600px) {
-  
+  .statusBarContainer {
+    padding: 8px; /* Reduce padding for mobile */
+  }
+
   .questionText {
-    font-size: 8px; /* Adjust for smaller screens */
+    font-size: 8px; /* Reduce font size for mobile */
   }
 
   .buttonBack,
-  .buttonNext {
-    font-size: 14px; /* Smaller font size for buttons */
+  .buttonNext,
+  .buttonSubmit {
+    font-size: 14px; /* Reduce font size for buttons */
+    height: 40px; /* Adjust height for buttons */
+  }
+
+  .progressBar {
+    width: 100%; /* Full width for progress bar */
+    height: 9px; /* Height of progress bar */
+    position: relative; /* Positioning relative to parent */
+    margin-top: 5px; /* Margin on top */
   }
 }
