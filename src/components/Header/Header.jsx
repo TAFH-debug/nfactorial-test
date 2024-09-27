@@ -5,12 +5,12 @@ import Link from 'next/link'; // Import Link
 
 export default function Header() {
     return (
-        <div className={styles.headerContainer}>
+        <div className={styles.header}>
+            <Link className={styles.headerContainer} style={{ textDecoration: 'none' }} href="/"> {/* Make the image clickable */}
             <div className={styles.section}>
                 <span className={styles.text}>nFactorial School</span>
             </div>
             <div className={styles.imgContainer}>
-                <Link href="/"> {/* Make the image clickable */}
                     <Image
                         src="/logo.svg" // Измененный путь
                         alt="Logo"
@@ -18,8 +18,8 @@ export default function Header() {
                         height={37}
                         layout="responsive"
                     />
-                </Link>
             </div>
+                </Link>
         </div>
     );
 }
