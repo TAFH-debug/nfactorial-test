@@ -1,52 +1,63 @@
 .headerContainer {
     display: flex;
-    justify-content: left;
+    justify-content: center; /* Center the contents horizontally */
+    align-items: center; /* Center the contents vertically */
     position: relative;
-    width: calc(100% - 100px); /* 50px left + 50px right */
-    height: 37px;
-    margin: 0 auto; /* Center the header */
-    margin-left: 50px;
-    margin-top: 50px; /* Remove this since we have set width */
+    width: 100%; /* Full width */
+    height: auto; /* Allow height to adjust based on content */
+    margin: 50px auto; /* Center the header with top margin */
     box-sizing: border-box;
 }
 
 .section {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: nowrap;
-    gap: 8px;
-    position: absolute;
-    width: 156px;
-    height: 37px;
-    top: 0;
-    left: 0;
-    padding: 10px 15px;
-    border: 1.901px solid #ffffff;
-    z-index: 1;
+    align-items: center; /* Center items vertically */
+    gap: 4px; /* Space between text and logo set to 4px */
+    padding: 5px 8px; /* Padding for the text section */
+    border: 1.901px solid #ffffff; /* Border inside */
     border-radius: 20px;
     box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.5); /* Optional: Add background for better visibility */
 }
 
 .text {
-    flex-shrink: 0;
-    flex-basis: auto;
-    position: relative;
-    height: 20px;
     color: #ffffff;
-    font-family: SF Pro Display, var(--default-font-family);
-    font-size: 18px;
+    font-family: 'SF Pro', sans-serif;
+    font-size: 12px; /* Adjusted font size */
     font-weight: 400;
-    line-height: 19.98px;
-    text-align: left;
-    white-space: nowrap;
-    z-index: 2;
+    line-height: 1.5; /* Adjust line-height for better spacing */
+    white-space: nowrap; /* Prevent text wrapping */
 }
 
 .imgContainer {
-    position: absolute;
-    top: 0;
-    left: 163px;
     width: 37px;
     height: 37px;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .headerContainer {
+        margin: 20px auto;
+        gap:4px; /* Less margin for mobile */
+    }
+
+    .section {
+        padding: 5px 8px;
+        gap: 4px; /* Maintain padding for mobile */
+        width: auto; /* Allow section width to be flexible */
+    }
+
+    .text {
+        font-size: 9px; /* Adjust font size for mobile */
+    }
+
+    .imgContainer {
+        width: 20px; /* Adjust image width for mobile */
+        height: 20px; /* Adjust image height for mobile */
+    }
+
+    .imgContainer img {
+        width: 100%; /* Responsive image */
+        height: auto; /* Maintain aspect ratio */
+    }
 }

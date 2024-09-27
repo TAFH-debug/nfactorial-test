@@ -4,7 +4,6 @@
   flex-direction: column;
   align-items: center;
   padding: 40px;
-  /* max-width: 800px; */
   margin: 0 auto;
 }
 
@@ -34,7 +33,7 @@
   font-family: "SF Pro Display", sans-serif;
   position: relative;
   height: auto;
-  width: 250px;
+  width: 250px; /* Default width for desktop */
   margin: 0 auto;
   padding: 15px 20px;
   background: rgba(255, 255, 255, 0.1);
@@ -62,7 +61,7 @@
 
 /* General Button Styles */
 .button {
-  width: 204px;
+  width: 2114px;
   height: auto;
   padding: 15px; /* Consistent padding */
   border-radius: 34px;
@@ -99,4 +98,41 @@
   cursor: not-allowed;
   background: #d3d3d3;
   color: #777;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .box {
+    display: flex; /* Make sure this is a flex container */
+    flex-direction: column; /* Stack inputs vertically */
+    align-items: stretch; /* Allow inputs to stretch */
+    width: 100%; /* Ensure the box takes full width */
+  }
+
+  .inputWrapper {
+    flex: 1; /* Each input takes equal space */
+    width: 100%; /* Allow inputs to take full width of wrapper */
+    display: flex; /* Ensure input wrapper is a flex container */
+  }
+
+  .line {
+    display: none; /* Hide the lines on mobile */
+  }
+
+  .input {
+    width: 100%; /* Ensure inputs take the full width of the wrapper */
+    margin: 0; /* Remove margin */
+    box-sizing: border-box; /* Include padding and border in the width */
+  }
+
+  .buttonWrapper {
+    margin-top: 20px; /* Add margin above the button */
+    width: 100%; /* Full width for the button wrapper */
+    display: flex; /* Ensure the button wrapper is also a flex container */
+  }
+
+  .button {
+    flex: 1; /* Allow the button to stretch */
+    width: auto; /* Remove fixed width */
+  }
 }

@@ -69,3 +69,55 @@
     justify-content: center; /* Center horizontally */
   }
   
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+    .gradientBackground {
+        width: 100%; /* Make cards full width on mobile */
+        height: auto; /* Adjust height automatically */
+        padding: 8px; /* Smaller padding */
+    }
+
+    .header {
+        font-size: 15px; /* Adjust font size for header */
+    }
+
+    .description {
+        font-size: 12px; /* Adjust font size for description */
+    }
+}
+
+.imageWrapper {
+    margin-right: 16px;
+    width: 40px; /* Set size */
+    height: 40px; /* Set size */
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+}
+
+.textContainer {
+    font-family: SF Pro; /* Ensure correct font */
+    text-align: left; /* Align text to left */
+    font-weight: bold; /* Set font weight */
+    color: #ffffff; /* Text color */
+}
+
+.header {
+    margin: 0;
+    font-size: 17px; /* Base font size */
+    font-weight: bold;
+}
+
+.description {
+    max-width: 167px; /* Prevent text overflow */
+    font-family: SF Pro; /* Ensure correct font */
+    font-size: 13px; /* Base font size */
+    font-weight: medium; /* Set font weight */
+}
+
+.image {
+    max-width: 100%; /* Prevent overflow */
+    max-height: 100%; /* Prevent overflow */
+    object-fit: contain; /* Maintain aspect ratio */
+}

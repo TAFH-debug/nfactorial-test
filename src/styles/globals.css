@@ -1,16 +1,39 @@
+/* Основные стили */
 :root {
-  --default-font-family: "SF Pro Display", sans-serif; /* Устанавливаем шрифт по умолчанию */
+  --default-font-family: "SF Pro Display", sans-serif;
 }
 
-@import url('https://fonts.cdnfonts.com/css/sf-pro-display');
-
 body {
-  font-family: var(--default-font-family); /* Используем переменную */
-  background: #020102; /* Цвет фона */
-  width: 100vw; /* Ширина */
-  height: 100vh; /* Высота */
-  position: relative; /* Позиционирование */
-  display: flex; /* Используем flexbox для расположения */
-  justify-content: flex-end; /* Выравнивание по правому краю */
-  align-items: center; /* Выравнивание по центру по вертикали */
+  font-family: var(--default-font-family);
+  background: #020102;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-end; /* Default for larger screens */
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center items */
+    padding: 25px 10px; /* Adjust padding */
+  }
+}
+
+/* Для планшетов */
+@media (min-width: 768px) and (max-width: 1024px) {
+  body {
+    padding: 20px; /* Adjust padding for tablets */
+  }
+}
+
+/* Для больших экранов */
+@media (min-width: 1024px) {
+  body {
+    justify-content: flex-end; /* Align to the right for larger screens */
+  }
 }
