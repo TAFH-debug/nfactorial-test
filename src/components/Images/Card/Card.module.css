@@ -1,43 +1,44 @@
 .imageContainer {
-    display: flex;
-    width: fit-content;
-    height: 90px;
-    align-items: center;
-    justify-content: left;
-    position: relative;
-    background: radial-gradient(34.16% 89.89% at 94.13% 87.64%, #282D3E 0%, #0E111D 100%);
-    padding: 15px;
-    border-radius: 20px;
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+    position: relative; /* Ensure the container is positioned */
+    width: 100%; /* Full width for better positioning */
+    height: 300px; /* Adjust as needed */
 }
 
 .card {
     display: flex;
-    flex-direction: row;
-    align-items: left;
-    justify-content: center;
-    position: relative; /* Измените на relative, чтобы карточка позиционировалась нормально */
-    /* margin: 10px; Добавьте отступы между карточками */
+    flex-direction: column; /* Stack content vertically */
+    align-items: center; /* Center items */
+    justify-content: center; /* Center content */
+}
+
+.gradientBackground {
+    display: flex;
+    flex-direction: row; /* Align icon and text side by side */
+    align-items: center; /* Center items vertically */
+    justify-content: flex-start; /* Align items to the start */
+    padding: 10px; /* Add padding for spacing */
+    border-radius: 10px; /* Rounded corners */
+    background: radial-gradient(34.16% 89.89% at 94.13% 87.64%, #282D3E 0%, #0E111D 100%); /* Gradient background for each card */
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2); /* Shadow for card effect */
+    width: 200px; /* Set a width for each card */
+    height: 90px; /* Set a height for each card */
+    margin: 10px; /* Add some margin for spacing */
 }
 
 .imageWrapper {
     margin-right: 16px;
-    position: relative;
-    width: 40px; /* Задайте нужный размер */
-    height: 40px; /* Задайте нужный размер */
-    border-radius: 10px;
-    overflow: hidden; /* Обрезка содержимого */
-    background: #ffffff; /* Белый фон для иконок */
+    width: 40px; /* Set size */
+    height: 40px; /* Set size */
     display: flex;
-    align-items: center; /* Центрирование по вертикали */
-    justify-content: center; /* Центрирование по горизонтали */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
 }
 
 .textContainer {
-    font-family: SF pro;
-    text-align: left;
-    font-weight: bold;
-    color: #ffffff; /* Цвет текста */
+    font-family: SF Pro; /* Ensure correct font */
+    text-align: left; /* Align text to left */
+    font-weight: bold; /* Set font weight */
+    color: #ffffff; /* Text color */
 }
 
 .header {
@@ -48,13 +49,13 @@
 
 .description {
     max-width: 167px;
-    font-family: SF pro;
+    font-family: SF Pro; /* Ensure correct font */
     font-size: 13px;
-    font-weight: medium;
+    font-weight: medium; /* Set font weight */
 }
 
 .image {
-    max-width: 100%; /* Чтобы изображение не выходило за пределы контейнера */
-    max-height: 100%; /* Чтобы изображение не выходило за пределы контейнера */
-    object-fit: contain; /* Сохранение пропорций изображения */
+    max-width: 100%; /* Prevent overflow */
+    max-height: 100%; /* Prevent overflow */
+    object-fit: contain; /* Maintain aspect ratio */
 }

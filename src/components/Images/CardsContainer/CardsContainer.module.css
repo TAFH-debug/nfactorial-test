@@ -1,29 +1,46 @@
 /* CardsContainer.module.css */
 .container {
-    position: relative; /* Чтобы дочерние элементы могли позиционироваться относительно контейнера */
-    width: 100%; /* Или другой желаемый размер */
-    height: 100%; /* Или другой желаемый размер */
+    position: relative; /* Allow absolute positioning of cards */
+    width: 100%; /* Full width for the container */
+    height: 400px; /* Adjust height based on your layout */
+    overflow: hidden; /* Prevent overflow */
+    margin: 0 auto; /* Center the container if needed */
 }
 
-.card1, .card2, .card3 {
-    position: absolute; /* Позволяет точно расположить карточки */
+.card {
+    /* No specific styles needed here since we manage styles in the rendering */
 }
 
-/* Примерные координаты и угол для каждой карточки */
-.card1 {
-    top: 20px;  /* Координаты Y */
-    left: 30px; /* Координаты X */
-    transform: rotate(10deg); /* Поворот на 10 градусов */
+.gradientBackground {
+    display: flex;
+    flex-direction: row; /* Align icon and text side by side */
+    align-items: center; /* Center items vertically */
+    justify-content: flex-start; /* Align items to the start */
+    padding: 10px; /* Add padding for spacing */
+    border-radius: 10px; /* Rounded corners */
+    background: radial-gradient(34.16% 89.89% at 94.13% 87.64%, #282D3E 0%, #0E111D 100%); /* Gradient background for each card */
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2); /* Shadow for card effect */
+    width: 200px; /* Set a width for each card */
+    height: 90px; /* Set a height for each card */
+    margin: 10px; /* Add some margin for spacing */
 }
 
-.card2 {
-    top: 100px; /* Координаты Y */
-    left: 150px; /* Координаты X */
-    transform: rotate(-10deg); /* Поворот на -10 градусов */
+.textContainer {
+    font-family: SF Pro; /* Ensure correct font */
+    text-align: left; /* Align text to left */
+    font-weight: bold; /* Set font weight */
+    color: #ffffff; /* Text color */
 }
 
-.card3 {
-    top: 180px; /* Координаты Y */
-    left: 300px; /* Координаты X */
-    transform: rotate(5deg); /* Поворот на 5 градусов */
+.header {
+    margin: 0;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.description {
+    max-width: 167px;
+    font-family: SF Pro; /* Ensure correct font */
+    font-size: 13px;
+    font-weight: medium; /* Set font weight */
 }
