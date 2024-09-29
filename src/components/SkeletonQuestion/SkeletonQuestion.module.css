@@ -1,0 +1,104 @@
+/* Skeleton Container */
+.skeletonContainer {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    overflow: hidden;
+  }
+  
+  /* Badge Placeholder */
+  .skeletonBadge {
+    width: 80px;
+    height: 80px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+  
+  /* Question Section */
+  .skeletonQuestionPart {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 20px;
+    padding: 35px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 940px;
+  }
+  
+  .skeletonQuestionText {
+    width: 100%;
+    height: 40px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+  }
+  
+  .skeletonAnswer {
+    width: 100%;
+  }
+  
+  .skeletonAnswerVariant {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .skeletonCheckbox {
+    width: 15px;
+    height: 15px;
+    background-color: #e0e0e0;
+    border-radius: 2px;
+  }
+  
+  .skeletonChoiceText {
+    width: 100%;
+    height: 15px;
+    background-color: #e0e0e0;
+    border-radius: 3px;
+  }
+  
+  /* Button and Status Section */
+  .skeletonButtonStatusContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 940px;
+    padding: 35px;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .skeletonButton {
+    width: 120px;
+    height: 44px;
+    background-color: #e0e0e0;
+    border-radius: 34px;
+  }
+  
+  .skeletonProgressBar {
+    width: 430px;
+    height: 9px;
+    background-color: #e0e0e0;
+    border-radius: 20px;
+  }
+  
+  /* Mobile styles */
+  @media (max-width: 768px) {
+    .skeletonButtonStatusContainer {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .skeletonButton {
+      width: 100%;
+    }
+  
+    .skeletonProgressBar {
+      width: 100%;
+    }
+  }
+  

@@ -6,7 +6,7 @@ import Background from "@/components/Background/Background";
 import Result from "../components/Result/Result";
 import CourseRecommendations from "../components/CourseRecommendations/CourseRecommendations";
 import MainForm from "../components/MainForm/MainForm";
-import Skeleton from "../components/Skeleton/Skeleton"; // Импортируем компонент Skeleton
+import SkeletonQuestion from "../components/SkeletonQuestion/SkeletonQuestion"; // Импортируем компонент SkeletonQuestion
 import styles from "./Quiz.module.css";
 
 export default function Quiz() {
@@ -84,22 +84,27 @@ export default function Quiz() {
     },
   };
 
-  // Показываем Skeleton, пока данные загружаются
-  if (loading) return <Skeleton />;
-
   return (
     <>
       <Header />
       <Background />
       <div style={{ textAlign: "center" }}>
+        {/* Отображаем все компоненты кроме Question */}
         {!showResult ? (
-          <Question
-            question={questions[currentQuestionIndex]}
-            totalQuestions={questions.length}
-            currentQuestion={currentQuestionIndex + 1}
-            onAnswer={handleAnswer}
-            onBack={handleBack}
-          />
+          <>
+            {/* Если данные еще не загружены, показываем SkeletonQuestion */}
+            {loading ? (
+              <SkeletonQuestion />
+            ) : (
+              <Question
+                question={questions[currentQuestionIndex]}
+                totalQuestions={questions.length}
+                currentQuestion={currentQuestionIndex + 1}
+                onAnswer={handleAnswer}
+                onBack={handleBack}
+              />
+            )}
+          </>
         ) : (
           <div>
             <Result
