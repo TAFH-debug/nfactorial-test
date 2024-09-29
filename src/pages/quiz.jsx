@@ -6,6 +6,7 @@ import Background from "@/components/Background/Background";
 import Result from "../components/Result/Result";
 import CourseRecommendations from "../components/CourseRecommendations/CourseRecommendations";
 import MainForm from "../components/MainForm/MainForm";
+import Skeleton from "../components/Skeleton/Skeleton"; // Импортируем компонент Skeleton
 import styles from "./Quiz.module.css";
 
 export default function Quiz() {
@@ -18,12 +19,14 @@ export default function Quiz() {
     product_management: 0,
   });
   const [showResult, setShowResult] = useState(false);
+  const [loading, setLoading] = useState(true); // Добавляем состояние для загрузки
 
   useEffect(() => {
     const fetchQuestions = async () => {
       const res = await fetch("/api/questions");
       const data = await res.json();
       setQuestions(data);
+      setLoading(false); // Когда данные получены, устанавливаем loading в false
     };
     fetchQuestions();
   }, []);
@@ -57,12 +60,11 @@ export default function Quiz() {
   const getTopThreeCategories = () => {
     const sortedCategories = Object.entries(selectedCategories)
       .sort(([, a], [, b]) => b - a)
-      .slice(0, 3) // Get top 3 categories
+      .slice(0, 3)
       .map(([category]) => category);
     return sortedCategories;
   };
 
-  // Define category descriptions before using them
   const categoryDescriptions = {
     mob_dev: {
       title: "iOS/Android-разработчик (мобильная разработка)",
@@ -82,14 +84,14 @@ export default function Quiz() {
     },
   };
 
-  // Ensure you check if questions exist before accessing its length
-  if (!questions.length) return <p>Loading...</p>;
+  // Показываем Skeleton, пока данные загружаются
+  if (loading) return <Skeleton />;
 
   return (
     <>
       <Header />
       <Background />
-      <div style={{ textAlign: "center",}}>
+      <div style={{ textAlign: "center" }}>
         {!showResult ? (
           <Question
             question={questions[currentQuestionIndex]}
@@ -99,29 +101,29 @@ export default function Quiz() {
             onBack={handleBack}
           />
         ) : (
-<div>
-          <Result
-            category={getTopCategory()}
-            description={categoryDescriptions[getTopCategory()]}
-            style={{ marginBottom: "50px" }} // Set margin to 50px for Result card
-          />
-          <CourseRecommendations
-            selectedCategory={getTopCategory()}
-            topCategories={getTopThreeCategories()}
-            style={{ marginBottom: "50px" }} // Set margin to 50px for CourseRecommendations card
-          />
-          <div style={{ maxWidth: "940px", margin: "0 auto", padding: "20px" }}>
-            <Image src="image.svg" alt="alt" width={295} height={200} />
-            <h1 className={styles.heading}>
-              Если ты все еще не определился с профессией, то можем провести
-              бесплатную карьерную консультацию для старта в IT и расскажем
-              какие профессии актуальнее всего для тебя
-            </h1>
-            <MainForm />
+          <div>
+            <Result
+              category={getTopCategory()}
+              description={categoryDescriptions[getTopCategory()]}
+              style={{ marginBottom: "50px" }}
+            />
+            <CourseRecommendations
+              selectedCategory={getTopCategory()}
+              topCategories={getTopThreeCategories()}
+              style={{ marginBottom: "50px" }}
+            />
+            <div style={{ maxWidth: "940px", margin: "0 auto", padding: "20px" }}>
+              <Image src="image.svg" alt="alt" width={295} height={200} />
+              <h1 className={styles.heading}>
+                Если ты все еще не определился с профессией, то можем провести
+                бесплатную карьерную консультацию для старта в IT и расскажем
+                какие профессии актуальнее всего для тебя
+              </h1>
+              <MainForm />
+            </div>
           </div>
-        </div>
-      )}
-    </div>
-  </>
+        )}
+      </div>
+    </>
   );
 }
