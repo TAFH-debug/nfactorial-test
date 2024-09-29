@@ -70,7 +70,7 @@
   align-items: center;
   justify-items: center;
   overflow: hidden; /* Hide overflow */
-  height: calc(100vh - 120px); 
+  /* height: calc(100vh - 120px);  */
 }
 
 .QuestionPart {
