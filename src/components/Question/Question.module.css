@@ -5,7 +5,7 @@
   padding: 15px;
   border-radius: 34px;
   font-size: 17px;
-  font-family: 'SF Pro Display', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 700;
   cursor: pointer;
   border: none;
@@ -57,11 +57,11 @@
 
 .progressBackground {
   width: 100%;
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .progressFill {
-  background: #7FDC9F;
+  background: #7fdc9f;
 }
 
 /* Container Styles */
@@ -91,11 +91,12 @@
 .QuestionText {
   width: auto; /* Ensure 100% width */
   max-width: 940px;
-  font-family: 'SF Pro', sans-serif;
+  font-family: "Inter", sans-serif;
   color: black;
   font-size: 25px;
-  font-weight: 800;
-  line-height: 27.75px;
+  font-weight: 600;
+  line-height: 111%; /* 27.75px */
+  letter-spacing: -1.25px;
   overflow: hidden; /* Hide overflow */
   text-overflow: ellipsis; /* Add ellipsis for overflow */
 }
@@ -109,18 +110,20 @@
 }
 
 .AnswerVariants {
-  font-family: 'SF Pro', sans-serif;
+  font-family: "Inter", sans-serif;
   display: flex;
   padding: 5px;
   align-items: center;
   gap: 15px;
   border-radius: 10px;
   max-width: 800px;
+  font-weight: 400;
+  line-height: 111%;
   cursor: pointer; /* Pointer cursor for clickable items */
 }
 
 .selected {
-  background-color: #F8F8F8; /* Color for selected answer */
+  background-color: #f8f8f8; /* Color for selected answer */
 }
 
 /* Checkbox Styles */
@@ -156,9 +159,9 @@
   text-align: center;
   color: white;
   font-size: 10px;
-  font-family: 'SF Pro Display', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 400;
-  line-height: 11.10px;
+  line-height: 11.1px;
 }
 
 /* Card Styles */
@@ -174,17 +177,16 @@
   background: white;
 }
 
-
 @media (max-width: 768px) {
   .buttonStatusContainer {
     flex-direction: column; /* Stack buttons vertically on mobile */
     align-items: center; /* Center align for mobile */
     gap: 10px;
   }
-  .AllComponent{
+  .AllComponent {
     padding: 16px;
   }
-  .QuestionText{
+  .QuestionText {
     margin: 0 auto;
     padding: 0 auto;
   }
@@ -192,17 +194,21 @@
     text-align: left; /* Align text to the left */
     width: auto;
     padding-left: 0px;
-    padding-right: 0px; 
+    padding-right: 0px;
   }
-  
+
   .QuestionPart {
-    padding: 20px; /* Adjust padding for mobile */
+    padding: 20px;
+    gap: 15px /* Adjust padding for mobile */
   }
 
   .QuestionText {
-    font-size: 20px;
+    font-size: 17px;
     padding-left: 0px;
     padding-top: 0px; /* Adjust font size for mobile */
+  }
+  .AnswerVariants{
+    font-size: 10px;
   }
 
   .button {
@@ -210,7 +216,7 @@
     height: 40px; /* Adjust height for mobile */
     margin-bottom: 10px; /* Add margin between buttons */
   }
-  
+
   .buttons {
     display: flex;
     flex-direction: row;

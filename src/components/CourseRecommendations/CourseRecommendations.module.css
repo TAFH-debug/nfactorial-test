@@ -8,13 +8,15 @@
   gap: 20px;
   text-align: left;
   margin: 0 auto;
-  font-family: 'SF Pro', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .title {
-  color: #1a1a1a;
-  font-size: 36px;
-  font-weight: 800;
+  color: #000;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 111%; /* 44.4px */
+  letter-spacing: -2px;
   text-align: left;
 }
 
@@ -79,7 +81,7 @@
 .courseTitle {
   font-size: 24px;
   font-family: 'Inter', sans-serif;
-  font-weight: 700;
+  font-weight: 600;
   word-wrap: break-word;
   margin-top: 4px;
   line-height: 111%;

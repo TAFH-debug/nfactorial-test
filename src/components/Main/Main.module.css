@@ -20,10 +20,11 @@
     align-self: stretch;
     flex-shrink: 0;
     color: #f6f6f6;
-    font-family: SF pro, sans-serif;
+    font-family: "Inter";
     font-size: 55px; /* Desktop size */
-    font-weight: bold;
-    line-height: 61.05px;
+    font-weight: 600;
+    line-height: 111%;
+    letter-spacing: -2.75px;
     text-align: center;
     max-width: 100%; /* Max width relative to the container */
 }
@@ -34,10 +35,10 @@
     justify-content: center;
     flex-shrink: 0;
     color: #f6f6f6;
-    font-family: SF pro, sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 17px; /* Desktop size */
     font-weight: 400;
-    line-height: 18.87px;
+    line-height: 111%;
     text-align: center;
     max-width: 100%; /* Max width relative to the container */
     z-index: 1;
@@ -55,13 +56,15 @@
     .text {
         font-size: 40px; /* Semibold for mobile */
         font-weight: 700;
-        line-height: 45px;
+        line-height: 111%;
+        letter-spacing: -2px;
         max-width: 100%; /* Allowing some margin on the sides */
     }
 
     .text2 {
         font-size: 15px; /* Regular for mobile */
-        line-height: 17px;
+        line-height: 111%;
+        font-weight: 400;
         max-width: 100%; /* Allowing some margin on the sides */
     }
 }

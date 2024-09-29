@@ -2,91 +2,96 @@
 
 import React, { useState, useEffect } from "react";
 import styles from "./MainForm.module.css"; // Import CSS module
+import Link from "next/link";
 
 export default function MainForm(props) {
-    const [submitted, setSubmitted] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [roistatId, setRoistatId] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [roistatId, setRoistatId] = useState("");
 
-    useEffect(() => {
-        const roistatVisit =
-            document.cookie
-                .split("; ")
-                .find((row) => row.startsWith("roistat_visit="))
-                ?.split("=")[1] || "nocookie";
-        setRoistatId(roistatVisit);
-    }, []);
+  useEffect(() => {
+    const roistatVisit =
+      document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("roistat_visit="))
+        ?.split("=")[1] || "nocookie";
+    setRoistatId(roistatVisit);
+  }, []);
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        setSubmitted(true);
-    };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setSubmitted(true);
+  };
 
-    const handleNumberInput = (event) => {
-        const value = event.target.value;
-        const numericInput = value.replace(/[^0-9+()-]/g, "");
+  const handleNumberInput = (event) => {
+    const value = event.target.value;
+    const numericInput = value.replace(/[^0-9+()-]/g, "");
 
-        if (value !== numericInput) {
-            setErrorMessage("Пожалуйста, введите корректный номер телефона.");
-        } else {
-            setErrorMessage("");
-        }
-    };
+    if (value !== numericInput) {
+      setErrorMessage("Пожалуйста, введите корректный номер телефона.");
+    } else {
+      setErrorMessage("");
+    }
+  };
 
-    return (
-        <>
-            <script src="https://unpkg.com/@formspark/formtrack" async></script>
+  return (
+    <>
+      <script src="https://unpkg.com/@formspark/formtrack" async></script>
 
-            <form
-                action="https://submit-form.com/0CvtQ6co3"
-                onSubmit={handleSubmit}
-                className={styles.form} // Apply CSS module styles
-                data-formtrack
-            >
-                {submitted ? (
-                    <p className={styles.successMessage}>Спасибо за вашу заявку!</p>
-                ) : null}
-                {errorMessage && (
-                    <p className={styles.errorMessage}>{errorMessage}</p>
-                )}
-                <div className={styles.inputContainer}>
-                    <input
-                        type="hidden"
-                        name="_redirect"
-                        value="https://www.nfactorial.school/thanks"
-                        className={styles.hiddenInput}
-                    />
-                    <input
-                        type="hidden"
-                        name="roistat_visit"
-                        value={roistatId}
-                        className={styles.hiddenInput}
-                    />
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Имя"
-                        required
-                        className={styles.input} // Apply CSS module styles
-                    />
-                    <input
-                        type="tel"
-                        id="number"
-                        name="number"
-                        placeholder="Номер телефона"
-                        required
-                        className={styles.input} // Apply CSS module styles
-                        onChange={handleNumberInput}
-                    />
-                    <button
-                        type="submit"
-                        className={styles.button} // Apply CSS module styles
-                    >
-                        Получить консультацию
-                    </button>
-                </div>
-            </form>
-        </>
-    );
+      <form
+        action="https://submit-form.com/0CvtQ6co3"
+        onSubmit={handleSubmit}
+        className={styles.form} // Apply CSS module styles
+        data-formtrack
+      >
+        {submitted ? (
+          <p className={styles.successMessage}>Спасибо за вашу заявку!</p>
+        ) : null}
+        {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+        <div className={styles.inputContainer}>
+          <input
+            type="hidden"
+            name="_redirect"
+            value="https://www.nfactorial.school/thanks"
+            className={styles.hiddenInput}
+          />
+          <input
+            type="hidden"
+            name="roistat_visit"
+            value={roistatId}
+            className={styles.hiddenInput}
+          />
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Имя"
+            required
+            className={styles.input} // Apply CSS module styles
+          />
+          <input
+            type="tel"
+            id="number"
+            name="number"
+            placeholder="Номер телефона"
+            required
+            className={styles.input} // Apply CSS module styles
+            onChange={handleNumberInput}
+          />
+          <button
+            type="submit"
+            className={styles.button} // Apply CSS module styles
+          >
+            Получить консультацию
+          </button>
+<div className={styles.text}>    
+Нажимая на кнопку, я соглашаюсь <Link className={styles.text} href="https://docs.google.com/document/d/1q4gLy-OhHozcMw3nYw6Pk4bIkSmqCBfmSy6boIbtHb8/edit">
+             с политикой обработки персональных
+            данных
+          </Link>
+</div>
+        </div>
+      </form>
+    </>
+  );
 }

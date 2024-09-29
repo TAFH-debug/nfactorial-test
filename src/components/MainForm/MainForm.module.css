@@ -1,69 +1,83 @@
 /* MainForm.module.css */
 .form {
-    display: flex;
-    width: 100%;
-    flex-direction: column; /* Default to column layout */
-    gap: 4px;
-    font-family: 'SF Pro', sans-serif;
-    font-size: 13px;
-    color: black;
-    padding: 5px;
-    border-radius: 32px;
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.0);
+  display: flex;
+  width: 100%;
+  flex-direction: column; /* Default to column layout */
+  gap: 4px;
+  font-family: "Inter";
+  align-items: center;
+  font-size: 13px;
+  color: black;
+  padding: 5px;
+  border-radius: 32px;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0);
+  padding-bottom: 100px;
 }
 
 .hiddenInput {
-    display: none; /* Hide hidden inputs */
+  display: none; /* Hide hidden inputs */
 }
 
 .errorMessage {
-    color: red;
-    font-weight: 600;
-    text-align: center;
+  color: red;
+  font-weight: 600;
+  text-align: center;
 }
 
 .successMessage {
-    color: black;
-    font-weight: 600;
-    text-align: center;
+  color: black;
+  font-weight: 600;
+  text-align: center;
 }
 
 .inputContainer {
-    display: flex;
-    flex-direction: column; /* Change to column by default */
-    align-items: center; /* Center items horizontally */
-    width: 100%;
-    max-width: 1200px;
-    gap: 8px; /* Space between inputs */
+  display: flex;
+  flex-direction: column; /* Change to column by default */
+  /* align-items: center;  */
+  /* width: 100%; */
+  max-width: 480px;
+  gap: 8px; /* Space between inputs */
 }
 
 .input {
-    width: 100%;
-    font-size: 18px;
-    color: black;
-    font-weight: 400;
-    padding: 25px 20px;
-    border: 1px solid #EAE7E3;
-    border-radius: 12px;
-    max-width: 390px;
+  /* width: 100%; */
+  font-size: 18px;
+  color: black;
+  font-weight: 400;
+  padding: 25px 20px;
+  border-radius: 70px;
+  border: 0 solid #e8e8e8;
+  background: #f5f5f5;
+  /* max-width: 390px; */
 }
 
 .button {
-    color: white;
-    font-size: 18px;
-    width: 100%;
-    padding: 25px 10px;
-    background-color: #E01424;
-    font-weight: bold;
-    border: 0 solid #ffffff20;
-    border-radius: 12px;
-    cursor: pointer;
-    max-width: 390px;
+  color: white;
+  font-size: 18px;
+  /* width: 100%; */
+  padding: 25px 20px;
+  font-weight: bold;
+  border: 0 solid #ffffff20;
+  border-radius: 70px;
+  background: #e01424;
+  cursor: pointer;
+  /* max-width: 390px; */
 }
-
+.text {
+  color: #fff;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 111%;
+  /* text-decoration-line: underline; */
+}
 /* Media query for mobile devices */
 @media (min-width: 768px) {
-    .inputContainer {
-        flex-direction: row; /* Change to row layout for larger screens */
-    }
+  .form {
+    padding-bottom: 64px;
+  }
+  .inputContainer {
+    flex-direction: column; /* Change to row layout for larger screens */
+  }
 }

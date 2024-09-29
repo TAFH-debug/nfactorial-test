@@ -9,11 +9,11 @@
 .heading {
     color: #FFF;
     text-align: center;
-    font-family: "Sf pro";
+    font-family: Inter;
     font-size: 25px;
     font-style: normal;
-    font-weight: 700;
-    line-height: 111%; /* 22.2px */
+    font-weight: 600;
+    line-height: 111%; /* 27.75px */
     letter-spacing: -1.25px;
     max-width: 670px;
     justify-content: center;

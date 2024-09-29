@@ -35,7 +35,7 @@
 }
 
 .textContainer {
-    font-family: SF Pro; /* Ensure correct font */
+    font-family: "Inter"; /* Ensure correct font */
     text-align: left; /* Align text to left */
     font-weight: bold; /* Set font weight */
     color: #ffffff; /* Text color */
@@ -49,7 +49,7 @@
 
 .description {
     max-width: 167px;
-    font-family: SF Pro; /* Ensure correct font */
+    font-family: "Inter"; /* Ensure correct font */
     font-size: 13px;
     font-weight: medium; /* Set font weight */
 }
@@ -97,7 +97,7 @@
 }
 
 .textContainer {
-    font-family: SF Pro; /* Ensure correct font */
+    font-family: "Inter"; /* Ensure correct font */
     text-align: left; /* Align text to left */
     font-weight: bold; /* Set font weight */
     color: #ffffff; /* Text color */
@@ -111,7 +111,7 @@
 
 .description {
     max-width: 167px; /* Prevent text overflow */
-    font-family: SF Pro; /* Ensure correct font */
+    font-family: "Inter"; /* Ensure correct font */
     font-size: 13px; /* Base font size */
     font-weight: medium; /* Set font weight */
 }

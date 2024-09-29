@@ -1,6 +1,7 @@
 /* Основные стили */
 :root {
-  --default-font-family: "SF Pro Display", sans-serif;
+  --default-font-family: "Inter";
+  line-height: 111%;
 }
 
 body {

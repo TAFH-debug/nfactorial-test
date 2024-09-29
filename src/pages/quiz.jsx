@@ -118,7 +118,8 @@ export default function Quiz() {
               style={{ marginBottom: "50px" }}
             />
             <div style={{ maxWidth: "940px", margin: "0 auto", padding: "20px" }}>
-              <Image src="image.svg" alt="alt" width={295} height={200} />
+              <Image src="image.svg" alt="alt" width={295 } height={197} />
+              {/* <Image src="/123/image.webp" alt="alt" width={500} height={390} /> */}
               <div className={styles.text}>
               <div className={styles.heading}>
                 Если ты все еще не определился с профессией, то можем провести

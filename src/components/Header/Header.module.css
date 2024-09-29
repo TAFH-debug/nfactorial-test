@@ -5,7 +5,8 @@
     position: relative;
     width: 100%; /* Full width */
     height: 37px; /* Set height for desktop */
-    margin: 50px auto; /* Center the header with top margin */
+    margin: auto;
+    margin-top: 50px; /* Center the header with top margin */
     box-sizing: border-box;
     padding-left: 50px;
     gap: 8px;
@@ -29,7 +30,7 @@
     display: flex;
     align-items: center; /* Center items vertically */
     gap: 4px; /* Space between text and logo set to 4px */
-    padding: 5px 8px; /* Padding for the text section */
+    padding: 10px 15px; /* Padding for the text section */
     border: 1.901px solid #ffffff; /* Border inside */
     border-radius: 20px;
     box-sizing: border-box;
@@ -38,16 +39,16 @@
 
 .text {
     color: #ffffff;
-    font-family: 'SF Pro', sans-serif;
+    font-family: 'Inter';
     font-size: 18px; /* Adjusted font size */
     font-weight: 400;
-    line-height: 1.5; /* Adjust line-height for better spacing */
+    line-height: 111%; /* Adjust line-height for better spacing */
     white-space: nowrap; /* Prevent text wrapping */
 }
 
 .imgContainer {
-    width: 39px;
-    height: 39px;
+    width: 44px;
+    height: 44px;
 }
 
 /* Mobile styles */
