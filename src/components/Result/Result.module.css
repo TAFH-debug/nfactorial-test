@@ -107,7 +107,8 @@
     justify-content: center;
     flex-direction: column;
     padding: 8px;
-    padding-top: 16px; 
+    padding-top: 16px;
+    margin: 16px;
   }
   .infoContainer {
     align-items: center; /* Центрируем содержимое на мобильных */

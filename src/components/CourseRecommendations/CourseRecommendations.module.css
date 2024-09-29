@@ -121,6 +121,9 @@
 }
 
 @media (max-width: 600px) {
+  .container{
+    margin: 16px;
+  }
   .cardContainer {
     flex-direction: column;
     align-items: center;
@@ -129,7 +132,8 @@
   .card {
     width: 250px;
     height: 350px;
-    margin-bottom: 20px;
+    margin: 0;
+    /* margin-bottom: 20px; */
   }
   
   .title {
