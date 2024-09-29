@@ -89,8 +89,8 @@
 
 /* Question Text Styles */
 .QuestionText {
-  width: 100%; /* Ensure 100% width */
-  max-width: 800px;
+  width: auto; /* Ensure 100% width */
+  max-width: 940px;
   font-family: 'SF Pro', sans-serif;
   color: black;
   font-size: 25px;
@@ -103,7 +103,9 @@
 /* Answer Section Styles */
 .Answer {
   text-align: left; /* Align text to the left */
-  width: 100%; /* Make width 100% */
+  width: auto;
+  padding-left: 140px;
+  padding-right: 140px; /* Make width 100% */
 }
 
 .AnswerVariants {
@@ -135,7 +137,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 800px; /* Max width for better structure */
+  max-width: 1010px; /* Max width for better structure */
   gap: 20px; /* Space between buttons and status */
   margin-top: 20px;
 }
@@ -179,13 +181,28 @@
     align-items: center; /* Center align for mobile */
     gap: 10px;
   }
-
+  .AllComponent{
+    padding: 16px;
+  }
+  .QuestionText{
+    margin: 0 auto;
+    padding: 0 auto;
+  }
+  .Answer {
+    text-align: left; /* Align text to the left */
+    width: auto;
+    padding-left: 0px;
+    padding-right: 0px; 
+  }
+  
   .QuestionPart {
     padding: 20px; /* Adjust padding for mobile */
   }
 
   .QuestionText {
-    font-size: 20px; /* Adjust font size for mobile */
+    font-size: 20px;
+    padding-left: 0px;
+    padding-top: 0px; /* Adjust font size for mobile */
   }
 
   .button {

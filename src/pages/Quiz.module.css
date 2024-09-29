@@ -1,4 +1,11 @@
 /* Quiz.module.css */
+/* justify-content: center; */
+.text{
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
 .heading {
     color: #FFF;
     text-align: center;
@@ -7,7 +14,9 @@
     font-style: normal;
     font-weight: 700;
     line-height: 111%; /* 22.2px */
-    letter-spacing: -5%;
+    letter-spacing: -1.25px;
+    max-width: 670px;
+    justify-content: center;
 }
 
 @media (max-width: 768px) {

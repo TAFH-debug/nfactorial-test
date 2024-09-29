@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import StatusBar from "../StatusBar/StatusBar";
 import StatusButton from "../StatusButton/StatusButton";
 import styles from "./Question.module.css";
-import Badge from "../Badge/Badge";
+import Badge from "../CustomBadge/CustomBadge";
 
 export default function Question({
   question,
@@ -13,6 +13,11 @@ export default function Question({
 }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Reset selectedCategory whenever currentQuestion changes
+  useEffect(() => {
+    setSelectedCategory(null); // Clear the selection when the question changes
+  }, [currentQuestion]);
 
   const handleChoiceClick = (category) => {
     setSelectedCategory(category === selectedCategory ? null : category);
@@ -39,7 +44,7 @@ export default function Question({
   return (
     <div className={styles.AllComponent}>
       {/* Question Section */}
-      <Badge/>
+      <Badge logoSrc="/notify.svg" text="Тест на профориентацию" />
       <div className={styles.QuestionPart}>
         <h1 className={styles.QuestionText}>{question.question}</h1>
         <div className={styles.Answer}>
@@ -77,18 +82,18 @@ export default function Question({
               currentQuestion={currentQuestion}
               totalQuestions={totalQuestions}
             />
-             <div className={styles.buttons}>
-             <StatusButton
-              type="back"
-              onClick={onBack}
-              isDisabled={currentQuestion === 1}
-            />
-            <StatusButton
-              type={currentQuestion === totalQuestions ? "submit" : "next"}
-              onClick={handleSubmit}
-              isDisabled={!selectedCategory}
-            />
-             </div>
+            <div className={styles.buttons}>
+              <StatusButton
+                type="back"
+                onClick={onBack}
+                isDisabled={currentQuestion === 1}
+              />
+              <StatusButton
+                type={currentQuestion === totalQuestions ? "submit" : "next"}
+                onClick={handleSubmit}
+                isDisabled={!selectedCategory}
+              />
+            </div>
           </>
         ) : (
           <>

@@ -119,11 +119,13 @@ export default function Quiz() {
             />
             <div style={{ maxWidth: "940px", margin: "0 auto", padding: "20px" }}>
               <Image src="image.svg" alt="alt" width={295} height={200} />
-              <h1 className={styles.heading}>
+              <div className={styles.text}>
+              <div className={styles.heading}>
                 Если ты все еще не определился с профессией, то можем провести
                 бесплатную карьерную консультацию для старта в IT и расскажем
                 какие профессии актуальнее всего для тебя
-              </h1>
+              </div>
+              </div>
               <MainForm />
             </div>
           </div>
