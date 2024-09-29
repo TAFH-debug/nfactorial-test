@@ -1,46 +1,137 @@
-/* CardsContainer.module.css */
 .container {
-    position: relative; /* Allow absolute positioning of cards */
-    width: 100%; 
-    height: 400px; /* Adjust height based on your layout */
-    overflow: hidden; /* Prevent overflow */
-    margin: 0 auto; /* Center the container if needed */
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.card3Container {
+    position: absolute;
+    top: 32%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-6.695deg);
+    z-index: 4;
+}
+
+.card2Container {
+    position: absolute;
+    top: 17%;
+    left: 51%;
+    z-index: 3;
 }
 
 .card {
-    /* No specific styles needed here since we manage styles in the rendering */
+    position: absolute;
+    transform: rotate(0); /* Default rotation */
 }
 
-.gradientBackground {
-    display: flex;
-    flex-direction: row; /* Align icon and text side by side */
-    align-items: center; /* Center items vertically */
-    justify-content: flex-start; /* Align items to the start */
-    padding: 10px; /* Add padding for spacing */
-    border-radius: 10px; /* Rounded corners */
-    background: radial-gradient(34.16% 89.89% at 94.13% 87.64%, #282D3E 0%, #0E111D 100%); /* Gradient background for each card */
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2); /* Shadow for card effect */
-    width: 200px; /* Set a width for each card */
-    height: 90px; /* Set a height for each card */
-    margin: 10px; /* Add some margin for spacing */
+/* Card-specific styles */
+.card1 {
+    top: 20%;
+    left: 12%;
+    transform: rotate(-6.106deg);
+    z-index: 1;
 }
 
-.textContainer {
-    font-family: "Inter"; /* Ensure correct font */
-    text-align: left; /* Align text to left */
-    font-weight: bold; /* Set font weight */
-    color: #ffffff; /* Text color */
+.card2 {
+    top: 10%;
+    left: 22%;
+    transform: rotate(7.71deg);
+    z-index: 3;
 }
 
-.header {
-    margin: 0;
-    font-size: 17px;
-    font-weight: bold;
+.card3 {
+    top: 39%;
+    left: 32%;
+    transform: rotate(-0.956deg);
+    z-index: 5;
 }
 
-.description {
-    max-width: 167px;
-    font-family: "Inter"; /* Ensure correct font */
-    font-size: 13px;
-    font-weight: medium; /* Set font weight */
+.card4 {
+    top: 10%;
+    left: 60%;
+    transform: rotate(-4.283deg);
+    z-index: 4;
+}
+
+/* Media queries for responsiveness */
+
+/* Screen width up to 768px */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        max-height: 220px;
+    }
+
+    .card3Container {
+        top: 45%;
+        left: 50%;
+    }
+
+    .card2Container {
+        top: 25%;
+        left: 45%;
+    }
+
+    .card1 {
+        top: 35%;
+        left: 5%;
+        transform: rotate(-5deg); /* Adjusted rotation for Card 1 */
+    }
+
+    .card2 {
+        top: 20%;
+        left: 10%;
+        transform: rotate(5deg); /* Adjusted rotation for Card 2 */
+    }
+
+    .card3 {
+        top: 40%;
+        left: 15%;
+        transform: rotate(2deg); /* Adjusted rotation for Card 3 */
+    }
+
+    .card4 {
+        top: 30%;
+        left: 40%;
+        transform: rotate(1deg); /* Adjusted rotation for Card 4 */
+    }
+}
+
+/* Screen width up to 480px */
+@media (max-width: 480px) {
+    .card1 {
+        top: 70%;
+        left: 2%;
+        transform: rotate(-10.495deg); /* No rotation for Card 1 */
+    }
+
+    .card2 {
+        top: 5%;
+        left: 5%;
+        transform: rotate(3.321deg); /* No rotation for Card 2 */
+    }
+
+    .card3 {
+        top: 5%;
+        left: 50%;
+        transform: rotate(-9.272deg); /* No rotation for Card 3 */
+    }
+
+    .card4 {
+        top: 65%;
+        left: 40%;
+        transform: rotate(2.315deg);/* No rotation for Card 4 */
+    }
+
+    .card3Container {
+        top: 55%;
+        left: 50%;
+    }
+
+    .card2Container {
+        top: 35%;
+        left: 35%;
+    }
 }

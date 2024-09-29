@@ -9,7 +9,8 @@
     position: relative;
     max-width: 940px; /* Max width for desktop */
     margin: 0 auto;
-    padding: 0 20px; /* Adding some padding for smaller screens */
+    padding: 0 20px; 
+    padding-top: 60px;/* Adding some padding for smaller screens */
 }
 
 /* Desktop styles */
@@ -49,7 +50,9 @@
     .mainContainer {
         max-width: 100%;
         padding-top: 12px; /* Full width for mobile */
-        padding: 32px;
+        padding: 0px;
+        gap: 10px;
+        margin: 16px;
         justify-content: center; /* Extra padding for mobile */
     }
 

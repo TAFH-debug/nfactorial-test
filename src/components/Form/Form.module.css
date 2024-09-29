@@ -102,6 +102,13 @@
 
 /* Mobile Styles */
 @media (max-width: 768px) {
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 16px;
+  }
   .box {
     display: flex; /* Make sure this is a flex container */
     flex-direction: column; /* Stack inputs vertically */

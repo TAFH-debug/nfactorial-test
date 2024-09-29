@@ -52,9 +52,9 @@ const MobileLayout = () => (
   <div style={{ overflow: 'hidden' }}>
     <Background />
     <Header />
-    {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'fit-content' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'fit-content' }}>
         <CardsContainer />
-    </div> */}
+    </div>
     <Main />
     <Form />
     <Badge />

@@ -11,8 +11,8 @@ const Card = ({ src, alt, header, description }) => {
           <Image
             src={src}
             alt={alt}
-            width={40}
-            height={40}
+            width={24}
+            height={24}
             objectFit="contain"
             className={styles.image}
           />

@@ -16,12 +16,12 @@
     flex-direction: row; /* Align icon and text side by side */
     /* align-items: center; */
     justify-content: flex-start; /* Align items to the start */
-    padding: 10px; /* Add padding for spacing */
+    padding: 15px; /* Add padding for spacing */
     border-radius: 10px; /* Rounded corners */
     background: radial-gradient(34.16% 89.89% at 94.13% 87.64%, #282D3E 0%, #0E111D 100%); /* Gradient background for each card */
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2); /* Shadow for card effect */
-    width: 200px; /* Set a width for each card */
-    height: 90px; /* Set a height for each card */
+    width: fit-content; /* Set a width for each card */
+    height: auto; /* Set a height for each card */
     margin: 10px; /* Add some margin for spacing */
 }
 
@@ -121,3 +121,78 @@
     max-height: 100%; /* Prevent overflow */
     object-fit: contain; /* Maintain aspect ratio */
 }
+
+
+  /* Адаптивный дизайн для планшетов */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .gradientBackground {
+      width: 90%; /* Увеличить ширину для планшетов */
+      padding: 10px; /* Немного уменьшить padding */
+    }
+  
+    .header {
+      font-size: 16px; /* Уменьшить шрифт для заголовков */
+    }
+  
+    .description {
+      font-size: 12px; /* Уменьшить шрифт для описания */
+    }
+  }
+  
+  /* Адаптивный дизайн для мобильных устройств */
+  @media (max-width: 767px) {
+
+    .gradientBackground {
+      width: 100%; /* На мобильных устройствах карточки занимают всю ширину */
+      padding: 8px;
+      margin: 0;
+      
+    }
+  
+    .header {
+      font-size: 9px;
+    }
+  
+    .description {
+      font-size: 7px;
+    }
+  
+    .imageWrapper {
+      width: 30px; /* Уменьшить размер иконки для мобильных устройств */
+      height: 30px;
+      margin-right: 12px; /* Уменьшить отступ справа */
+    }
+  
+    .imageContainer {
+      width: 30px; /* Уменьшить размер иконки */
+      height: 30px;
+    }
+  }
+  
+  /* Для больших экранов */
+  @media (min-width: 1024px) {
+    
+    .gradientBackground {
+      width: fit-content; /* Автоматическая подгонка ширины */
+      padding: 20px; /* Увеличить padding для крупных экранов */
+    }
+  
+    .header {
+      font-size: 18px; /* Сделать заголовки больше */
+    }
+  
+    .description {
+      font-size: 14px; /* Сделать описание больше */
+    }
+  
+    .imageWrapper {
+      width: 50px; /* Увеличить размер иконки для больших экранов */
+      height: 50px;
+    }
+  
+    .imageContainer {
+      width: 50px; /* Увеличить размер иконки */
+      height: 50px;
+    }
+  }
+  

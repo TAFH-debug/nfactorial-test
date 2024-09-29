@@ -6,7 +6,7 @@ import match from '/public/images/image.png'; // Update the path accordingly
 const Card3 = () => {
     return (
         <div>
-            <Image src={match} alt="Match" width={191} height={235} />
+            <Image src={match} alt="Match2" width={191} height={235} />
             {/* <Image src={hug} alt="Hug" width={135} height={fixed} /> */}
         </div>
     );
