@@ -112,6 +112,7 @@
     padding: 8px;
     padding-top: 16px;
     margin: 16px;
+    gap: 15px;
   }
   .infoContainer {
     align-items: center; /* Центрируем содержимое на мобильных */
@@ -122,8 +123,8 @@
     gap: 10px;
   }
   .image {
-    max-width: 190px;
-    max-height: 250px;
+    max-width: 120px;
+    max-height: 150px;
     width: 100%;
     border-radius: 20px;
   }
