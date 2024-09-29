@@ -57,7 +57,6 @@ const CourseRecommendations = ({ selectedCategory }) => {
                 layout="fill"
                 objectFit="cover"
                 className={styles.image}
-                loading="lazy"
               />
             </div>
             <div className={styles.cardOverlay} />

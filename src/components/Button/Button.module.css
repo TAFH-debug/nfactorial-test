@@ -1,59 +1,93 @@
 .buttonContainer {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+  flex-wrap: wrap; /* Добавлено для поддержки переноса кнопок на маленьких экранах */
+}
+
+.backButton,
+.nextButton,
+.submitButton {
+  flex: 1; /* Позволяет кнопкам занимать равную ширину */
+  max-width: 203px; /* Максимальная ширина кнопок */
+  height: 43px;
+  padding: 15px;
+  border-radius: 34px;
+  font-size: 17px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
+  margin: 5px; /* Добавлено для отступов между кнопками */
+}
+
+.backButton {
+  background: rgba(255, 255, 255, 0.10);
+  color: white;
+}
+
+.nextButton {
+  background: white;
+  color: #222222;
+}
+
+.submitButton {
+  background: rgba(0, 123, 255, 0.10);
+  color: #007BFF;
+}
+
+.backButton:hover,
+.nextButton:hover,
+.submitButton:hover {
+  background: rgba(0, 123, 255, 0.20);
+}
+
+.statusBar {
+  width: 100%;
+  height: 9px;
+  position: relative;
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 20px;
+  margin-top: 20px; /* Добавлено для отступа от кнопок */
+}
+
+.progress {
+  height: 9px;
+  background: #7FDC9F; /* Цвет прогресса */
+  border-radius: 20px;
+  transition: width 0.3s; /* Плавный переход для прогресса */
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+  .buttonContainer {
+      flex-direction: column; /* Кнопки будут вертикально */
+      align-items: center; /* Выравнивание кнопок по центру */
   }
-  
+
   .backButton,
   .nextButton,
   .submitButton {
-    width: 203px;
-    height: 43px;
-    padding: 15px;
-    border-radius: 34px;
-    font-size: 17px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    cursor: pointer;
-    border: none;
-    transition: background 0.3s;
+      width: 100%; /* Кнопки займут 100% ширины */
+      max-width: none; /* Убираем ограничение по максимальной ширине */
   }
-  
-  .backButton {
-    background: rgba(255, 255, 255, 0.10);
-    color: white;
-  }
-  
-  .nextButton {
-    background: white;
-    color: #222222;
-  }
-  
-  .submitButton {
-    background: rgba(0, 123, 255, 0.10);
-    color: #007BFF;
-  }
-  
-  .backButton:hover,
-  .nextButton:hover,
-  .submitButton:hover {
-    background: rgba(0, 123, 255, 0.20);
-  }
-  
+
   .statusBar {
-    width: 100%;
-    height: 9px;
-    position: relative;
-    background: rgba(255, 255, 255, 0.10);
-    border-radius: 20px;
+      margin-top: 15px; /* Уменьшить отступ сверху на маленьких экранах */
   }
-  
-  .progress {
-    height: 9px;
-    background: #7FDC9F; /* Progress color */
-    border-radius: 20px;
-    transition: width 0.3s; /* Smooth transition for progress */
+}
+
+@media (max-width: 480px) {
+  .backButton,
+  .nextButton,
+  .submitButton {
+      font-size: 17px; /* Уменьшаем размер шрифта для малых экранов */
+      height: 40px; /* Уменьшаем высоту кнопок */
   }
-  
-  
+
+  .statusBar {
+      height: 7px; /* Уменьшаем высоту статус-бара на малых экранах */
+  }
+}

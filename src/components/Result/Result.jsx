@@ -41,7 +41,7 @@ const Result = ({ category, description }) => {
             width={206}
             height={240}
             className={styles.image}
-            loading="lazy"
+            priority={1}
           />
         </div>
         <div className={styles.infoContainer}>
@@ -55,7 +55,6 @@ const Result = ({ category, description }) => {
                   alt={`${category} badge`}
                   width={20}
                   height={20}
-                  loading="lazy"
                 />
               </div>
               <div className={styles.badgeText}>
