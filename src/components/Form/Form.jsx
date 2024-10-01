@@ -36,7 +36,7 @@ export default function Form() {
   };
 
   const validatePhone = (phone) => {
-    return /^\d{10,15}$/.test(phone); // 10-15 digits only
+    return /^\+?\d{10,15}$/.test(phone); // Разрешает опциональный плюс и 10-15 цифр
   };
 
   const handleStart = async (e) => {
