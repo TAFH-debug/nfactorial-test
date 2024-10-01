@@ -8,6 +8,7 @@ import CourseRecommendations from "../components/CourseRecommendations/CourseRec
 import MainForm from "../components/MainForm/MainForm";
 import SkeletonQuestion from "../components/SkeletonQuestion/SkeletonQuestion"; // Импортируем компонент SkeletonQuestion
 import styles from "./Quiz.module.css";
+import Head from 'next/head';
 
 export default function Quiz() {
   const [questions, setQuestions] = useState([]);
@@ -78,6 +79,17 @@ export default function Quiz() {
 
   return (
     <>
+        <Head>
+        <title>IT Quiz - Найди свою профессию в IT</title>
+        <meta name="description" content="Пройди тест и узнай, какая профессия в IT подходит тебе лучше всего. Подберите профессию, будь то мобильная разработка, веб-разработка, дата-аналитика или продакт-менеджмент." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:title" content="IT Quiz - Найди свою профессию в IT" />
+        <meta property="og:description" content="Пройди тест и узнай, какая профессия в IT подходит тебе лучше всего. Получите рекомендации по обучению и начните карьеру в IT." />
+        <meta property="og:image" content="/image.svg" /> {/* You can replace this with your image URL */}
+        <meta property="og:type" content="website" />
+        {/* Отключаем индексирование */}
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
       <Header />
       <Background />
       <div style={{ textAlign: "center" }}>
