@@ -140,6 +140,7 @@
   }
   .imageContainer{
     width: auto;
+    max-width: 100%;
   }
 }
 
