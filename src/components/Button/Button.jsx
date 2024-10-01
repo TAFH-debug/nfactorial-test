@@ -1,6 +1,20 @@
 import styles from './Button.module.css';
+import { logEvent } from '@amplitude/analytics-browser'; // Импорт Amplitude
 
 export default function Button({ onSubmit, onNext }) {
+  const handleSubmit = () => {
+    // Логируем событие завершения теста в Amplitude
+    logEvent('test_completed', {
+      timestamp: new Date().toISOString(), // Добавим время завершения теста
+      status: 'completed', // Дополнительные данные
+    });
+
+    // Вызов функции onSubmit
+    if (onSubmit) {
+      onSubmit();
+    }
+  };
+
   return (
     <div>
       <div className={styles.statusBar}>
@@ -14,7 +28,7 @@ export default function Button({ onSubmit, onNext }) {
         <button className={styles.nextButton} onClick={onNext}>
           Дальше
         </button>
-        <button className={styles.submitButton} onClick={onSubmit}>
+        <button className={styles.submitButton} onClick={handleSubmit}>
           Submit Answer
         </button>
       </div>

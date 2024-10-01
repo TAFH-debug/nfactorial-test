@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@amplitude/analytics-browser": "^2.11.7",
     "@formspark/use-formspark": "^0.1.39",
     "@next/font": "^14.2.13",
     "dotenv": "^16.4.5",
