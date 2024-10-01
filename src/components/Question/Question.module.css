@@ -176,47 +176,50 @@
   max-width: 300px;
   background: white;
 }
-
 @media (max-width: 768px) {
   .buttonStatusContainer {
     flex-direction: column; /* Stack buttons vertically on mobile */
     align-items: center; /* Center align for mobile */
-    gap: 16px;
+    gap: 1em; /* 16px -> 1em */
   }
+
   .AllComponent {
-    padding: 16px;
+    padding: 1em; /* 16px -> 1em */
   }
+
   .QuestionText {
-    font-size: 24px;
+    font-size: 1.5em; /* 24px -> 1.5em */
     margin: 0 auto;
     padding: 0 auto;
   }
+
   .Answer {
     text-align: left; /* Align text to the left */
     width: auto;
-    font-size: 15px;
-    padding-left: 0px;
-    padding-right: 0px;
+    font-size: 0.9375em; /* 15px -> 0.9375em */
+    padding-left: 0em; /* 0px -> 0em */
+    padding-right: 0em; /* 0px -> 0em */
   }
 
   .QuestionPart {
-    padding: 20px;
-    gap: 15px;
-    margin-top: 10px; /* Adjust padding for mobile */
+    padding: 1.25em; /* 20px -> 1.25em */
+    gap: 0.9375em; /* 15px -> 0.9375em */
+    margin-top: 0.625em; /* 10px -> 0.625em */
   }
 
   .QuestionText {
-    padding-left: 0px;
-    padding-top: 0px; /* Adjust font size for mobile */
+    padding-left: 0em; /* 0px -> 0em */
+    padding-top: 0em; /* 0px -> 0em */
   }
-  .AnswerVariants{
-    font-size: 14px;
+
+  .AnswerVariants {
+    font-size: 0.875em; /* 14px -> 0.875em */
   }
 
   .button {
     width: 100%; /* Full width on mobile */
-    height: 40px; /* Adjust height for mobile */
-    margin-bottom: 10px; /* Add margin between buttons */
+    height: 2.5em; /* 40px -> 2.5em */
+    margin-bottom: 0.625em; /* 10px -> 0.625em */
   }
 
   .buttons {
@@ -224,7 +227,7 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    margin: 10px;
-    gap: 10px; /* Adjust the gap between buttons */
+    margin: 0.625em; /* 10px -> 0.625em */
+    gap: 0.625em; /* 10px -> 0.625em */
   }
 }
