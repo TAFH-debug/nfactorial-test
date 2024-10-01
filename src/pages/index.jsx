@@ -6,6 +6,7 @@ import Form from '@/components/Form/Form';
 import CardsContainer from '@/components/Images/CardsContainer/CardsContainer';
 import Badge from '@/components/Badge/Badge';
 import Head from 'next/head';
+import CustomBadge from '@/components/CustomBadge/CustomBadge';
 
 // export default function Home() {
 //     return (
@@ -67,7 +68,8 @@ const MobileLayout = () => (
     {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'fit-content' }}>
         <CardsContainer />
     </div> */}
-    <Badge />
+    {/* <Badge /> */}
+    <CustomBadge logoSrc="/notify.svg" text="Тест займет около 10 минут" />
   </div>
 );
 
