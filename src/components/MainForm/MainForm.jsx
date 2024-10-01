@@ -84,12 +84,15 @@ export default function MainForm(props) {
           >
             Получить консультацию
           </button>
-<div className={styles.text}>    
-Нажимая на кнопку, я соглашаюсь <Link className={styles.text} href="https://docs.google.com/document/d/1q4gLy-OhHozcMw3nYw6Pk4bIkSmqCBfmSy6boIbtHb8/edit">
-             с политикой обработки персональных
-            данных
-          </Link>
-</div>
+          <div className={styles.text}>
+            Нажимая на кнопку, я соглашаюсь{" "}
+            <Link
+              className={styles.text}
+              href="https://docs.google.com/document/d/1q4gLy-OhHozcMw3nYw6Pk4bIkSmqCBfmSy6boIbtHb8/edit"
+            >
+              с политикой обработки персональных данных
+            </Link>
+          </div>
         </div>
       </form>
     </>

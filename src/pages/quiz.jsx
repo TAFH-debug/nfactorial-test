@@ -19,14 +19,14 @@ export default function Quiz() {
     product_management: 0,
   });
   const [showResult, setShowResult] = useState(false);
-  const [loading, setLoading] = useState(true); // Добавляем состояние для загрузки
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchQuestions = async () => {
       const res = await fetch("/api/questions");
       const data = await res.json();
       setQuestions(data);
-      setLoading(false); // Когда данные получены, устанавливаем loading в false
+      setLoading(false);
     };
     fetchQuestions();
   }, []);
@@ -57,14 +57,6 @@ export default function Quiz() {
     return sortedCategories[0][0];
   };
 
-  const getTopThreeCategories = () => {
-    const sortedCategories = Object.entries(selectedCategories)
-      .sort(([, a], [, b]) => b - a)
-      .slice(0, 3)
-      .map(([category]) => category);
-    return sortedCategories;
-  };
-
   const categoryDescriptions = {
     mob_dev: {
       title: "iOS/Android-разработчик (мобильная разработка)",
@@ -89,10 +81,8 @@ export default function Quiz() {
       <Header />
       <Background />
       <div style={{ textAlign: "center" }}>
-        {/* Отображаем все компоненты кроме Question */}
         {!showResult ? (
           <>
-            {/* Если данные еще не загружены, показываем SkeletonQuestion */}
             {loading ? (
               <SkeletonQuestion />
             ) : (
@@ -107,6 +97,7 @@ export default function Quiz() {
           </>
         ) : (
           <div>
+            {/* Показываем результат только для одной категории */}
             <Result
               category={getTopCategory()}
               description={categoryDescriptions[getTopCategory()]}
@@ -114,18 +105,17 @@ export default function Quiz() {
             />
             <CourseRecommendations
               selectedCategory={getTopCategory()}
-              topCategories={getTopThreeCategories()}
+              topCategories={[getTopCategory()]} // Передаем только одну категорию в topCategories
               style={{ marginBottom: "50px" }}
             />
             <div style={{ maxWidth: "940px", margin: "0 auto", padding: "20px" }}>
-              <Image src="image.svg" alt="alt" width={295 } height={197} />
-              {/* <Image src="/123/image.webp" alt="alt" width={500} height={390} /> */}
+              <Image src="image.svg" alt="alt" width={295} height={197} />
               <div className={styles.text}>
-              <div className={styles.heading}>
-                Если ты все еще не определился с профессией, то можем провести
-                бесплатную карьерную консультацию для старта в IT и расскажем
-                какие профессии актуальнее всего для тебя
-              </div>
+                <div className={styles.heading}>
+                  Если ты все еще не определился с профессией, то можем провести
+                  бесплатную карьерную консультацию для старта в IT и расскажем
+                  какие профессии актуальнее всего для тебя
+                </div>
               </div>
               <MainForm />
             </div>

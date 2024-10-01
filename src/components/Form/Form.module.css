@@ -1,4 +1,9 @@
-/* Form Styles */
+.input:focus {
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  color: #ffffff; /* Keep text color white on focus */
+}
+
 .formContainer {
   display: flex;
   flex-direction: column;
@@ -15,13 +20,44 @@
 }
 
 .line {
-  width: 100%; /* Set to 100% to fill available space */
-  height: 2px; /* Thickness of the line */
-  background-color: rgba(255, 255, 255, 0.202); /* Line color */
+  width: 100%;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.202);
 }
 
+/* Контейнер для общего сообщения об ошибке */
+.errorContainer {
+  display: flex;
+  justify-content: center; /* Выравнивание по центру */
+  margin-bottom: 10px; /* Отступ снизу */
+  width: 100%; /* Ширина 100% для корректного выравнивания */
+}
+
+/* Сообщение об ошибке для всей формы */
+.formError {
+  color: #ff4d4d; /* Красный цвет текста */
+  font-size: 16px; /* Размер шрифта */
+  display: flex; /* Flex для выравнивания */
+  align-items: center;
+  padding: 24px; /* Центрируем по вертикали */
+}
+
+.errorIcon {
+  margin-right: 8px; /* Отступ между иконкой и текстом */
+  color: #ff4d4d; /* Красный цвет иконки */
+}
+
+/* Стили для обертки кнопки */
+.buttonContainer {
+  display: flex;
+  justify-content: center; /* Центрируем кнопку */
+  width: 100%; /* Ширина на 100% */
+}
+
+/* Остальные стили остаются прежними... */
+
 .inputWrapper {
-  flex: 1; /* Ensure inputs stretch to fill available space */
+  flex: 1;
 }
 
 .input {
@@ -31,39 +67,21 @@
   gap: 10px;
   font-size: 17px;
   font-family: "Inter", sans-serif;
-  position: relative;
   height: auto;
-  width: 250px; /* Default width for desktop */
+  width: 250px;
   margin: 0 auto;
   padding: 15px 20px;
   background: rgba(255, 255, 255, 0.1);
-  border: none; /* Remove border */
+  border: none;
   border-radius: 37px;
-  color: #ffffff; /* White text color */
+  color: #ffffff;
 }
 
-/* Change placeholder text color */
-.input::placeholder {
-  color: #ffffff; /* White placeholder text */
-}
-
-.input:focus {
-  background: rgba(255, 255, 255, 0.2);
-  outline: none;
-  color: #ffffff; /* Keep text color white on focus */
-}
-
-.buttonWrapper {
-  display: flex;
-  justify-content: center;
-  margin-left: 10px; /* Add space between inputs and button */
-}
-
-/* General Button Styles */
+/* Кнопка */
 .button {
-  width: 2114px;
+  width: 100%; /* Удаляем фиксированную ширину */
   height: auto;
-  padding: 15px; /* Consistent padding */
+  padding: 15px;
   border-radius: 34px;
   font-size: 17px;
   font-family: "Inter", sans-serif;
@@ -73,73 +91,33 @@
   transition: background 0.3s;
 }
 
-.buttonBack {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-.buttonNext {
-  background: white;
-  color: #222222;
-}
-
-.button.submit {
-  background: rgba(0, 123, 255, 0.1);
-  color: #ffffff;
-}
-
-/* Hover and Disabled States */
-.button:hover:not([disabled]) {
-  background: rgba(214, 214, 214, 0.2);
-  color: white;
-}
-
-.button:disabled {
-  cursor: not-allowed;
-  background: #d3d3d3;
-  color: #777;
-}
-
-/* Mobile Styles */
+/* Мобильные стили */
 @media (max-width: 768px) {
   .formContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     padding: 0;
     margin: 16px;
   }
   .box {
-    display: flex; /* Make sure this is a flex container */
-    flex-direction: column; /* Stack inputs vertically */
-    align-items: stretch; /* Allow inputs to stretch */
-    width: 100%; /* Ensure the box takes full width */
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
   }
 
   .inputWrapper {
-    flex: 1; /* Each input takes equal space */
-    width: 100%; /* Allow inputs to take full width of wrapper */
-    display: flex; /* Ensure input wrapper is a flex container */
-  }
-
-  .line {
-    display: none; /* Hide the lines on mobile */
+    width: 100%;
   }
 
   .input {
-    width: 100%; /* Ensure inputs take the full width of the wrapper */
-    margin: 0; /* Remove margin */
-    box-sizing: border-box; /* Include padding and border in the width */
-  }
-
-  .buttonWrapper {
-    margin-top: 20px; /* Add margin above the button */
-    width: 100%; /* Full width for the button wrapper */
-    display: flex; /* Ensure the button wrapper is also a flex container */
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
   }
 
   .button {
-    flex: 1; /* Allow the button to stretch */
-    width: auto; /* Remove fixed width */
+    flex: 1;
+    width: auto;
+  }
+  .line{
+    display: none;
   }
 }

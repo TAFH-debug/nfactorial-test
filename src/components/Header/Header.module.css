@@ -53,6 +53,14 @@
 
 /* Mobile styles */
 @media (max-width: 768px) {
+    .text {
+        color: #ffffff;
+        font-family: 'Inter';
+        font-size: 18px; /* Adjusted font size */
+        font-weight: 400;
+        /* line-height: 111%; */
+        white-space: nowrap; /* Prevent text wrapping */
+    }
     .headerContainer{
         justify-content: center;
         align-items: center;
@@ -62,18 +70,18 @@
         margin-top: 25px;
     }
     .section {
-        padding: 5px 8px;
-        gap: 4px; /* Maintain padding for mobile */
+        padding: 10px 16px;
+        gap: 8px; /* Maintain padding for mobile */
         width: auto; /* Allow section width to be flexible */
     }
 
     .text {
-        font-size: 9px; /* Adjust font size for mobile */
+        font-size: 14px; /* Adjust font size for mobile */
     }
 
     .imgContainer {
-        width: 20px; /* Adjust image width for mobile */
-        height: 20px; /* Adjust image height for mobile */
+        width: 39px; /* Adjust image width for mobile */
+        height: 39px; /* Adjust image height for mobile */
     }
 
     .imgContainer img {
