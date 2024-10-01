@@ -1,51 +1,62 @@
-// Form.js
 import React, { useState } from "react";
-import { useFormspark } from "@formspark/use-formspark";
 import { useRouter } from "next/router";
 import styles from "./Form.module.css";
-// import { FaExclamationCircle } from "react-icons/fa"; // Иконка ошибки
-
-const FORMSPARK_FORM_ID = "0CvtQ6co3"; // Замените на свой Form ID
 
 export default function Form() {
-  const [submit, submitting] = useFormspark({
-    formId: FORMSPARK_FORM_ID,
-  });
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [formError, setFormError] = useState(""); // Ошибка для всей формы
+  const [formError, setFormError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
 
   const validateName = (name) => {
-    return /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(name); // Разрешаем только буквы и пробелы
+    return /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(name); // Letters and spaces only
   };
 
   const validatePhone = (phone) => {
-    return /^\d{10,15}$/.test(phone); // Проверка на 10-15 цифр
+    return /^\d{10,15}$/.test(phone); // 10-15 digits only
   };
 
   const handleStart = async (e) => {
     e.preventDefault();
 
-    // Очистка предыдущей ошибки
+    // Clear previous errors
     setFormError("");
+    setSubmitting(true);
 
-    // Валидация полей
+    // Validate fields
     if (!validateName(name)) {
       setFormError("Введите корректное имя (только буквы).");
+      setSubmitting(false);
       return;
     }
     if (!validatePhone(phone)) {
       setFormError("Введите корректный номер телефона (10-15 цифр).");
+      setSubmitting(false);
       return;
     }
 
-    // Отправка данных
-    const success = await submit({ name, phone });
-    if (success) {
-      router.push("/quiz");
-    } else {
-      console.error("Ошибка при отправке данных");
+    // Submit data to the API
+    try {
+      const response = await fetch("/api/submitForm", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, phone }),
+      });
+
+      if (response.ok) {
+        router.push("/quiz");
+      } else {
+        const result = await response.json();
+        setFormError(result.error || "Ошибка при отправке данных");
+      }
+    } catch (error) {
+      console.error("Ошибка при отправке данных:", error);
+      setFormError("Ошибка при отправке данных");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -74,19 +85,14 @@ export default function Form() {
         </div>
         <div className={styles.buttonContainer}>
           <button type="submit" className={`${styles.button} ${styles.startButton}`} disabled={submitting}>
-            Начать
+            {submitting ? "Отправка..." : "Начать"}
           </button>
         </div>
-
 
         <div className={styles.line} />
       </form>
       <div className={styles.errorContainer}>
-        {formError && (
-          <div className={styles.formError}>
-            {formError}
-          </div>
-        )}
+        {formError && <div className={styles.formError}>{formError}</div>}
       </div>
     </div>
   );
