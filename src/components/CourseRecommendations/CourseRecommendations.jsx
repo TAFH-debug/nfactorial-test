@@ -79,7 +79,7 @@ const CourseRecommendations = ({ selectedCategory }) => {
           </div>
         ))}
       </div>
-      <Link href="https://www.nfactorial.school/courses">
+      <Link href="https://www.nfactorial.school/courses?utm_source=quiz">
         <div className={styles.button}>
           <div className={styles.buttonText}>Посмотреть все курсы</div>
         </div>

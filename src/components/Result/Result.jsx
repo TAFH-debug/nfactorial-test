@@ -1,42 +1,48 @@
 import React from "react";
 import Image from "next/image";
 import styles from "./Result.module.css";
-import Badge from "@/components/CustomBadge/CustomBadge"; // Import the Badge component
+import Badge from "@/components/CustomBadge/CustomBadge"; // Импорт компонента Badge
 
 const Result = ({ category, description }) => {
   const categoryDetails = {
     mob_dev: {
       imageSrc: "/images/results/mob_dev.webp",
+      mobileImageSrc: "/images/results/mob_dev_mobile.webp", // Добавляем мобильную картинку
       badgeSrc: "/images/icons/mob_dev_icon.svg",
       badgeText: "Мобильная разработка",
     },
     web_dev: {
       imageSrc: "/images/results/web_dev.webp",
+      mobileImageSrc: "/images/results/web_dev_mobile.webp", // Добавляем мобильную картинку
       badgeSrc: "/images/icons/web_dev_icon.svg",
       badgeText: "Веб-разработка",
     },
     data_analytics: {
       imageSrc: "/images/results/data_analytics.webp",
+      mobileImageSrc: "/images/results/data_analytics_mobile.webp", // Добавляем мобильную картинку
       badgeSrc: "/images/icons/data_analytics_icon.svg",
       badgeText: "Аналитика",
     },
     product_management: {
       imageSrc: "/images/results/product_management.webp",
+      mobileImageSrc: "/images/results/product_management_mobile.webp", // Добавляем мобильную картинку
       badgeSrc: "/images/icons/product_management_icon.svg",
       badgeText: "IT-менеджмент",
     },
   };
 
+  // Используем `window.innerWidth` для определения мобильной версии
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600;
+
   return (
     <>
       <div className={styles.badgeContainer}>
-        <Badge logoSrc="/images/results.svg" text="Результат" />{" "}
-        {/* Include the Badge */}
+        <Badge logoSrc="/images/results.svg" text="Результат" /> {/* Включаем Badge */}
       </div>
       <div className={styles.container}>
         <div className={styles.imageContainer}>
           <Image
-            src={categoryDetails[category].imageSrc}
+            src={isMobile ? categoryDetails[category].mobileImageSrc : categoryDetails[category].imageSrc}
             alt={`${category} image`}
             width={206}
             height={240}

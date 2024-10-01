@@ -5,6 +5,7 @@ import Main from '@/components/Main/Main';
 import Form from '@/components/Form/Form';
 import CardsContainer from '@/components/Images/CardsContainer/CardsContainer';
 import Badge from '@/components/Badge/Badge';
+import Head from 'next/head';
 
 // export default function Home() {
 //     return (
@@ -50,13 +51,22 @@ export default function Home() {
 // Mobile Layout
 const MobileLayout = () => (
   <div style={{ overflow: 'hidden' }}>
+          <Head>
+        <title>nFactorial Test - Найди свою профессию в IT</title>
+        <meta name="description" content="Пройди тест и узнай, какая профессия в IT подходит тебе лучше всего. Подберите профессию, будь то мобильная разработка, веб-разработка, дата-аналитика или продакт-менеджмент." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:title" content="nFactorial Test - Найди свою профессию в IT" />
+        <meta property="og:description" content="Пройди тест и узнай, какая профессия в IT подходит тебе лучше всего. Получите рекомендации по обучению и начните карьеру в IT." />
+        <meta property="og:image" content="/image.svg" /> {/* You can replace this with your image URL */}
+        <meta property="og:type" content="website" />
+      </Head>
     <Background />
     <Header />
+    <Main />
+    <Form />
     {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'fit-content' }}>
         <CardsContainer />
     </div> */}
-    <Main />
-    <Form />
     <Badge />
   </div>
 );
@@ -64,6 +74,15 @@ const MobileLayout = () => (
 // Desktop Layout
 const DesktopLayout = () => (
   <div style={{ overflow: 'hidden' }}>
+          <Head>
+        <title>IT Quiz - Найди свою профессию в IT</title>
+        <meta name="description" content="Пройди тест и узнай, какая профессия в IT подходит тебе лучше всего. Подберите профессию, будь то мобильная разработка, веб-разработка, дата-аналитика или продакт-менеджмент." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:title" content="IT Quiz - Найди свою профессию в IT" />
+        <meta property="og:description" content="Пройди тест и узнай, какая профессия в IT подходит тебе лучше всего. Получите рекомендации по обучению и начните карьеру в IT." />
+        <meta property="og:image" content="/image.svg" /> {/* You can replace this with your image URL */}
+        <meta property="og:type" content="website" />
+      </Head>
     <Background />
     <Header />
     <Main />

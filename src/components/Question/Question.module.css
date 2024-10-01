@@ -181,18 +181,20 @@
   .buttonStatusContainer {
     flex-direction: column; /* Stack buttons vertically on mobile */
     align-items: center; /* Center align for mobile */
-    gap: 10px;
+    gap: 16px;
   }
   .AllComponent {
     padding: 16px;
   }
   .QuestionText {
+    font-size: 24px;
     margin: 0 auto;
     padding: 0 auto;
   }
   .Answer {
     text-align: left; /* Align text to the left */
     width: auto;
+    font-size: 15px;
     padding-left: 0px;
     padding-right: 0px;
   }
@@ -204,12 +206,11 @@
   }
 
   .QuestionText {
-    font-size: 17px;
     padding-left: 0px;
     padding-top: 0px; /* Adjust font size for mobile */
   }
   .AnswerVariants{
-    font-size: 10px;
+    font-size: 14px;
   }
 
   .button {

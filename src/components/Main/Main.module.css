@@ -1,73 +1,75 @@
 /* Main.module.css */
 .mainContainer {
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-wrap: nowrap;
-    gap: 15px;
-    position: relative;
-    max-width: 940px; /* Max width for desktop */
-    margin: 0 auto;
-    padding: 0 20px; 
-    padding-top: 60px;/* Adding some padding for smaller screens */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 15px;
+  position: relative;
+  max-width: 940px; /* Max width for desktop */
+  margin: 0 auto;
+  padding: 0 20px;
+  padding-top: 60px; /* Adding some padding for smaller screens */
 }
 
 /* Desktop styles */
 .text {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    align-self: stretch;
-    flex-shrink: 0;
-    color: #f6f6f6;
-    font-family: "Inter";
-    font-size: 55px; /* Desktop size */
-    font-weight: 600;
-    line-height: 111%;
-    letter-spacing: -2.75px;
-    text-align: center;
-    max-width: 100%; /* Max width relative to the container */
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  color: #f6f6f6;
+  font-family: "Inter";
+  font-size: 55px; /* Desktop size */
+  font-weight: 600;
+  line-height: 111%;
+  letter-spacing: -2.75px;
+  text-align: center;
+  max-width: 100%; /* Max width relative to the container */
 }
 
 .text2 {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-shrink: 0;
-    color: #f6f6f6;
-    font-family: "Inter", sans-serif;
-    font-size: 17px; /* Desktop size */
-    font-weight: 400;
-    line-height: 111%;
-    text-align: center;
-    max-width: 100%; /* Max width relative to the container */
-    z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #f6f6f6;
+  font-family: "Inter", sans-serif;
+  font-size: 17px; /* Desktop size */
+  font-weight: 400;
+  line-height: 111%;
+  text-align: center;
+  max-width: 100%; /* Max width relative to the container */
+  z-index: 1;
 }
 
 /* Mobile styles */
 @media (max-width: 768px) {
-    .mainContainer {
-        max-width: 100%;
-        padding-top: 12px; /* Full width for mobile */
-        padding: 0px;
-        gap: 10px;
-        margin: 16px;
-        justify-content: center; /* Extra padding for mobile */
-    }
+  .mainContainer {
+    max-width: 100%;
+    /* padding-top: 12px; */
+    padding: 0px;
+    gap: 20px;
+    margin: 16px;
+    justify-content: center;
+    margin-top: 80px; /* Extra padding for mobile */
+  }
 
-    .text {
-        font-size: 40px; /* Semibold for mobile */
-        font-weight: 700;
-        line-height: 111%;
-        letter-spacing: -2px;
-        max-width: 100%; /* Allowing some margin on the sides */
-    }
+  .text {
+    font-size: 40px; /* Semibold for mobile */
+    font-weight: 700;
+    line-height: 111%;
+    font-family: Inter;
+    letter-spacing: -0.05em;
+    max-width: 100%; /* Allowing some margin on the sides */
+  }
 
-    .text2 {
-        font-size: 15px; /* Regular for mobile */
-        line-height: 111%;
-        font-weight: 400;
-        max-width: 100%; /* Allowing some margin on the sides */
-    }
+  .text2 {
+    font-size: 15px; /* Regular for mobile */
+    line-height: 111%;
+    font-weight: 400;
+    max-width: 100%; /* Allowing some margin on the sides */
+  }
 }

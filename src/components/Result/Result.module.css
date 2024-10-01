@@ -8,16 +8,15 @@
   overflow: hidden;
   display: flex;
   flex-direction: row;
-  /* align-items: center;  */
   gap: 20px;
   font-family: "Inter", sans-serif;
 }
 
 .badgeContainer {
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  margin-bottom: 20px; /* Space between the badge and the rest of the content */
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .imageContainer {
@@ -28,13 +27,14 @@
   overflow: hidden;
   border: 2px solid #414ad200;
   display: flex;
-  justify-content: center; /* Центрируем изображение */
+  justify-content: center;
 }
 
 .image {
-  width: fit-content;
+  width: 100%;
   height: auto;
   border-radius: 32px;
+  object-fit: cover;
 }
 
 .infoContainer {
@@ -50,7 +50,7 @@
 .titleContainer {
   flex-direction: column;
   display: flex;
-  align-items: flex-start; /* Выравнивание по левому краю на ПК */
+  align-items: flex-start;
   gap: 10px;
 }
 
@@ -58,7 +58,7 @@
   color: black;
   font-size: 20px;
   font-weight: 600;
-  line-height: 111%; /* 22.2px */
+  line-height: 111%;
   letter-spacing: -1px;
 }
 
@@ -66,7 +66,7 @@
   color: black;
   font-size: 40px;
   font-weight: 600;
-  line-height: 111%; /* 44.4px */
+  line-height: 111%;
   letter-spacing: -2px;
   text-align: left;
 }
@@ -101,49 +101,48 @@
   font-weight: 400;
   line-height: 111%;
   word-wrap: break-word;
-  text-align: left; /* Выравнивание текста по левому краю на ПК */
+  text-align: left;
 }
 
-/* Media queries for smaller screens */
 @media (max-width: 600px) {
   .container {
     justify-content: center;
     flex-direction: column;
     padding: 8px;
-    padding-top: 16px;
     margin: 16px;
     gap: 15px;
   }
   .infoContainer {
-    align-items: center; /* Центрируем содержимое на мобильных */
-    text-align: center; /* Центрируем текст на мобильных */
+    align-items: center;
+    text-align: center;
   }
   .titleContainer {
-    align-items: center; /* Центрируем заголовок на мобильных */
+    align-items: center;
     gap: 10px;
   }
   .image {
-    max-width: 120px;
-    max-height: 150px;
+    max-width: 1200px;
+    /* max-height: 150px; */
     width: 100%;
-    border-radius: 20px;
+    border-radius: 15px;
+    box-sizing: border-box;
   }
   .title {
     font-size: 18px;
   }
-
   .profession {
     font-size: 40px;
     text-align: center;
   }
-
   .descriptionText {
     font-size: 14px;
-    text-align: center; /* Центрируем текст на мобильных */
+    text-align: center;
+  }
+  .imageContainer{
+    width: auto;
   }
 }
 
-/* Media queries for tablet screens */
 @media (min-width: 601px) and (max-width: 1024px) {
   .container {
     padding: 20px;
@@ -155,54 +154,16 @@
   .profession {
     font-size: 35px;
   }
-  .image {
-    width: 180px;
-    height: 220px;
-  }
-  .descriptionText {
-    font-size: 16px;
-  }
-}
-
-/* Media queries for very small screens (320px) */
-@media (max-width: 320px) {
-  .container {
-    justify-content: center;
-    flex-direction: column;
-    padding: 5px;
-  }
   .imageContainer {
     width: 100%;
-    max-width: 150px;
     height: auto;
   }
   .image {
-    max-width: 100%;
-    max-height: 180px;
-  }
-  .infoContainer {
-    padding: 10px;
-    align-items: center;
-    text-align: center;
-  }
-  .title {
-    font-size: 16px;
-  }
-  .profession {
-    font-size: 24px;
-  }
-  .badge {
-    padding: 3px 7px;
-  }
-  .badgeIcon {
-    width: 16px;
-    height: 16px;
-  }
-  .badgeText {
-    font-size: 11px;
+    width: 100%;
+    height: auto;
+    max-height: 240px;
   }
   .descriptionText {
-    font-size: 12px;
-    text-align: center;
+    font-size: 16px;
   }
 }
