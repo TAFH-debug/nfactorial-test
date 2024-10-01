@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "./Form.module.css";
 
@@ -7,7 +7,28 @@ export default function Form() {
   const [phone, setPhone] = useState("");
   const [formError, setFormError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [utmData, setUtmData] = useState({});
+  const [referrer, setReferrer] = useState("");
   const router = useRouter();
+
+  // Capture UTM and referrer data on component mount
+  useEffect(() => {
+    const query = router.query;
+
+    // Collect UTM parameters
+    const utmParams = {
+      utm_source: query.utm_source || "",
+      utm_medium: query.utm_medium || "",
+      utm_campaign: query.utm_campaign || "",
+      utm_term: query.utm_term || "",
+      utm_content: query.utm_content || "",
+    };
+
+    setUtmData(utmParams);
+
+    // Capture referrer (if available)
+    setReferrer(document.referrer || "");
+  }, [router.query]);
 
   const validateName = (name) => {
     return /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(name); // Letters and spaces only
@@ -43,7 +64,12 @@ export default function Form() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, phone }),
+        body: JSON.stringify({
+          name,
+          phone,
+          utmData,
+          referrer,
+        }),
       });
 
       if (response.ok) {

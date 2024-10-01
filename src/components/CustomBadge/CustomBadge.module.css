@@ -46,7 +46,7 @@
         gap: 5px;
         margin:0px;
         height: auto;
-        width: auto;
+        /* width: auto; */
         margin: 12px;
     }
     .badgeText {

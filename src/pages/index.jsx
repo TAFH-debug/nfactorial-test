@@ -7,6 +7,7 @@ import CardsContainer from '@/components/Images/CardsContainer/CardsContainer';
 import Badge from '@/components/Badge/Badge';
 import Head from 'next/head';
 import CustomBadge from '@/components/CustomBadge/CustomBadge';
+import styles from './Home.module.css'
 
 // export default function Home() {
 //     return (
@@ -69,7 +70,9 @@ const MobileLayout = () => (
         <CardsContainer />
     </div> */}
     {/* <Badge /> */}
+    <div className={styles.badge}>
     <CustomBadge logoSrc="/notify.svg" text="Тест займет около 10 минут" />
+    </div>
   </div>
 );
 

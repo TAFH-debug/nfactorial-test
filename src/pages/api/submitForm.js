@@ -16,20 +16,22 @@ const getCurrentTimestamp = () => {
   return date.toLocaleString("en-US", { timeZone: "UTC" }); // Adjust timeZone as needed
 };
 
-async function appendToSheet(name, phone) {
+async function appendToSheet({ name, phone, utmData, referrer }) {
   try {
     const sheets = google.sheets({ version: "v4", auth });
 
     // Prepare the data to append, including the current timestamp
     const timestamp = getCurrentTimestamp();
-    const values = [[timestamp, name, phone]];
+    const values = [
+      [timestamp, name, phone, referrer, utmData.utm_source, utmData.utm_medium, utmData.utm_campaign, utmData.utm_term, utmData.utm_content]
+    ];
 
     const resource = { values };
 
-    // Append data to the sheet, adding it to columns A, B, and C
+    // Append data to the sheet, adding it to columns A to I
     const result = await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.GOOGLE_SHEETS_ID, // Use Google Sheets ID from environment
-      range: `${process.env.SHEET_NAME || "QuizFormLeads"}!A:C`, // Default to "QuizFormLeads" or use SHEET_NAME from .env
+      range: `${process.env.SHEET_NAME || "QuizFormLeads"}!A:I`, // Default to "QuizFormLeads" or use SHEET_NAME from .env
       valueInputOption: "RAW",
       resource,
     });
@@ -43,14 +45,14 @@ async function appendToSheet(name, phone) {
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { name, phone } = req.body;
+    const { name, phone, utmData, referrer } = req.body;
 
     // Validate data
     if (!name || !phone) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    const success = await appendToSheet(name, phone);
+    const success = await appendToSheet({ name, phone, utmData, referrer });
 
     if (success) {
       return res.status(200).json({ message: "Data successfully submitted" });

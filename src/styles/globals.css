@@ -16,6 +16,7 @@ body {
   padding: 0;
 }
 
+
 /* Мобильная версия */
 @media (max-width: 768px) {
   body {

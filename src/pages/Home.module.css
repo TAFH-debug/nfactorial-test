@@ -975,3 +975,8 @@ button {
     white-space: nowrap;
     z-index: 81;
 } */
+.badge{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
