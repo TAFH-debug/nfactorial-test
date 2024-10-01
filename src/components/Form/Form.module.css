@@ -37,10 +37,14 @@
 /* Сообщение об ошибке для всей формы */
 .formError {
   color: #ff4d4d; /* Красный цвет текста */
-  font-size: 16px; /* Размер шрифта */
   display: flex; /* Flex для выравнивания */
   align-items: center;
   padding: 24px; /* Центрируем по вертикали */
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 111%;
 }
 
 .errorIcon {
