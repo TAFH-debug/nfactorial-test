@@ -75,7 +75,7 @@ export default function Form() {
 
       if (response.ok) {
         // Отслеживание события отправки формы в Amplitude
-        logEvent('form_submitted', {
+        logEvent('Test started', {
           name,
           phone,
           utmData,

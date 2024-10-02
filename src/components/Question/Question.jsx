@@ -3,6 +3,7 @@ import StatusBar from "../StatusBar/StatusBar";
 import StatusButton from "../StatusButton/StatusButton";
 import styles from "./Question.module.css";
 import Badge from "../CustomBadge/CustomBadge";
+import { track } from '@amplitude/analytics-browser';
 
 export default function Question({
   question,
@@ -26,6 +27,15 @@ export default function Question({
   const handleSubmit = () => {
     if (selectedCategory) {
       onAnswer(selectedCategory);
+
+      // Если это последний вопрос, отправляем событие в Amplitude
+      if (currentQuestion === totalQuestions) {
+        track('Test Completed', {
+          category: selectedCategory,
+          currentQuestion,
+          totalQuestions,
+        });
+      }
     }
   };
 

@@ -1,6 +1,9 @@
 import styles from './Button.module.css';
 
 export default function Button({ onSubmit, onNext }) {
+  // if(onSubmit){
+  //   console.log("Завершил тест")
+  // }
   return (
     <div>
       <div className={styles.statusBar}>
