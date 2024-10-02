@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 // import { logEvent } from '@amplitude/analytics-browser'; // Добавьте этот импорт
 import styles from "./Form.module.css";
+import { sendGTMEvent } from '@next/third-parties/google';
 
 export default function Form() {
   const [name, setName] = useState("");
@@ -82,6 +83,7 @@ export default function Form() {
       //     referrer,
       //   }
       // );
+      sendGTMEvent({ event: 'form_submited_main', formName: 'main_lead_form' });
 
         // Переход на другую страницу после успешной отправки
         router.push("/quiz");
