@@ -63,6 +63,14 @@ export default function Form() {
       });
 
       if (response.ok) {
+        // Отправка события в Google Analytics о завершении формы
+        window.gtag('event', 'form_submission', {
+          event_category: 'Form',
+          event_label: 'Main Lead Form',
+          value: name,
+          ...utmData, // Добавьте UTM данные, если необходимо
+        });
+
         // Отправка события в GTM о завершении формы
         sendGTMEvent({
           event: 'form_submited_main',

@@ -3,7 +3,8 @@ import StatusBar from "../StatusBar/StatusBar";
 import StatusButton from "../StatusButton/StatusButton";
 import styles from "./Question.module.css";
 import Badge from "../CustomBadge/CustomBadge";
-// import { track } from '@amplitude/analytics-browser';
+// Импортируйте библиотеку для работы с GA
+import Script from 'next/script';
 
 export default function Question({
   question,
@@ -14,6 +15,26 @@ export default function Question({
 }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [utmTags, setUtmTags] = useState({}); // Состояние для хранения UTM-тегов
+
+  // Функция для получения UTM-тегов из URL
+  const getUtmTags = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const utmSource = urlParams.get('utm_source');
+    const utmMedium = urlParams.get('utm_medium');
+    const utmCampaign = urlParams.get('utm_campaign');
+
+    return {
+      utm_source: utmSource || null,
+      utm_medium: utmMedium || null,
+      utm_campaign: utmCampaign || null,
+    };
+  };
+
+  // Инициализация UTM-тегов при загрузке компонента
+  useEffect(() => {
+    setUtmTags(getUtmTags());
+  }, []);
 
   // Reset selectedCategory whenever currentQuestion changes
   useEffect(() => {
@@ -28,14 +49,13 @@ export default function Question({
     if (selectedCategory) {
       onAnswer(selectedCategory);
 
-      // Если это последний вопрос, отправляем событие в Amplitude
-      // if (currentQuestion === totalQuestions) {
-      //   track('Test Completed', {
-      //     category: selectedCategory,
-      //     currentQuestion,
-      //     totalQuestions,
-      //   });
-      // }
+      // Отправляем событие в Google Analytics
+      window.gtag('event', 'form_submission', {
+        category: selectedCategory,
+        currentQuestion,
+        totalQuestions,
+        ...utmTags, // Включаем UTM-теги в событие
+      });
     }
   };
 
@@ -53,7 +73,6 @@ export default function Question({
 
   return (
     <div className={styles.AllComponent}>
-      {/* Question Section */}
       <Badge logoSrc="/notify.svg" text="Тест на профориентацию" />
       <div className={styles.QuestionPart}>
         <h1 className={styles.QuestionText}>{question.question}</h1>
@@ -63,7 +82,7 @@ export default function Question({
               className={styles.AnswerVariants}
               key={index}
               style={{ margin: "10px 0" }}
-              onClick={() => handleChoiceClick(category)} // Handle click on variant
+              onClick={() => handleChoiceClick(category)}
             >
               <div className={styles.checkbox}>
                 <div style={{ width: '15px', height: '15px' }}>
