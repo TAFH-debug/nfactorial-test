@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-// import { logEvent } from '@amplitude/analytics-browser'; // Добавьте этот импорт
 import styles from "./Form.module.css";
-import { sendGTMEvent } from '@next/third-parties/google';
+import { sendGTMEvent } from '@next/third-parties/google'; // GTM отправка событий
 
 export default function Form() {
   const [name, setName] = useState("");
@@ -13,11 +12,10 @@ export default function Form() {
   const [referrer, setReferrer] = useState("");
   const router = useRouter();
 
-  // Capture UTM and referrer data on component mount
+  // Сохраняем UTM и данные реферера
   useEffect(() => {
     const query = router.query;
 
-    // Collect UTM parameters
     const utmParams = {
       utm_source: query.utm_source || "",
       utm_medium: query.utm_medium || "",
@@ -27,39 +25,29 @@ export default function Form() {
     };
 
     setUtmData(utmParams);
-
-    // Capture referrer (if available)
     setReferrer(document.referrer || "");
   }, [router.query]);
 
-  const validateName = (name) => {
-    return /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(name); // Letters and spaces only
-  };
-
-  const validatePhone = (phone) => {
-    return /^\+?\d{10,15}$/.test(phone); // Разрешает опциональный плюс и 10-15 цифр
-  };
+  const validateName = (name) => /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(name); // Проверка имени
+  const validatePhone = (phone) => /^\+?\d{10,15}$/.test(phone); // Проверка телефона
 
   const handleStart = async (e) => {
     e.preventDefault();
-
-    // Clear previous errors
     setFormError("");
     setSubmitting(true);
 
-    // Validate fields
     if (!validateName(name)) {
       setFormError("Введите корректное имя (только буквы).");
       setSubmitting(false);
       return;
     }
+
     if (!validatePhone(phone)) {
       setFormError("Введите корректный номер телефона (10-15 цифр).");
       setSubmitting(false);
       return;
     }
 
-    // Submit data to the API
     try {
       const response = await fetch("/api/submitForm", {
         method: "POST",
@@ -75,17 +63,18 @@ export default function Form() {
       });
 
       if (response.ok) {
-        // Отслеживание события отправки формы в Amplitude
-      //   logEvent('Test started', {
-      //     name,
-      //     phone,
-      //     utmData,
-      //     referrer,
-      //   }
-      // );
-      sendGTMEvent({ event: 'form_submited_main', formName: 'main_lead_form' });
+        // Отправка события в GTM о завершении формы
+        sendGTMEvent({
+          event: 'form_submited_main',
+          formName: 'main_lead_form',
+          utm_source: utmData.utm_source,
+          utm_medium: utmData.utm_medium,
+          utm_campaign: utmData.utm_campaign,
+          utm_term: utmData.utm_term,
+          utm_content: utmData.utm_content,
+        });
 
-        // Переход на другую страницу после успешной отправки
+        // Переход на страницу квиза
         router.push("/quiz");
       } else {
         const result = await response.json();
@@ -123,7 +112,11 @@ export default function Form() {
           />
         </div>
         <div className={styles.buttonContainer}>
-          <button type="submit" className={`${styles.button} ${styles.startButton}`} disabled={submitting}>
+          <button
+            type="submit"
+            className={`${styles.button} ${styles.startButton}`}
+            disabled={submitting}
+          >
             {submitting ? "Отправка..." : "Начать"}
           </button>
         </div>
