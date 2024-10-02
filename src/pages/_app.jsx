@@ -1,15 +1,16 @@
 // pages/_app.jsx
-import { useEffect } from 'react';
-import { init } from '@amplitude/analytics-browser';
+import Script from "next/script";
 
 function MyApp({ Component, pageProps }) {
-  useEffect(() => {
-    // Инициализация Amplitude только в браузере
-    if (typeof window !== 'undefined') {
-      init(process.env.NEXT_PUBLIC_AMPLITUDE_API_KEY);
-    }
-  }, []);
+  <Script id="G-WY8EBLD4VH" strategy="afterInteractive">
+  {`
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-WY8EBLD4VH');
+  `}
+</Script>
   return <Component {...pageProps} />;
 }
 

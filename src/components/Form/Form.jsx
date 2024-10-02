@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { logEvent } from '@amplitude/analytics-browser'; // Добавьте этот импорт
+// import { logEvent } from '@amplitude/analytics-browser'; // Добавьте этот импорт
 import styles from "./Form.module.css";
 
 export default function Form() {
@@ -75,12 +75,13 @@ export default function Form() {
 
       if (response.ok) {
         // Отслеживание события отправки формы в Amplitude
-        logEvent('Test started', {
-          name,
-          phone,
-          utmData,
-          referrer,
-        });
+      //   logEvent('Test started', {
+      //     name,
+      //     phone,
+      //     utmData,
+      //     referrer,
+      //   }
+      // );
 
         // Переход на другую страницу после успешной отправки
         router.push("/quiz");
