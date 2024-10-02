@@ -64,7 +64,7 @@ export default function Form() {
 
       if (response.ok) {
         // Отправка события в Google Analytics о завершении формы
-        window.gtag('event', 'form_submission', {
+        window.gtag('event', 'form_started', {
           event_category: 'Form',
           event_label: 'Main Lead Form',
           value: name,
@@ -72,15 +72,15 @@ export default function Form() {
         });
 
         // Отправка события в GTM о завершении формы
-        sendGTMEvent({
-          event: 'form_submited_main',
-          formName: 'main_lead_form',
-          utm_source: utmData.utm_source,
-          utm_medium: utmData.utm_medium,
-          utm_campaign: utmData.utm_campaign,
-          utm_term: utmData.utm_term,
-          utm_content: utmData.utm_content,
-        });
+        // sendGTMEvent({
+        //   event: 'form_submited_main',
+        //   formName: 'main_lead_form',
+        //   utm_source: utmData.utm_source,
+        //   utm_medium: utmData.utm_medium,
+        //   utm_campaign: utmData.utm_campaign,
+        //   utm_term: utmData.utm_term,
+        //   utm_content: utmData.utm_content,
+        // });
 
         // Переход на страницу квиза
         router.push("/quiz");

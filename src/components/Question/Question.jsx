@@ -50,7 +50,7 @@ export default function Question({
       onAnswer(selectedCategory);
 
       // Отправляем событие в Google Analytics
-      window.gtag('event', 'form_submission', {
+      window.gtag('event', 'form_ended', {
         category: selectedCategory,
         currentQuestion,
         totalQuestions,
