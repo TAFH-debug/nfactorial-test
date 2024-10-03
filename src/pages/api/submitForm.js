@@ -4,7 +4,7 @@ import { google } from "googleapis";
 const auth = new google.auth.GoogleAuth({
   credentials: {
     client_email: process.env.GOOGLE_CLIENT_EMAIL,
-    private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"), // Replacing escaped newlines
+    private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
   },
   projectId: process.env.GOOGLE_PROJECT_ID,
   scopes: ["https://www.googleapis.com/auth/spreadsheets"],
@@ -12,33 +12,38 @@ const auth = new google.auth.GoogleAuth({
 
 // Function to get the current date and time in a readable format
 const getCurrentTimestamp = () => {
-  const date = new Date();
-  return date.toLocaleString("en-US", { timeZone: "UTC" }); // Adjust timeZone as needed
+  return new Date().toLocaleString("en-US", { timeZone: "UTC" });
 };
+
+// Function to validate phone number format
+const isValidPhone = (phone) => /^\+?\d{10,15}$/.test(phone);
 
 async function appendToSheet({ name, phone, utmData, referrer }) {
   try {
     const sheets = google.sheets({ version: "v4", auth });
 
-    // Prepare the data to append, including the current timestamp
     const timestamp = getCurrentTimestamp();
     const values = [
-      [timestamp, name, phone, referrer, utmData.utm_source, utmData.utm_medium, utmData.utm_campaign, utmData.utm_term, utmData.utm_content]
+      [
+        timestamp, name, phone, referrer,
+        utmData.utm_source || '', utmData.utm_medium || '', 
+        utmData.utm_campaign || '', utmData.utm_term || '', 
+        utmData.utm_content || ''
+      ]
     ];
 
     const resource = { values };
 
-    // Append data to the sheet, adding it to columns A to I
-    const result = await sheets.spreadsheets.values.append({
-      spreadsheetId: process.env.GOOGLE_SHEETS_ID, // Use Google Sheets ID from environment
-      range: `${process.env.SHEET_NAME || "QuizFormLeads"}!A:I`, // Default to "QuizFormLeads" or use SHEET_NAME from .env
+    await sheets.spreadsheets.values.append({
+      spreadsheetId: process.env.GOOGLE_SHEETS_ID,
+      range: `${process.env.SHEET_NAME || "QuizFormLeads"}!A:I`,
       valueInputOption: "RAW",
       resource,
     });
 
-    return result.status === 200;
+    return true;
   } catch (error) {
-    console.error("Error appending to sheet:", error);
+    console.error("Error appending to sheet:", error.message);
     return false;
   }
 }
@@ -48,8 +53,8 @@ export default async function handler(req, res) {
     const { name, phone, utmData, referrer } = req.body;
 
     // Validate data
-    if (!name || !phone) {
-      return res.status(400).json({ error: "Missing required fields" });
+    if (!name || !phone || !isValidPhone(phone)) {
+      return res.status(400).json({ error: "Missing required fields or invalid phone format" });
     }
 
     const success = await appendToSheet({ name, phone, utmData, referrer });

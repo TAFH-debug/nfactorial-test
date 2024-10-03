@@ -93,7 +93,7 @@
   font-weight: 700;
   cursor: pointer;
   border: none;
-  transition: background 0.3s;
+  transition: background 0.1s;
 }
 
 /* Мобильные стили */

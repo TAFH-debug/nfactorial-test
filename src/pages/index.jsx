@@ -8,48 +8,53 @@ import Badge from '@/components/Badge/Badge';
 import Head from 'next/head';
 import CustomBadge from '@/components/CustomBadge/CustomBadge';
 import styles from './Home.module.css'
-
-// export default function Home() {
-//     return (
-//         <div style={{ height: '100vh', overflow: 'hidden' }}>
-//             <Background />
-//             <Header />
-//             <Main />
-//             <Form />
-//             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'fit-content' }}>
-//                 <CardsContainer />
-//             </div>
-//             <Badge /> {/* Add Badge component */}
-//         </div>
-//     );
-// }
+import { useRouter } from "next/router";
 
 export default function Home() {
-    const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [quizData, setQuizData] = useState(null); // Добавляем состояние для кэширования данных квиза
+  const router = useRouter();
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= 768);
-        };
+  useEffect(() => {
+      const handleResize = () => {
+          setIsMobile(window.innerWidth <= 768);
+      };
 
-        // Set initial value
-        handleResize();
+      handleResize();
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-        // Add event listener
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+  // Запрос данных через 5 секунд
+  useEffect(() => {
+      const timer = setTimeout(() => {
+          fetchQuizData();
+      }, 5000);
 
-    return (
-        <div style={{ height: '100%', overflow: 'hidden' }}>
-            {/* <Background />
-            <Header /> */}
-            {isMobile ? <MobileLayout /> : <DesktopLayout />}
-            {/* <Badge /> */}
-        </div>
-    );
+      return () => clearTimeout(timer);
+  }, []);
+
+  // Функция для запроса данных квиза
+  const fetchQuizData = async () => {
+      try {
+          const res = await fetch('/api/questions');
+          const data = await res.json();
+          setQuizData(data);
+          // Сохраняем данные в localStorage для последующего использования
+          localStorage.setItem('quizData', JSON.stringify(data));
+      } catch (error) {
+          console.error('Error fetching quiz data:', error);
+      }
+  };
+
+
+
+  return (
+      <div style={{ height: '100%', overflow: 'hidden' }}>
+          {isMobile ? <MobileLayout /> : <DesktopLayout />}
+      </div>
+  );
 }
-
 // Mobile Layout
 const MobileLayout = () => (
   <div style={{ overflow: 'hidden' }}>

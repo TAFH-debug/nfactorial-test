@@ -21,8 +21,19 @@ export default function Quiz() {
   });
   const [showResult, setShowResult] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState(null); // Для хранения данных формы
 
   useEffect(() => {
+    // Получаем данные из localStorage
+    const data = localStorage.getItem("formData");
+    if (data) {
+      setFormData(JSON.parse(data));
+    } else {
+      // Можно сделать API-запрос для получения данных, если нужно
+      console.error("Данные формы не найдены.");
+    }
+    
+    // Загружаем вопросы
     const fetchQuestions = async () => {
       const res = await fetch("/api/questions");
       const data = await res.json();
@@ -79,13 +90,13 @@ export default function Quiz() {
 
   return (
     <>
-        <Head>
+      <Head>
         <title>IT Quiz - Найди свою профессию в IT</title>
         <meta name="description" content="Пройди тест и узнай, какая профессия в IT подходит тебе лучше всего. Подберите профессию, будь то мобильная разработка, веб-разработка, дата-аналитика или продакт-менеджмент." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:title" content="IT Quiz - Найди свою профессию в IT" />
         <meta property="og:description" content="Пройди тест и узнай, какая профессия в IT подходит тебе лучше всего. Получите рекомендации по обучению и начните карьеру в IT." />
-        <meta property="og:image" content="/image.svg" /> {/* You can replace this with your image URL */}
+        <meta property="og:image" content="/image.svg" /> {/* Замените на URL вашего изображения */}
         <meta property="og:type" content="website" />
         {/* Отключаем индексирование */}
         <meta name="robots" content="noindex, nofollow" />
@@ -129,7 +140,8 @@ export default function Quiz() {
                   какие профессии актуальнее всего для тебя
                 </div>
               </div>
-              <MainForm />
+              {/* Передаем данные формы в компонент MainForm */}
+              <MainForm formData={formData} />
             </div>
           </div>
         )}
