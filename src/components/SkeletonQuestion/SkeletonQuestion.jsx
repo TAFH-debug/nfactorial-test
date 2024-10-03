@@ -24,7 +24,7 @@ export default function SkeletonQuestion() {
       <div className={styles.skeletonButtonStatusContainer}>
         <div className={styles.skeletonButton}></div>
         <div className={styles.skeletonProgressBar}></div>
-        <div className={styles.skeletonButton}></div>
+        {/* <div className={styles.skeletonButton}></div> */}
       </div>
     </div>
   );
