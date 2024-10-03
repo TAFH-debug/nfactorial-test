@@ -5,6 +5,9 @@ const nextConfig = {
     domains: ['www.facebook.com'], // Add any external domains if needed
     formats: ['image/avif', 'image/webp'], // If you want to support specific image formats
   },
+  experimental: {
+    googleAnalytics: true, // Corrected spelling
+  },
 };
 
 export default nextConfig;
