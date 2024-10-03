@@ -1,16 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "./Form.module.css";
+import { sendGTMEvent } from '@next/third-parties/google'; // GTM отправка событий
 
 export default function Form() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [formError, setFormError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [utmData, setUtmData] = useState({});
+  const [referrer, setReferrer] = useState("");
   const router = useRouter();
 
-  const validateName = (name) => /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(name);
-  const validatePhone = (phone) => /^\+?\d{10,15}$/.test(phone);
+  // Сохраняем UTM и данные реферера
+  useEffect(() => {
+    const query = router.query;
+
+    const utmParams = {
+      utm_source: query.utm_source || "",
+      utm_medium: query.utm_medium || "",
+      utm_campaign: query.utm_campaign || "",
+      utm_term: query.utm_term || "",
+      utm_content: query.utm_content || "",
+    };
+
+    setUtmData(utmParams);
+    setReferrer(document.referrer || "");
+  }, [router.query]);
+
+  const validateName = (name) => /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(name); // Проверка имени
+  const validatePhone = (phone) => /^\+?\d{10,15}$/.test(phone); // Проверка телефона
 
   const handleStart = async (e) => {
     e.preventDefault();
@@ -38,12 +57,19 @@ export default function Form() {
         body: JSON.stringify({
           name,
           phone,
-          utmData: router.query, // Send UTM parameters directly
-          referrer: document.referrer || "",
+          utmData,
+          referrer,
         }),
       });
 
       if (response.ok) {
+        // Отправка события в Google Analytics о завершении формы
+        window.gtag('event', 'form_started', {
+          event_category: 'Form',
+          event_label: 'Main Lead Form',
+          value: name,
+          ...utmData, // Добавьте UTM данные, если необходимо
+        });
         router.push("/quiz");
       } else {
         const result = await response.json();
