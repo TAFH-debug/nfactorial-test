@@ -58,7 +58,7 @@ const Results = () => {
                 </div>
               </div>
               {/* Передаем данные формы в компонент MainForm */}
-              <MainForm formData={JSON.parse(formData)} />
+              <MainForm />
             </div>
           </div>
         )}

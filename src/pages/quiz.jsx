@@ -21,11 +21,6 @@ export default function Quiz() {
   // const [formData, setFormData] = useState(null);
 
   useEffect(() => {
-    // const data = localStorage.getItem("formData");
-    // if (data) {
-    //   setFormData(JSON.parse(data));
-    // }
-
     const fetchQuestions = async () => {
       const res = await fetch("/api/questions");
       const data = await res.json();
@@ -48,7 +43,7 @@ export default function Quiz() {
       const topCategory = getTopCategory();
       router.push({
         pathname: "/results",
-        query: { category: topCategory, formData: JSON.stringify(formData) }, // Передаем данные в query
+        query: { category: topCategory }, // Передаем данные в query
       });
     }
   };
