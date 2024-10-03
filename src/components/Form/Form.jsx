@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "./Form.module.css";
-import { sendGTMEvent } from '@next/third-parties/google'; // GTM отправка событий
+import { sendGAEvent } from '@next/third-parties/google'; // GTM отправка событий
 
 export default function Form() {
   const [name, setName] = useState("");
@@ -63,8 +63,8 @@ export default function Form() {
       });
 
       if (response.ok) {
-        // Используем sendGTMEvent для отправки события
-        sendGTMEvent('form_started', {
+        // Используем sendGAEvent для отправки события
+        sendGAEvent('form_started', {
           event_category: 'Form',
           event_label: 'Main Lead Form',
           name,
