@@ -7,6 +7,7 @@ import styles from "./Results.module.css"; // Импортируем стили
 import Header from "@/components/Header/Header"; // Импортируем Header
 import Background from "@/components/Background/Background"; // Импортируем Background
 import Image from "next/image";
+import Head from "next/head";
 
 const Results = () => {
   const router = useRouter();
@@ -33,6 +34,25 @@ const Results = () => {
 
   return (
     <>
+      <Head>
+        <title>Результаты вашего теста</title>
+        <meta
+          name="description"
+          content="Пройди тест и узнай, какая профессия в IT подходит тебе лучше всего. Подберите профессию, будь то мобильная разработка, веб-разработка, дата-аналитика или продакт-менеджмент."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          property="og:title"
+          content="nFactorial Test - Найди свою профессию в IT"
+        />
+        <meta
+          property="og:description"
+          content="Пройди тест и узнай, какая профессия в IT подходит тебе лучше всего. Получите рекомендации по обучению и начните карьеру в IT."
+        />
+        <meta property="og:image" content="/image.svg" />{" "}
+        {/* You can replace this with your image URL */}
+        <meta property="og:type" content="website" />
+      </Head>
       <Header />
       <Background />
       <div style={{ textAlign: "center" }}>
@@ -48,7 +68,9 @@ const Results = () => {
               topCategories={[category]} // Передаем только одну категорию в topCategories
               style={{ marginBottom: "50px" }}
             />
-            <div style={{ maxWidth: "940px", margin: "0 auto", padding: "20px" }}>
+            <div
+              style={{ maxWidth: "940px", margin: "0 auto", padding: "20px" }}
+            >
               <Image src="/image.svg" alt="alt" width={295} height={197} />
               <div className={styles.text}>
                 <div className={styles.heading}>

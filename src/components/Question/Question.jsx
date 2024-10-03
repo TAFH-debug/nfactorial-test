@@ -3,8 +3,7 @@ import StatusBar from "../StatusBar/StatusBar";
 import StatusButton from "../StatusButton/StatusButton";
 import styles from "./Question.module.css";
 import Badge from "../CustomBadge/CustomBadge";
-// Импортируйте библиотеку для работы с GA
-import Script from "next/script";
+import { sendGTMEvent } from '@next/third-parties/google'; // GTM отправка событий
 import Image from "next/image";
 
 export default function Question({
@@ -50,8 +49,9 @@ export default function Question({
     if (selectedCategory) {
       onAnswer(selectedCategory);
 
-      // Отправляем событие в Google Analytics
-      window.gtag("event", "form_ended", {
+      // Отправляем событие в Google Analytics через GTM
+      sendGTMEvent('form_ended', {
+        event_category: 'Quiz',
         category: selectedCategory,
         currentQuestion,
         totalQuestions,

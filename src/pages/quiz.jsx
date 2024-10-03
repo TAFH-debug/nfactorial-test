@@ -6,6 +6,7 @@ import { useRouter } from "next/router"; // Импортируем useRouter
 import Header from "@/components/Header/Header"; // Импортируем Header
 import Background from "@/components/Background/Background"; // Импортируем Background
 import styles from "./Quiz.module.css";
+import Head from "next/head";
 
 export default function Quiz() {
   const router = useRouter(); // Инициализация роутера
@@ -57,6 +58,25 @@ export default function Quiz() {
 
   return (
     <>
+      <Head>
+        <title>nFactorial Test - Найди свою профессию в IT</title>
+        <meta
+          name="description"
+          content="Пройди тест и узнай, какая профессия в IT подходит тебе лучше всего. Подберите профессию, будь то мобильная разработка, веб-разработка, дата-аналитика или продакт-менеджмент."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          property="og:title"
+          content="nFactorial Test - Найди свою профессию в IT"
+        />
+        <meta
+          property="og:description"
+          content="Пройди тест и узнай, какая профессия в IT подходит тебе лучше всего. Получите рекомендации по обучению и начните карьеру в IT."
+        />
+        <meta property="og:image" content="/image.svg" />{" "}
+        {/* You can replace this with your image URL */}
+        <meta property="og:type" content="website" />
+      </Head>
       <Header />
       <Background />
       <div style={{ textAlign: "center" }}>

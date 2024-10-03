@@ -63,12 +63,13 @@ export default function Form() {
       });
 
       if (response.ok) {
-        // Отправка события в Google Analytics о завершении формы
-        window.gtag('event', 'form_started', {
+        // Используем sendGTMEvent для отправки события
+        sendGTMEvent('form_started', {
           event_category: 'Form',
           event_label: 'Main Lead Form',
-          value: name,
-          ...utmData, // Добавьте UTM данные, если необходимо
+          name,
+          phone,
+          ...utmData,
         });
         router.push("/quiz");
       } else {
