@@ -16,7 +16,8 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
           {/* Meta Pixel Code */}
-          <script
+        </Head>
+        <script
             dangerouslySetInnerHTML={{
               __html: `
                 !function(f,b,e,v,n,t,s)
@@ -40,7 +41,6 @@ class MyDocument extends Document {
               height={1} 
             />
           </noscript>
-        </Head>
         <body>
           <Main />
           <NextScript />
