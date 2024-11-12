@@ -5,7 +5,7 @@ import CourseRecommendations from "@/components/CourseRecommendations/CourseReco
 import MainForm from "@/components/MainForm/MainForm";
 import styles from "./index.module.css"; // Import styles
 import Header from "@/components/Header/Header"; // Import Header
-import Background from "@/components/Background/Background"; // Import Background
+import Background from "@/components/Background_uxui/Background_uxui"; // Import Background
 import Image from "next/image";
 import Head from "next/head";
 
