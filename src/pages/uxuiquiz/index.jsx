@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Background from "@/components/Background/Background";
+import Background from "@/components/Background_uxui/Background_uxui";
 import Header from "@/components/Header/Header";
 import Main from "@/components/Main_uxui/Main_uxui";
 import Form from "@/components/Form_uxui/Form_uxui";

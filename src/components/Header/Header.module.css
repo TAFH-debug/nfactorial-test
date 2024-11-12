@@ -27,14 +27,14 @@
 }
 
 .section {
-    display: flex;
+    /* display: flex; */
     align-items: center; /* Center items vertically */
     gap: 4px; /* Space between text and logo set to 4px */
     padding: 10px 15px; /* Padding for the text section */
     border: 1.901px solid #ffffff; /* Border inside */
     border-radius: 20px;
     box-sizing: border-box;
-    background-color: rgba(0, 0, 0, 0.5); /* Optional: Add background for better visibility */
+    /* background-color: rgba(0, 0, 0, 0.5); Optional: Add background for better visibility */
 }
 
 .text {
