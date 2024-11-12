@@ -1,4 +1,8 @@
 /* General Button Styles */
+.correct {
+  border: 2px solid #C2F3B5; /* Зеленая рамка для правильного ответа */
+  background-color: #e8f5e9; /* Светло-зеленый фон */
+}
 .button {
   width: 204px;
   height: 44px;
@@ -11,6 +15,37 @@
   border: none;
   transition: background 0.3s;
 }
+/* Correct feedback style */
+.feedbackCorrect {
+  letter-spacing: -0.05em;
+  font-family: "Inter";
+  padding: 24px;
+  background-color: #C2F3B5;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #333;
+  font-weight: 400;
+  text-align: center;
+  width: 100%;
+  max-width: 940px;
+  border-radius: 20px;
+}
+
+/* Incorrect feedback style */
+.feedbackIncorrect {
+  padding: 24px;
+  font-family: "Inter";
+  letter-spacing: -0.05em;
+  background-color: #FEA7A9;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #333;
+  font-weight: 400;
+  border-radius: 20px;
+  text-align: center;
+  width: 100%;
+  max-width: 940px;
+}
 
 .buttonBack {
   background: rgba(255, 255, 255, 0.1);
@@ -20,6 +55,16 @@
 .buttonNext {
   background: white;
   color: #222222;
+  flex: 1; /* Позволяет кнопкам занимать равную ширину *//* Максимальная ширина кнопок */
+  padding: 15px;
+  border-radius: 34px;
+  font-size: 17px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
+  margin: 5px;
 }
 
 .button.submit {

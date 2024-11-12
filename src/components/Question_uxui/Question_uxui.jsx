@@ -1,4 +1,3 @@
-// components/Question/Question.js
 import { useEffect, useState } from "react";
 import StatusBar from "../StatusBar/StatusBar";
 import StatusButton from "../StatusButton/StatusButton";
@@ -12,34 +11,46 @@ export default function Question({
   totalQuestions,
   currentQuestion,
   onAnswer,
-  onBack,
 }) {
   const [selectedOptionId, setSelectedOptionId] = useState(null);
+  const [showCorrectOption, setShowCorrectOption] = useState(false);
+  const [feedbackText, setFeedbackText] = useState("");
   const [isMobile, setIsMobile] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(null);
 
-  // Reset selectedOptionId whenever currentQuestion changes
   useEffect(() => {
-    setSelectedOptionId(null); // Clear the selection when the question changes
+    setSelectedOptionId(null);
+    setShowCorrectOption(false);
+    setFeedbackText("");
   }, [currentQuestion]);
 
   const handleChoiceClick = (optionId) => {
-    setSelectedOptionId(optionId === selectedOptionId ? null : optionId);
+    setSelectedOptionId(optionId);
+    setShowCorrectOption(true);
+
+    const isOptionCorrect = question.options.find(
+      (opt) => opt.id === optionId
+    ).isGoodDesign;
+
+    setIsCorrect(isOptionCorrect); // Set isCorrect state
+    setFeedbackText(
+      isOptionCorrect ? question.feedback.correct : question.feedback.incorrect
+    );
   };
 
-  const handleSubmit = () => {
-    if (selectedOptionId !== null) {
-      onAnswer(selectedOptionId);
-    }
+  const handleNextQuestion = () => {
+    setFeedbackText("");
+    setIsCorrect(null); // Reset isCorrect for the next question
+    onAnswer(selectedOptionId);
   };
 
-  // Check window size for mobile or desktop
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); // Check initial size
+    handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -54,16 +65,19 @@ export default function Question({
       <Badge logoSrc="/notify.svg" text="Тест на знание дизайна" />
       <div className={styles.QuestionPart}>
         <h1 className={styles.QuestionText}>
-          Вопрос {currentQuestion} из {totalQuestions}: Выберите вариант с лучшим дизайном
+          Вопрос {currentQuestion} из {totalQuestions}: Выберите вариант с
+          лучшим дизайном
         </h1>
         <div className={styles.Answer}>
           {question.options.map((option) => (
             <motion.div
               className={`${styles.AnswerVariants} ${
                 selectedOptionId === option.id ? styles.selected : ""
+              } ${
+                showCorrectOption && option.isGoodDesign ? styles.correct : ""
               }`}
               key={option.id}
-              onClick={() => handleChoiceClick(option.id)}
+              onClick={() => !showCorrectOption && handleChoiceClick(option.id)}
               whileHover={{ scale: 1.05 }}
             >
               <Image
@@ -77,45 +91,26 @@ export default function Question({
           ))}
         </div>
       </div>
+      {feedbackText && (
+        <div
+          className={
+            isCorrect ? styles.feedbackCorrect : styles.feedbackIncorrect
+          }
+        >
+          {feedbackText}
+        </div>
+      )}
 
       {/* Button and Status Section */}
       <div className={styles.buttonStatusContainer}>
-        {isMobile ? (
-          <>
-            <StatusBar
-              currentQuestion={currentQuestion}
-              totalQuestions={totalQuestions}
-            />
-            <div className={styles.buttons}>
-              <StatusButton
-                type="back"
-                onClick={onBack}
-                isDisabled={currentQuestion === 1}
-              />
-              <StatusButton
-                type={currentQuestion === totalQuestions ? "submit" : "next"}
-                onClick={handleSubmit}
-                isDisabled={selectedOptionId === null}
-              />
-            </div>
-          </>
-        ) : (
-          <>
-            <StatusButton
-              type="back"
-              onClick={onBack}
-              isDisabled={currentQuestion === 1}
-            />
-            <StatusBar
-              currentQuestion={currentQuestion}
-              totalQuestions={totalQuestions}
-            />
-            <StatusButton
-              type={currentQuestion === totalQuestions ? "submit" : "next"}
-              onClick={handleSubmit}
-              isDisabled={selectedOptionId === null}
-            />
-          </>
+        <StatusBar
+          currentQuestion={currentQuestion}
+          totalQuestions={totalQuestions}
+        />
+        {feedbackText && (
+          <div onClick={handleNextQuestion} className={styles.buttonNext}>
+            Следующий
+          </div>
         )}
       </div>
     </motion.div>

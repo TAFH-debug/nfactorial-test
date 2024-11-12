@@ -61,7 +61,7 @@ const MobileLayout = () => (
     </div> */}
     {/* <Badge /> */}
     <div className={styles.badge}>
-      <CustomBadge logoSrc="/notify.svg" text="Тест займет около 10 минут" />
+      <CustomBadge logoSrc="/notify.svg" text="Тест займет около 5 минут" />
     </div>
   </div>
 );
@@ -96,7 +96,7 @@ const DesktopLayout = () => (
         height: "fit-content",
       }}
     >
-      <CardsContainer />
+      {/* <CardsContainer /> */}
     </div>
     <Badge />
   </div>
