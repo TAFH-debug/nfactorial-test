@@ -6,7 +6,7 @@ import SkeletonQuestion from '@/components/SkeletonQuestion/SkeletonQuestion';
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-export default function uxui() {
+export default function Uxui() {
     const router = useRouter(); // Инициализация роутера
     const [questions, setQuestions] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
