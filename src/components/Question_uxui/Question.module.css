@@ -1,0 +1,235 @@
+/* General Button Styles */
+.button {
+  width: 204px;
+  height: 44px;
+  padding: 15px;
+  border-radius: 34px;
+  font-size: 17px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
+}
+
+.buttonBack {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.buttonNext {
+  background: white;
+  color: #222222;
+}
+
+.button.submit {
+  background: rgba(0, 123, 255, 0.1);
+  color: #007bff;
+}
+
+/* Hover and Disabled States */
+.button:hover:not([disabled]) {
+  background: rgba(214, 214, 214, 0.2);
+  color: white;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  background: #d3d3d3;
+  color: #777;
+}
+
+/* Progress Bar Styles */
+.progressBar {
+  width: 430px;
+  height: 9px;
+  position: relative;
+}
+
+.progressBackground,
+.progressFill {
+  height: 9px;
+  border-radius: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.progressBackground {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.progressFill {
+  background: #7fdc9f;
+}
+
+/* Container Styles */
+.AllComponent {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden; /* Hide overflow */
+  /* height: calc(100vh - 120px);  */
+}
+
+.QuestionPart {
+  display: flex;
+  width: auto;
+  padding: 35px;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  border-radius: 20px;
+  background: #fff;
+  max-width: 940px;
+  word-wrap: break-word; /* Word wrap */
+  flex-grow: 1; /* Allow it to grow and take available space */
+}
+
+/* Question Text Styles */
+.QuestionText {
+  width: auto; /* Ensure 100% width */
+  max-width: 940px;
+  font-family: "Inter", sans-serif;
+  color: black;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 111%; /* 27.75px */
+  letter-spacing: -1.25px;
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Add ellipsis for overflow */
+}
+
+/* Answer Section Styles */
+.Answer {
+  display: flex;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.AnswerVariants {
+  font-family: "Inter", sans-serif;
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  gap: 15px;
+  border-radius: 10px;
+  max-width: 800px;
+  font-weight: 400;
+  line-height: 111%;
+  cursor: pointer; /* Pointer cursor for clickable items */
+}
+
+.selected {
+  background-color: #f8f8f8; /* Color for selected answer */
+}
+
+/* Checkbox Styles */
+.checkbox {
+  display: inline-flex;
+  padding: 5px;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Button and Status Section */
+.buttonStatusContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1010px; /* Max width for better structure */
+  gap: 20px; /* Space between buttons and status */
+  margin-top: 20px;
+}
+
+/* Progress Container */
+.progressContainer {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Question Text Styles for Progress */
+.questionText {
+  text-align: center;
+  color: white;
+  font-size: 10px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  line-height: 11.1px;
+}
+
+/* Card Styles */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  background: white;
+}
+@media (max-width: 768px) {
+  .buttonStatusContainer {
+    flex-direction: column; /* Stack buttons vertically on mobile */
+    align-items: center; /* Center align for mobile */
+    gap: 1em; /* 16px -> 1em */
+  }
+
+  .AllComponent {
+    padding: 1em; /* 16px -> 1em */
+  }
+
+  .QuestionText {
+    font-size: 1.5em; /* 24px -> 1.5em */
+    margin: 0 auto;
+    padding: 0 auto;
+  }
+
+  /* Answer Section Styles */
+  .Answer {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .QuestionPart {
+    padding: 1.25em; /* 20px -> 1.25em */
+    gap: 0.9375em; /* 15px -> 0.9375em */
+    margin-top: 0.625em; /* 10px -> 0.625em */
+  }
+
+  .QuestionText {
+    padding-left: 0em; /* 0px -> 0em */
+    padding-top: 0em; /* 0px -> 0em */
+  }
+
+  .AnswerVariants {
+    display: block;
+    font-size: 0.875em; /* 14px -> 0.875em */
+  }
+
+  .button {
+    width: 100%; /* Full width on mobile */
+    height: 2.5em; /* 40px -> 2.5em */
+    margin-bottom: 0.625em; /* 10px -> 0.625em */
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0.625em; /* 10px -> 0.625em */
+    gap: 0.625em; /* 10px -> 0.625em */
+  }
+}
