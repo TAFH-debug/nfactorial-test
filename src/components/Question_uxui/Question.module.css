@@ -222,6 +222,14 @@
   background: white;
 }
 @media (max-width: 768px) {
+  .feedbackCorrect {
+    width: auto;
+  }
+  
+  /* Incorrect feedback style */
+  .feedbackIncorrect {
+    width: auto;
+  }
   .buttonStatusContainer {
     flex-direction: column; /* Stack buttons vertically on mobile */
     align-items: center; /* Center align for mobile */
@@ -276,5 +284,8 @@
     width: 100%;
     margin: 0.625em; /* 10px -> 0.625em */
     gap: 0.625em; /* 10px -> 0.625em */
+  }
+  .buttonNext {
+width: 100%;
   }
 }
