@@ -3,20 +3,3 @@
     width: 100%;
     justify-content: center;
 }
-
-
-.centeredContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: calc(100vh - 80px); /* Adjust height as needed */
-    padding-top: 80px; /* Space for the header */
-  }
-  
-  .badge {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-  }
-  
