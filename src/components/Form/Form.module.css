@@ -86,8 +86,8 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-color: #ff4d4d; /* Ваш цвет для кнопки */
-  color: #ffffff; /* Цвет текста на кнопке */
+  background-color: #FFFFFF; /* Ваш цвет для кнопки */
+  color: #222222; /* Цвет текста на кнопке */
   width: 100%;
   height: auto;
   padding: 15px;
@@ -104,6 +104,8 @@
 .button:focus {
   background-color: #d94444; /* Цвет при нажатии */
   outline: none; /* Убирает стандартное выделение */
+  color: #FFFFFF; /* Цвет текста на кнопке */
+
 }
 
 
