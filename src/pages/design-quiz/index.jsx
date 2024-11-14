@@ -35,21 +35,23 @@ export default function Home() {
 const MobileLayout = () => (
   <div style={{ overflow: "hidden" }}>
     <Head>
-      <title>nFactorial Test - Найди свою профессию в IT</title>
+      <title>
+        Насколько ты крутой UX/UI дизайнер? Пройди тест от nFactorial!
+      </title>
       <meta
         name="description"
-        content="Пройди тест и узнай, какая профессия в IT подходит тебе лучше всего. Подберите профессию, будь то мобильная разработка, веб-разработка, дата-аналитика или продакт-менеджмент."
+        content="Пройди тест и узнай, насколько ты крут в UX/UI дизайне. Получи персональные советы для развития карьеры в дизайне!"
       />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta
         property="og:title"
-        content="nFactorial Test - Найди свою профессию в IT"
+        content="Насколько ты крутой UX/UI дизайнер? Пройди тест!"
       />
       <meta
         property="og:description"
-        content="Пройди тест и узнай, какая профессия в IT подходит тебе лучше всего. Получите рекомендации по обучению и начните карьеру в IT."
+        content="Узнай, насколько ты крут в UX/UI дизайне! Пройди тест, получи советы по развитию навыков и начни строить карьеру мечты."
       />
-      <meta property="og:image" content="/image.svg" />{" "}
+      <meta property="og:image" content="/image.svg" />
       <meta property="og:type" content="website" />
     </Head>
     <Background />
@@ -70,18 +72,23 @@ const MobileLayout = () => (
 const DesktopLayout = () => (
   <div style={{ overflow: "hidden" }}>
     <Head>
-      <title>nFactorial Test - Найди свою профессию в IT</title>
+      <title>
+        Насколько ты крутой UX/UI дизайнер? Пройди тест от nFactorial!
+      </title>
       <meta
         name="description"
-        content="Пройди тест на Ux/Ui"
+        content="Пройди тест и узнай, насколько ты крут в UX/UI дизайне. Получи персональные советы для развития карьеры в дизайне!"
       />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta property="og:title" content="IT Quiz - Найди свою профессию в IT" />
+      <meta
+        property="og:title"
+        content="Насколько ты крутой UX/UI дизайнер? Пройди тест!"
+      />
       <meta
         property="og:description"
-        content="Пройди тест и узнай, какая профессия в IT подходит тебе лучше всего. Получите рекомендации по обучению и начните карьеру в IT."
+        content="Узнай, насколько ты крут в UX/UI дизайне! Пройди тест, получи советы по развитию навыков и начни строить карьеру мечты."
       />
-      <meta property="og:image" content="/image.svg" />{" "}
+      <meta property="og:image" content="/image.svg" />
       <meta property="og:type" content="website" />
     </Head>
     <Background />

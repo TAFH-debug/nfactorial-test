@@ -32,7 +32,7 @@ export default function Question({
       (opt) => opt.id === optionId
     ).isGoodDesign;
 
-    setIsCorrect(isOptionCorrect); // Set isCorrect state
+    setIsCorrect(isOptionCorrect);
     setFeedbackText(
       isOptionCorrect ? question.feedback.correct : question.feedback.incorrect
     );
@@ -40,7 +40,7 @@ export default function Question({
 
   const handleNextQuestion = () => {
     setFeedbackText("");
-    setIsCorrect(null); // Reset isCorrect for the next question
+    setIsCorrect(null);
     onAnswer(selectedOptionId);
   };
 
@@ -65,8 +65,7 @@ export default function Question({
       <Badge logoSrc="/notify.svg" text="Тест на знание дизайна" />
       <div className={styles.QuestionPart}>
         <h1 className={styles.QuestionText}>
-          Вопрос {currentQuestion} из {totalQuestions}: Выберите вариант с
-          лучшим дизайном
+          Вопрос {currentQuestion} из {totalQuestions}: Какой вариант вам кажется лучше?
         </h1>
         <div className={styles.Answer}>
           {question.options.map((option) => (

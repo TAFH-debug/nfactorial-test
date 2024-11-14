@@ -16,7 +16,7 @@ const getCurrentTimestamp = () => {
   return date.toLocaleString("en-US", { timeZone: "UTC" }); // Adjust timeZone as needed
 };
 
-async function appendToSheet({ name, phone, utmData, referrer }) {
+async function appendToSheet({ name, phone, utmData, referrer, spreadsheetId, sheetName }) {
   try {
     const sheets = google.sheets({ version: "v4", auth });
 
@@ -30,8 +30,8 @@ async function appendToSheet({ name, phone, utmData, referrer }) {
 
     // Append data to the sheet, adding it to columns A to I
     const result = await sheets.spreadsheets.values.append({
-      spreadsheetId: process.env.GOOGLE_SHEETS_ID, // Use Google Sheets ID from environment
-      range: `${process.env.SHEET_NAME || "QuizFormLeads"}!A:I`, // Default to "QuizFormLeads" or use SHEET_NAME from .env
+      spreadsheetId,  // Use the dynamically passed spreadsheetId
+      range: `${sheetName}!A:I`, // Use the dynamically passed sheetName
       valueInputOption: "RAW",
       resource,
     });
@@ -43,16 +43,26 @@ async function appendToSheet({ name, phone, utmData, referrer }) {
   }
 }
 
+
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { name, phone, utmData, referrer } = req.body;
+    const { name, phone, utmData, referrer, formType } = req.body;
 
-    // Validate data
     if (!name || !phone) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    const success = await appendToSheet({ name, phone, utmData, referrer });
+    // Determine parameters for each form
+    const { spreadsheetId, sheetName } = getSheetConfig(formType);
+
+    const success = await appendToSheet({
+      name,
+      phone,
+      utmData,
+      referrer,
+      spreadsheetId,
+      sheetName,
+    });
 
     if (success) {
       return res.status(200).json({ message: "Data successfully submitted" });
@@ -64,3 +74,20 @@ export default async function handler(req, res) {
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
+
+// Helper function to get the right spreadsheetId and sheetName
+const getSheetConfig = (formType) => {
+  if (formType === "first") {
+    return {
+      spreadsheetId: process.env.FIRST_SHEET_ID,
+      sheetName: "QuizFormLeads",
+    };
+  } else if (formType === "second") {
+    return {
+      spreadsheetId: process.env.SECOND_SHEET_ID,
+      sheetName: "UxuiFormLeads",
+    };
+  }
+  throw new Error("Unknown form type");
+};
+

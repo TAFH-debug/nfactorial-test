@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import InputMask from "react-input-mask"; // Импортируем InputMask
 import styles from "./Form.module.css";
-import { sendGAEvent } from '@next/third-parties/google'; // GTM отправка событий
+import { sendGAEvent } from "@next/third-parties/google"; // GTM отправка событий
 
 export default function Form() {
   const [name, setName] = useState("");
@@ -12,10 +13,8 @@ export default function Form() {
   const [referrer, setReferrer] = useState("");
   const router = useRouter();
 
-  // Сохраняем UTM и данные реферера
   useEffect(() => {
     const query = router.query;
-
     const utmParams = {
       utm_source: query.utm_source || "",
       utm_medium: query.utm_medium || "",
@@ -23,14 +22,13 @@ export default function Form() {
       utm_term: query.utm_term || "",
       utm_content: query.utm_content || "",
     };
-
     setUtmData(utmParams);
     setReferrer(document.referrer || "");
   }, [router.query]);
 
-  const validateName = (name) => /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(name); // Проверка имени
-  const validatePhone = (phone) => /^\+?\d{10,15}$/.test(phone); // Проверка телефона
-
+  const validateName = (name) => /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(name);
+  const validatePhone = (phone) =>
+    /^\+([1-9]) \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(phone);
   const handleStart = async (e) => {
     e.preventDefault();
     setFormError("");
@@ -43,7 +41,9 @@ export default function Form() {
     }
 
     if (!validatePhone(phone)) {
-      setFormError("Введите корректный номер телефона (10-15 цифр).");
+      setFormError(
+        "Введите корректный номер телефона (например, +7 (123) 456-78-90)."
+      );
       setSubmitting(false);
       return;
     }
@@ -59,18 +59,11 @@ export default function Form() {
           phone,
           utmData,
           referrer,
+          formType: "first", // Уникальный параметр для первой формы
         }),
       });
 
       if (response.ok) {
-        // Используем sendGAEvent для отправки события
-        sendGAEvent('form_started', {
-          event_category: 'Form',
-          event_label: 'Main Lead Form',
-          name,
-          phone,
-          ...utmData,
-        });
         router.push("/quiz");
       } else {
         const result = await response.json();
@@ -99,8 +92,8 @@ export default function Form() {
           />
         </div>
         <div className={styles.inputWrapper}>
-          <input
-            type="tel"
+          <InputMask
+            mask="+9 (999) 999-99-99" // Маска для телефона
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="Номер телефона"

@@ -7,20 +7,36 @@ import Link from "next/link";
 export default function MainForm(props) {
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [roistatId, setRoistatId] = useState("");
+  const [isPhoneValid, setIsPhoneValid] = useState(false);
+  const [utmParams, setUtmParams] = useState({
+    utm_source: "",
+    utm_medium: "",
+    utm_campaign: "",
+    utm_term: "",
+    utm_content: "",
+  });
 
   useEffect(() => {
-    const roistatVisit =
-      document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("roistat_visit="))
-        ?.split("=")[1] || "nocookie";
-    setRoistatId(roistatVisit);
+
+    // Capture UTM parameters from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    setUtmParams({
+      utm_source: urlParams.get("utm_source") || "",
+      utm_medium: urlParams.get("utm_medium") || "",
+      utm_campaign: urlParams.get("utm_campaign") || "",
+      utm_term: urlParams.get("utm_term") || "",
+      utm_content: urlParams.get("utm_content") || "",
+    });
   }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setSubmitted(true);
+    if (isPhoneValid) {
+      setSubmitted(true);
+      setErrorMessage("");
+    } else {
+      setErrorMessage("Пожалуйста, введите корректный номер телефона.");
+    }
   };
 
   const handleNumberInput = (event) => {
@@ -29,8 +45,10 @@ export default function MainForm(props) {
 
     if (value !== numericInput) {
       setErrorMessage("Пожалуйста, введите корректный номер телефона.");
+      setIsPhoneValid(false);
     } else {
       setErrorMessage("");
+      setIsPhoneValid(numericInput.length >= 10);
     }
   };
 
@@ -57,9 +75,28 @@ export default function MainForm(props) {
           />
           <input
             type="hidden"
-            name="roistat_visit"
-            value={roistatId}
-            className={styles.hiddenInput}
+            name="utm_source"
+            value={utmParams.utm_source}
+          />
+          <input
+            type="hidden"
+            name="utm_medium"
+            value={utmParams.utm_medium}
+          />
+          <input
+            type="hidden"
+            name="utm_campaign"
+            value={utmParams.utm_campaign}
+          />
+          <input
+            type="hidden"
+            name="utm_term"
+            value={utmParams.utm_term}
+          />
+          <input
+            type="hidden"
+            name="utm_content"
+            value={utmParams.utm_content}
           />
           <input
             type="text"
@@ -81,6 +118,7 @@ export default function MainForm(props) {
           <button
             type="submit"
             className={styles.button} // Apply CSS module styles
+            disabled={!isPhoneValid}
           >
             Получить консультацию
           </button>
