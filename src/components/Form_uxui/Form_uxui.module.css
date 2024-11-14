@@ -82,9 +82,13 @@
   color: #ffffff;
 }
 
-/* Кнопка */
 .button {
-  width: 100%; /* Удаляем фиксированную ширину */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #ff4d4d; /* Ваш цвет для кнопки */
+  color: #ffffff; /* Цвет текста на кнопке */
+  width: 100%;
   height: auto;
   padding: 15px;
   border-radius: 34px;
@@ -96,8 +100,16 @@
   transition: background 0.1s;
 }
 
+.button:active,
+.button:focus {
+  background-color: #d94444; /* Цвет при нажатии */
+  outline: none; /* Убирает стандартное выделение */
+}
+
+
 /* Мобильные стили */
 @media (max-width: 768px) {
+  
   .formContainer {
     padding: 0;
     margin: 16px;
@@ -126,4 +138,5 @@
   .line{
     display: none;
   }
+  
 }
