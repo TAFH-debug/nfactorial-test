@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import StatusBar from "../StatusBar/StatusBar";
-import StatusButton from "../StatusButton/StatusButton";
-import styles from "./Question.module.css";
-import Badge from "../CustomBadge/CustomBadge";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import StatusBar from "../StatusBar/StatusBar";
+import StatusButton from "../StatusButton/StatusButton";
+import Badge from "../CustomBadge/CustomBadge";
+import styles from "./Question.module.css";
 
 export default function Question({
   question,
@@ -17,6 +17,28 @@ export default function Question({
   const [feedbackText, setFeedbackText] = useState("");
   const [isMobile, setIsMobile] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  // Функция для предзагрузки изображений
+  const preloadImages = (images) => {
+    let loadedCount = 0;
+    images.forEach((image) => {
+      const img = new window.Image(); // Используем стандартный объект Image
+      img.src = image;
+      img.onload = () => {
+        loadedCount += 1;
+        if (loadedCount === images.length) {
+          setImagesLoaded(true); // Устанавливаем флаг, когда все изображения загружены
+        }
+      };
+    });
+  };
+
+  useEffect(() => {
+    // Предзагружаем изображения для текущего вопроса
+    const imageUrls = question.options.map((option) => option.image);
+    preloadImages(imageUrls);
+  }, [question]);
 
   useEffect(() => {
     setSelectedOptionId(null);
@@ -54,6 +76,10 @@ export default function Question({
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  if (!imagesLoaded) {
+    return <div>Загрузка...</div>; // Показываем индикатор загрузки, пока изображения не загрузятся
+  }
 
   return (
     <motion.div
