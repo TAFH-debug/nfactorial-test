@@ -78,6 +78,84 @@ export default function handler(req, res) {
           "Не угадали! Тут не соблюдается единство стилей иконок.",
       },
     },
+    {
+      id: 7,
+      options: [
+        { id: 1, image: "/images/uxui/quiz_7_1.png", isGoodDesign: true },
+        { id: 2, image: "/images/uxui/quiz_7_2.png", isGoodDesign: false },
+      ],
+      feedback: {
+        correct:
+          "Верно! Тут соблюдается единство стилей иконок. ",
+        incorrect:
+          "Не угадали! Тут не соблюдается единство стилей иконок.",
+      },
+    },
+    {
+      id: 8,
+      options: [
+        { id: 1, image: "/images/uxui/quiz_8_1.png", isGoodDesign: true },
+        { id: 2, image: "/images/uxui/quiz_8_2.png", isGoodDesign: false },
+      ],
+      feedback: {
+        correct:
+          "Верно! Тут соблюдается единство стилей иконок. ",
+        incorrect:
+          "Не угадали! Тут не соблюдается единство стилей иконок.",
+      },
+    },
+    {
+      id: 9,
+      options: [
+        { id: 1, image: "/images/uxui/quiz_9_1.png", isGoodDesign: true },
+        { id: 2, image: "/images/uxui/quiz_9_2.png", isGoodDesign: false },
+      ],
+      feedback: {
+        correct:
+          "Верно! Тут соблюдается единство стилей иконок. ",
+        incorrect:
+          "Не угадали! Тут не соблюдается единство стилей иконок.",
+      },
+    },
+    {
+      id: 10,
+      options: [
+        { id: 1, image: "/images/uxui/quiz_10_1.png", isGoodDesign: false },
+        { id: 2, image: "/images/uxui/quiz_10_2.png", isGoodDesign: true },
+      ],
+      feedback: {
+        correct:
+          "Верно! Тут соблюдается единство стилей иконок. ",
+        incorrect:
+          "Не угадали! Тут не соблюдается единство стилей иконок.",
+      },
+    },
+    {
+      id: 11,
+      options: [
+        { id: 1, image: "/images/uxui/quiz_11_1.png", isGoodDesign: true },
+        { id: 2, image: "/images/uxui/quiz_11_2.png", isGoodDesign: false },
+      ],
+      feedback: {
+        correct:
+          "Верно! Тут соблюдается единство стилей иконок. ",
+        incorrect:
+          "Не угадали! Тут не соблюдается единство стилей иконок.",
+      },
+    },
+    {
+      id: 12,
+      options: [
+        { id: 1, image: "/images/uxui/quiz_12_1.png", isGoodDesign: true },
+        { id: 2, image: "/images/uxui/quiz_12_2.png", isGoodDesign: false },
+      ],
+      feedback: {
+        correct:
+          "Верно! Тут соблюдается единство стилей иконок. ",
+        incorrect:
+          "Не угадали! Тут не соблюдается единство стилей иконок.",
+      },
+    },
   ];
 
   if (req.method === "GET") {

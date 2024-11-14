@@ -6,56 +6,98 @@ import Badge from "@/components/CustomBadge/CustomBadge";
 const Result = ({ score, category = "mob_dev" }) => {
   const categoryDetails = {
     mob_dev: {
-      imageSrc: "/images/results/mob_dev.webp",
-      mobileImageSrc: "/images/results/mob_dev_mobile.webp",
+      images: [
+        { desktop: "/images/results/mob_dev.webp", mobile: "/images/results/mob_dev_mobile.webp" },   // 0-3 балла
+        { desktop: "/images/results/data_analytics.webp", mobile: "/images/results/data_analytics_mobile.webp" }, // 4-7 баллов
+        { desktop: "/images/results/product_management.webp", mobile: "/images/results/product_management_mobile.webp" },   // 8-10 баллов
+        { desktop: "/images/results/mob_dev.webp", mobile: "/images/results/mob_dev_mobile.webp" }, // 11-12 баллов
+      ],
       badgeSrc: "/images/icons/mob_dev_icon.svg",
-      badgeText: "Хороший результат",
     },
-    web_dev: {
-      imageSrc: "/images/results/web_dev.webp",
-      mobileImageSrc: "/images/results/web_dev_mobile.webp",
-      badgeSrc: "/images/icons/web_dev_icon.svg",
-      badgeText: "Хороший результат",
-    },
-    data_analytics: {
-      imageSrc: "/images/results/data_analytics.webp",
-      mobileImageSrc: "/images/results/data_analytics_mobile.webp",
-      badgeSrc: "/images/icons/data_analytics_icon.svg",
-      badgeText: "Хороший результат",
-    },
-    product_management: {
-      imageSrc: "/images/results/product_management.webp",
-      mobileImageSrc: "/images/results/product_management_mobile.webp",
-      badgeSrc: "/images/icons/product_management_icon.svg",
-      badgeText: "Хороший результат",
-    },
+    // другие категории с похожей структурой
   };
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600;
   const selectedCategory = categoryDetails[category];
 
-  const scoreDetails = {
-    1: {
-      feedback: "Вы набрали 1 балл — это плохой результат. Начните с основ!",
-    },
-    2: {
-      feedback: "Вы набрали 2 балла. Продолжайте развиваться!",
-    },
-    3: {
-      feedback: "Вы набрали 3 балла. Неплохо, но есть куда стремиться.",
-    },
-    4: {
-      feedback: "Вы набрали 4 балла. Хороший результат, но можно еще лучше!",
-    },
-    5: {
-      feedback: "Вы набрали 5 баллов. Отличный результат!",
-    },
-    6: {
-      feedback: "Вы набрали 6 баллов — это круто! Вы — эксперт!",
-    },
+  const getBadgeText = (score) => {
+    if (score >= 0 && score <= 3) return "Нуждается в улучшении";
+    if (score >= 4 && score <= 7) return "Хороший результат";
+    if (score >= 8 && score <= 10) return "Отличный результат";
+    if (score >= 11 && score <= 12) return "Экспертный результат";
+    return "Результат недоступен";
   };
 
-  const feedback = scoreDetails[score]?.feedback || "Результат недоступен";
+  const getCorrectBallText = (score) => {
+    if (score === 1) return "балл";
+    if (score >= 2 && score <= 4) return "балла";
+    return "баллов";
+  };
+
+  const getFeedback = (score) => {
+    if (score >= 0 && score <= 3) {
+      return (
+        <>
+          Не переживай, ошибки — это первый шаг к успеху!
+          <br />
+          Кстати, у нас скоро начинается курс по UI/UX-дизайну, после которого
+          ты сможешь не только пройти тест на 10 баллов, но и научишься
+          проектировать интерфейсы для сайтов и приложений.
+          <br />
+          Присоединяйся и начни свой путь в дизайне!
+        </>
+      );
+    } else if (score >= 4 && score <= 7) {
+      return (
+        <>
+          У тебя есть потенциал! Осталось немного подтянуть знания, и ты сможешь
+          проектировать крутые интерфейсы для любых платформ.
+          <br />
+          Если интересно, то у нас скоро начинается курс по UI/UX-дизайну, на
+          котором ты узнаешь все тонкости UI/UX и сможешь создавать интерфейсы,
+          от которых будут в восторге.
+          <br />
+          Переходи, чтобы узнать подробнее!
+        </>
+      );
+    } else if (score >= 8 && score <= 10) {
+      return (
+        <>
+          Отличный результат! Ты почти готов к созданию классных интерфейсов.
+          <br />
+          Нужно только немного подтянуть теорию и практику.
+          <br />
+          Если интересно, то у нас скоро начинается курс по UI/UX-дизайну, на
+          котором ты узнаешь все тонкости UI/UX и сможешь создавать крутые
+          интерфейсы для сайтов и приложений.
+          <br />
+          Переходи, чтобы узнать подробнее!
+        </>
+      );
+    } else if (score >= 11 && score <= 12) {
+      return (
+        <>
+          Идеально! У тебя явно талант, и ты можешь создавать крутые интерфейсы.
+          <br />
+          Если хочешь структурировать свои знания, у нас скоро начинается курс
+          по UI/UX-дизайну.
+          <br />
+          Переходи, чтобы узнать подробнее!
+        </>
+      );
+    } else {
+      return "Результат недоступен";
+    }
+  };
+
+  const getImageSrc = (score) => {
+    const image = selectedCategory.images[Math.min(Math.floor(score / 4), 3)];
+    return isMobile ? image.mobile : image.desktop;
+  };
+
+  const badgeText = getBadgeText(score);
+  const feedback = getFeedback(score);
+  const imageSrc = getImageSrc(score);
 
   return (
     <>
@@ -65,7 +107,7 @@ const Result = ({ score, category = "mob_dev" }) => {
       <div className={styles.container}>
         <div className={styles.imageContainer}>
           <Image
-            src={isMobile ? selectedCategory.mobileImageSrc : selectedCategory.imageSrc}
+            src={imageSrc}
             alt={`${category} image`}
             width={206}
             height={240}
@@ -75,7 +117,7 @@ const Result = ({ score, category = "mob_dev" }) => {
         </div>
         <div className={styles.infoContainer}>
           <div className={styles.titleContainer}>
-            <div className={styles.title}>Ваш результат</div>
+            <div className={styles.title}>Ваш результат - {score} {getCorrectBallText(score)}</div>
             <div className={styles.badge}>
               <div className={styles.badgeIcon}>
                 <Image
@@ -86,7 +128,7 @@ const Result = ({ score, category = "mob_dev" }) => {
                 />
               </div>
               <div className={styles.badgeText}>
-                {selectedCategory.badgeText}
+                {badgeText}
               </div>
             </div>
           </div>

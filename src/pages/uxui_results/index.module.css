@@ -20,6 +20,17 @@
     justify-content: center;
 }
 
+.scoreDisplay {
+    max-width: 670px;
+    margin: 0 auto;
+    padding: 10px;
+    color: #FFF;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    overflow-wrap: break-word; /* Ensures text wraps within container */
+  }
+  
 @media (max-width: 768px) {
     .heading {
         font-size: 20px; /* Adjust for smaller screens */
