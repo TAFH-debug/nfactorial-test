@@ -123,7 +123,6 @@
 .imageWrapper :global(img) {
   width: 100%;
   height: auto;
-  min-height: 480px;
 }
 
 .imageHidden {
@@ -168,7 +167,7 @@
     width: auto;
   }
   .skeletonBox {
-    padding-bottom: calc(365 / 328 * 100%); /* Соотношение сторон для мобильных устройств */
+    padding-bottom: calc(365 / 328 * 100%); /* Aspect ratio for mobile */
   }
 }
 
@@ -185,7 +184,6 @@
 
   .imageContainer {
     max-width: 300px;
-    min-height: 480px;
   }
 
   .Answer {
