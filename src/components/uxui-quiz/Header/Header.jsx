@@ -6,7 +6,7 @@ import Link from 'next/link';
 export default function Header() {
   return (
     <div className={styles.header}>
-      <Link href="/uxui-quiz/index" style={{ textDecoration: 'none' }}>
+      <Link href="/uxui-quiz/" style={{ textDecoration: 'none' }}>
         <div className={styles.headerContent}>
           <div className={styles.section}>
             <span className={styles.text}>nFactorial School</span>
