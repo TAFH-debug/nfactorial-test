@@ -177,12 +177,13 @@
 @media (max-width: 380px) {
   .AllComponent {
     padding: 8px; /* Reduce overall padding */
+    display: block;
   }
 
   .QuestionPart {
     padding: 16px;
     gap: 12px; /* Reduce the gap between elements */
-    width: 100%;
+    width: fit-content;
   }
 
   .QuestionText {

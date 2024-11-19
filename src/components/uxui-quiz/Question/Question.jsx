@@ -14,10 +14,29 @@ export default function Question({
   const [isCorrect, setIsCorrect] = useState(null);
   const [imageSrc, setImageSrc] = useState("");
   const [isImageLoading, setIsImageLoading] = useState(true);
+  const [deviceType, setDeviceType] = useState("desktop");
+
+  useEffect(() => {
+    // Determine device type on mount
+    const determineDeviceType = () => {
+      if (typeof window !== "undefined") {
+        setDeviceType(window.innerWidth < 768 ? "mobile" : "desktop");
+      }
+    };
+
+    determineDeviceType();
+
+    // Update device type on resize
+    const handleResize = () => {
+      setDeviceType(window.innerWidth < 768 ? "mobile" : "desktop");
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const determineImageSrc = (questionId) => {
     const basePath = "/uxui";
-    const deviceType = window.innerWidth < 768 ? "mobile" : "desktop";
     return `${basePath}/${deviceType}/Quiz_${questionId}.png`;
   };
 
@@ -42,11 +61,8 @@ export default function Question({
 
     updateImageSrc();
 
-    window.addEventListener("resize", updateImageSrc);
-    return () => window.removeEventListener("resize", updateImageSrc);
-
-    // Only re-run when question.id or nextQuestionData changes
-  }, [question.id, nextQuestionData]);
+    // Only re-run when question.id, deviceType, or nextQuestionData changes
+  }, [question.id, deviceType, nextQuestionData]);
 
   const handleChoiceClick = (optionId) => {
     if (feedbackText) return;
