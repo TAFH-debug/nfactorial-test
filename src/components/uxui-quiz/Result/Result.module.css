@@ -12,6 +12,23 @@
   font-family: "Inter", sans-serif;
 }
 
+.buttonNext {
+  background: #222222;
+  color: #fff;
+  flex: 1;
+  padding: 12px;
+  border-radius: 34px;
+  font-size: 16px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
+  margin: 5px auto;
+  width: 100%;
+  max-width: 832px;
+}
+
 .badgeContainer {
   display: flex;
   justify-content: center;
@@ -114,12 +131,12 @@
     gap: 15px;
   }
   .infoContainer {
-    align-items: start;
+    align-items: center;
     text-align: left;
   }
   .titleContainer {
-    align-items: last baseline;
-    gap: 10px;
+    align-items: center;
+    gap: 16px;
   }
   .image {
     max-width: 1200px;
@@ -143,6 +160,11 @@
   .imageContainer{
     width: auto;
     max-width: 100%;
+  }
+  .buttonNext {
+    max-width: 260px;
+    font-size: 14px;
+    padding: 8px;
   }
 }
 

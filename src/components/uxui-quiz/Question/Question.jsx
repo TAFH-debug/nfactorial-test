@@ -12,6 +12,7 @@ export default function Question({
   const [feedbackText, setFeedbackText] = useState("");
   const [isCorrect, setIsCorrect] = useState(null);
   const [imageSrc, setImageSrc] = useState("");
+  const [isImageLoading, setIsImageLoading] = useState(true);
 
   const determineImageSrc = () => {
     const basePath = "/uxui";
@@ -21,12 +22,15 @@ export default function Question({
 
   useEffect(() => {
     const updateImageSrc = () => {
-      setImageSrc(determineImageSrc());
+      const newSrc = determineImageSrc();
+      console.log("New image source:", newSrc); // Для отладки пути
+      setImageSrc(newSrc);
+      setIsImageLoading(true);
     };
 
-    updateImageSrc(); // Устанавливаем изображение при загрузке компонента
+    updateImageSrc();
 
-    window.addEventListener("resize", updateImageSrc); // Обновляем изображение при изменении размера окна
+    window.addEventListener("resize", updateImageSrc);
     return () => window.removeEventListener("resize", updateImageSrc);
   }, [question.id]);
 
@@ -56,44 +60,61 @@ export default function Question({
           Вопрос {currentQuestion} из {totalQuestions}: Какой вариант вам кажется лучше?
         </h1>
         <div className={styles.imageContainer}>
-          {imageSrc && (
-            <Image
-              src={imageSrc}
-              alt={`Вопрос ${currentQuestion}`}
-              layout="responsive"
-              width={832} // Эти размеры используются только как базовые
-              height={470} // Следующие стили и медиа-запросы управляют адаптивностью
-            />
+          {isImageLoading && (
+            <div className={styles.skeleton}>
+              <div className={styles.skeletonBox}></div>
+            </div>
           )}
+          <Image
+            src={imageSrc}
+            alt={`Вопрос ${currentQuestion}`}
+            layout="responsive"
+            width={832}
+            height={470}
+            className={styles.image}
+            priority // Добавляем приоритет загрузки
+            onLoad={() => {
+              console.log("Image loaded:", imageSrc); // Для отладки
+              setIsImageLoading(false);
+            }}
+            onError={(e) => {
+              console.error("Image failed to load:", imageSrc, e); // Для отладки ошибок
+              setIsImageLoading(false); // Снимаем загрузку даже при ошибке, чтобы не зависло
+            }}
+          />
         </div>
         <div className={styles.Answer}>
           {question.options.map((option) => (
             <button
-            key={option.id}
-            className={`${styles.button} ${
-              selectedOptionId === option.id ? styles.selected : ""
+              key={option.id}
+              className={`${styles.button} ${
+                selectedOptionId === option.id ? styles.selected : ""
               }`}
               onClick={() => handleChoiceClick(option.id)}
-              disabled={!!feedbackText} // Блокируем кнопки после выбора
-              >
+              disabled={!!feedbackText || isImageLoading}
+            >
               {option.id === 1 ? "Вариант 1" : "Вариант 2"}
             </button>
           ))}
         </div>
-          {feedbackText && (
-            <div
-              className={
-                isCorrect ? styles.feedbackCorrect : styles.feedbackIncorrect
-              }
-            >
-              {feedbackText}
-            </div>
-          )}
-          {feedbackText && (
-            <button onClick={handleNextQuestion} className={styles.buttonNext}>
-              Следующий вопрос
-            </button>
-          )}
+        {feedbackText && (
+          <div
+            className={
+              isCorrect ? styles.feedbackCorrect : styles.feedbackIncorrect
+            }
+          >
+            {feedbackText}
+          </div>
+        )}
+        {feedbackText && (
+          <button
+            onClick={handleNextQuestion}
+            className={styles.buttonNext}
+            disabled={isImageLoading}
+          >
+            Следующий вопрос
+          </button>
+        )}
       </div>
     </div>
   );

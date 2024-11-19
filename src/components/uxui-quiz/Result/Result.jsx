@@ -20,6 +20,9 @@ const Result = ({ score, category = "mob_dev" }) => {
   const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600;
   const selectedCategory = categoryDetails[category];
 
+  const handleRedirect = () =>{
+    window.location.href = "https://www.nfactorial.school/courses_new/nfactorial-sat"; 
+  }
   const getBadgeText = (score) => {
     if (score >= 0 && score <= 3) return "Нуждается в улучшении";
     if (score >= 4 && score <= 7) return "Хороший результат";
@@ -133,6 +136,11 @@ const Result = ({ score, category = "mob_dev" }) => {
             </div>
           </div>
           <div className={styles.descriptionText}>{feedback}</div>
+        <button 
+        onClick={handleRedirect}
+        className={styles.buttonNext}>
+            Узнать о курсе
+        </button>
         </div>
       </div>
     </>
