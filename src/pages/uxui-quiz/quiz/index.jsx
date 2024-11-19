@@ -1,0 +1,88 @@
+import { useEffect, useState } from "react";
+import Question from "@/components/uxui-quiz/Question/Question";
+import Header from "@/components/Header/Header";
+import Background from "@/components/uxui-quiz/Background/Background";
+import { useRouter } from "next/router";
+
+export default function Uxui() {
+  const router = useRouter();
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const res = await fetch("/api/uxui_v2");
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        const data = await res.json();
+        setQuestions(data);
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchQuestions();
+  }, []);
+
+  const handleAnswer = (selectedOptionId) => {
+    setAnswers((prevAnswers) => {
+      const updatedAnswers = [...prevAnswers, selectedOptionId];
+
+      if (currentQuestionIndex < questions.length - 1) {
+        // Переход к следующему вопросу
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      } else {
+        // Вызов submitAnswers после последнего вопроса
+        submitAnswers(updatedAnswers);
+      }
+
+      return updatedAnswers;
+    });
+  };
+
+  const submitAnswers = async (answersArray) => {
+    try {
+      const res = await fetch("/api/uxui_v2", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ answers: answersArray }),
+      });
+
+      const data = await res.json();
+      const { score } = data;
+
+      // Перенаправление на страницу результатов
+      router.push({
+        pathname: "/uxui-quiz/results",
+        query: { score }, // Передаем результат
+      });
+    } catch (error) {
+      console.error("Ошибка при отправке ответов:", error);
+    }
+  };
+
+  if (loading) {
+    return <div>Загрузка...</div>;
+  }
+
+  return (
+    <>
+      <Header />
+      <Background />
+      <div>
+        <Question
+          question={questions[currentQuestionIndex]}
+          totalQuestions={questions.length}
+          currentQuestion={currentQuestionIndex + 1}
+          onAnswer={handleAnswer}
+        />
+      </div>
+    </>
+  );
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import InputMask from "react-input-mask"; // Импортируем InputMask
-import styles from "./Form_uxui.module.css";
+import styles from "./Form.module.css";
 import { sendGAEvent } from "@next/third-parties/google"; // GTM отправка событий
 
 export default function Form() {
@@ -65,7 +65,7 @@ export default function Form() {
       });
 
       if (response.ok) {
-        router.push("/uxui");
+        router.push("/uxui-quiz/quiz");
       } else {
         const result = await response.json();
         setFormError(result.error || "Ошибка при отправке данных");

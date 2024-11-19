@@ -1,0 +1,156 @@
+/* Основные стили */
+.AllComponent {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+  padding: 16px;
+}
+
+.QuestionPart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 20px;
+  background: #fff;
+  max-width: 940px;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.QuestionText {
+  font-family: "Inter", sans-serif;
+  color: black;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  max-width: 940px;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 832px;
+}
+
+.Answer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 16px;
+  width: 100%;
+  max-width: 832px;
+}
+
+.button {
+  flex: 1;
+  height: 44px;
+  padding: 10px 15px;
+  border-radius: 34px;
+  font-size: 16px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
+}
+
+.button:hover:not([disabled]) {
+  background-color: rgba(214, 214, 214, 0.2);
+}
+
+.button:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+}
+
+.feedbackCorrect,
+.feedbackIncorrect {
+  padding: 16px; /* Уменьшаем отступы */
+  margin-top: 16px;
+  font-size: 16px;
+  font-family: "Inter", sans-serif;
+  text-align: center;
+  width: 100%;
+  max-width: 832px; /* Совпадает с максимальной шириной изображения */
+  box-sizing: border-box; /* Учитываем padding в ширину */
+  border-radius: 24px; /* Уменьшаем скругление */
+  color: #333;
+  word-wrap: break-word; /* Переносим слова для избежания переполнения */
+  overflow-wrap: break-word; /* Поддержка переноса длинных слов */
+}
+
+.feedbackCorrect {
+  background-color: #c2f3b5; /* Светло-зеленый для правильного ответа */
+}
+
+.feedbackIncorrect {
+  background-color: #fea7a9; /* Светло-красный для неправильного ответа */
+}
+
+
+.buttonNext {
+  background: #222222;
+  color: #fff;
+  flex: 1;
+  padding: 12px;
+  border-radius: 34px;
+  font-size: 16px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
+  margin: 5px auto;
+  width: 100%;
+  max-width: 832px;
+}
+
+/* Адаптация для экранов до 768px */
+@media (max-width: 768px) {
+  .imageContainer {
+    max-width: 348px;
+  }
+  .QuestionPart {
+    width: auto;
+  }
+}
+
+/* Адаптация для экранов 380px и менее */
+@media (max-width: 380px) {
+  .QuestionPart {
+    width: auto;
+  }
+  
+  .QuestionText {
+    font-size: 18px;
+    padding: 0 10px;
+  }
+
+  .imageContainer {
+    max-width: 300px;
+  }
+
+  .Answer {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .button {
+    width: 100%;
+    max-width: 260px;
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+
+  .buttonNext {
+    max-width: 260px;
+    font-size: 14px;
+    padding: 8px;
+  }
+}

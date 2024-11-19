@@ -1,0 +1,143 @@
+.input:focus {
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  color: #ffffff; /* Keep text color white on focus */
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  margin: 0 auto;
+  height: auto;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.line {
+  width: 100%;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.202);
+}
+
+/* Контейнер для общего сообщения об ошибке */
+.errorContainer {
+  display: flex;
+  justify-content: center; /* Выравнивание по центру */
+  margin-bottom: 10px; /* Отступ снизу */
+  width: 100%; /* Ширина 100% для корректного выравнивания */
+}
+
+/* Сообщение об ошибке для всей формы */
+.formError {
+  color: #ff4d4d; /* Красный цвет текста */
+  display: flex; /* Flex для выравнивания */
+  align-items: center;
+  padding: 24px; /* Центрируем по вертикали */
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 111%;
+}
+
+.errorIcon {
+  margin-right: 8px; /* Отступ между иконкой и текстом */
+  color: #ff4d4d; /* Красный цвет иконки */
+}
+
+/* Стили для обертки кнопки */
+.buttonContainer {
+  display: flex;
+  justify-content: center; /* Центрируем кнопку */
+  width: 100%; /* Ширина на 100% */
+}
+
+/* Остальные стили остаются прежними... */
+
+.inputWrapper {
+  flex: 1;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+  font-size: 17px;
+  font-family: "Inter", sans-serif;
+  height: auto;
+  width: 250px;
+  margin: 0 auto;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 37px;
+  color: #ffffff;
+}
+
+.button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #FFFFFF; /* Ваш цвет для кнопки */
+  color: #222222; /* Цвет текста на кнопке */
+  width: 100%;
+  height: auto;
+  padding: 15px;
+  border-radius: 34px;
+  font-size: 17px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: background 0.1s;
+}
+
+.button:active,
+.button:focus {
+  background-color: #d94444; /* Цвет при нажатии */
+  outline: none; /* Убирает стандартное выделение */
+  color: #FFFFFF; /* Цвет текста на кнопке */
+}
+
+
+/* Мобильные стили */
+@media (max-width: 768px) {
+  
+  .formContainer {
+    padding: 0;
+    margin: 16px;
+  }
+  .box {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    padding-top: 16px;
+  }
+
+  .inputWrapper {
+    width: 100%;
+  }
+
+  .input {
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .button {
+    flex: 1;
+    width: auto;
+  }
+  .line{
+    display: none;
+  }
+  
+}
