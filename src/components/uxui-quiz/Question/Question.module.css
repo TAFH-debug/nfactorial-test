@@ -123,6 +123,7 @@
 .imageWrapper :global(img) {
   width: 100%;
   height: auto;
+  min-height: 480px;
 }
 
 .imageHidden {
@@ -184,6 +185,7 @@
 
   .imageContainer {
     max-width: 300px;
+    min-height: 480px;
   }
 
   .Answer {
