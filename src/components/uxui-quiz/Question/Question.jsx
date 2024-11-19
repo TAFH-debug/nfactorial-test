@@ -98,8 +98,11 @@ export default function Question({
   return (
     <div className={styles.AllComponent}>
       <div className={styles.QuestionPart}>
-        <h1 className={styles.QuestionText}>
+        {/* <h1 className={styles.QuestionText}>
           Вопрос {currentQuestion} из {totalQuestions}: Какой вариант вам кажется лучше?
+        </h1> */}
+        <h1 className={styles.QuestionText}>
+          Какой вариант вам кажется лучше?
         </h1>
         <div className={styles.imageContainer}>
           <div className={styles.imageWrapper}>
