@@ -7,6 +7,7 @@ export default function Question({
   totalQuestions,
   currentQuestion,
   onAnswer,
+  nextQuestionData,
 }) {
   const [selectedOptionId, setSelectedOptionId] = useState(null);
   const [feedbackText, setFeedbackText] = useState("");
@@ -14,27 +15,36 @@ export default function Question({
   const [imageSrc, setImageSrc] = useState("");
   const [isImageLoading, setIsImageLoading] = useState(true);
 
-  const determineImageSrc = () => {
+  const determineImageSrc = (questionId) => {
     const basePath = "/uxui";
     const deviceType = window.innerWidth < 768 ? "mobile" : "desktop";
-    return `${basePath}/${deviceType}/Quiz_${question.id}.png`;
+    return `${basePath}/${deviceType}/Quiz_${questionId}.png`;
   };
 
   useEffect(() => {
     const updateImageSrc = () => {
-      const newSrc = determineImageSrc();
-      console.log("New image source:", newSrc); // Для отладки пути
-      setImageSrc(newSrc);
+      const currentImageSrc = determineImageSrc(question.id);
+      setImageSrc(currentImageSrc);
       setIsImageLoading(true);
+
+      if (nextQuestionData) {
+        const nextImgSrc = determineImageSrc(nextQuestionData.id);
+
+        // Предзагрузка следующего изображения
+        const img = new window.Image();
+        img.src = nextImgSrc;
+      }
     };
 
     updateImageSrc();
 
     window.addEventListener("resize", updateImageSrc);
     return () => window.removeEventListener("resize", updateImageSrc);
-  }, [question.id]);
+  }, [question.id, nextQuestionData]);
 
   const handleChoiceClick = (optionId) => {
+    if (feedbackText) return;
+
     const isOptionCorrect = question.options.find(
       (opt) => opt.id === optionId
     ).isGoodDesign;
@@ -60,28 +70,24 @@ export default function Question({
           Вопрос {currentQuestion} из {totalQuestions}: Какой вариант вам кажется лучше?
         </h1>
         <div className={styles.imageContainer}>
-          {isImageLoading && (
-            <div className={styles.skeleton}>
-              <div className={styles.skeletonBox}></div>
-            </div>
-          )}
-          <Image
-            src={imageSrc}
-            alt={`Вопрос ${currentQuestion}`}
-            layout="responsive"
-            width={832}
-            height={470}
-            className={styles.image}
-            priority // Добавляем приоритет загрузки
-            onLoad={() => {
-              console.log("Image loaded:", imageSrc); // Для отладки
-              setIsImageLoading(false);
-            }}
-            onError={(e) => {
-              console.error("Image failed to load:", imageSrc, e); // Для отладки ошибок
-              setIsImageLoading(false); // Снимаем загрузку даже при ошибке, чтобы не зависло
-            }}
-          />
+          <div className={styles.imageWrapper}>
+            {imageSrc && (
+              <Image
+                src={imageSrc}
+                alt={`Вопрос ${currentQuestion}`}
+                layout="responsive"
+                width={832}
+                height={470}
+                onLoadingComplete={() => setIsImageLoading(false)}
+                className={isImageLoading ? styles.imageHidden : styles.imageVisible}
+              />
+            )}
+            {isImageLoading && (
+              <div className={styles.skeletonBox}>
+                {/* Скелетон */}
+              </div>
+            )}
+          </div>
         </div>
         <div className={styles.Answer}>
           {question.options.map((option) => (

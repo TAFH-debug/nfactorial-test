@@ -1,5 +1,8 @@
+// pages/uxui-quiz/index.js
+
 import { useEffect, useState } from "react";
 import Question from "@/components/uxui-quiz/Question/Question";
+import SkeletonQuestion from "@/components/uxui-quiz/SkeletonQuestion/SkeletonQuestion"; // Импортируем SkeletonQuestion
 import Header from "@/components/uxui-quiz/Header/Header";
 import Background from "@/components/uxui-quiz/Background/Background";
 import { useRouter } from "next/router";
@@ -33,10 +36,8 @@ export default function Uxui() {
       const updatedAnswers = [...prevAnswers, selectedOptionId];
 
       if (currentQuestionIndex < questions.length - 1) {
-        // Переход к следующему вопросу
         setCurrentQuestionIndex(currentQuestionIndex + 1);
       } else {
-        // Вызов submitAnswers после последнего вопроса
         submitAnswers(updatedAnswers);
       }
 
@@ -57,10 +58,9 @@ export default function Uxui() {
       const data = await res.json();
       const { score } = data;
 
-      // Перенаправление на страницу результатов
       router.push({
         pathname: "/uxui-quiz/results",
-        query: { score }, // Передаем результат
+        query: { score },
       });
     } catch (error) {
       console.error("Ошибка при отправке ответов:", error);
@@ -68,8 +68,20 @@ export default function Uxui() {
   };
 
   if (loading) {
-    return <div>Загрузка...</div>;
+    return (
+      <>
+        <Header />
+        <Background />
+        <SkeletonQuestion />
+      </>
+    );
   }
+
+  // Определяем данные следующего вопроса
+  const nextQuestionData =
+    currentQuestionIndex + 1 < questions.length
+      ? questions[currentQuestionIndex + 1]
+      : null;
 
   return (
     <>
@@ -81,6 +93,7 @@ export default function Uxui() {
           totalQuestions={questions.length}
           currentQuestion={currentQuestionIndex + 1}
           onAnswer={handleAnswer}
+          nextQuestionData={nextQuestionData} // Передаем данные следующего вопроса
         />
       </div>
     </>
