@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import InputMask from "react-input-mask"; // Импортируем InputMask
+// Удаляем импорт InputMask
+// import InputMask from "react-input-mask";
+import PhoneInput from "react-phone-input-2";
+// Удаляем импорт стилей библиотеки
+// import "react-phone-input-2/lib/style.css";
 import styles from "./Form.module.css";
-import { sendGAEvent } from "@next/third-parties/google"; // GTM отправка событий
+import { parsePhoneNumberFromString } from "libphonenumber-js"; // Импортируем для валидации номера
 
 export default function Form() {
   const [name, setName] = useState("");
@@ -27,8 +31,11 @@ export default function Form() {
   }, [router.query]);
 
   const validateName = (name) => /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(name);
-  const validatePhone = (phone) =>
-    /^\+([1-9]) \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(phone);
+
+  const validatePhone = (phone) => {
+    const phoneNumber = parsePhoneNumberFromString("+" + phone);
+    return phoneNumber && phoneNumber.isValid() && phoneNumber.country === "KZ";
+  };
 
   const handleStart = async (e) => {
     e.preventDefault();
@@ -42,9 +49,7 @@ export default function Form() {
     }
 
     if (!validatePhone(phone)) {
-      setFormError(
-        "Введите корректный номер телефона (например, +7 (123) 456-78-90)."
-      );
+      setFormError("Введите корректный номер телефона Казахстана.");
       setSubmitting(false);
       return;
     }
@@ -57,10 +62,10 @@ export default function Form() {
         },
         body: JSON.stringify({
           name,
-          phone,
+          phone: "+" + phone, // Добавляем '+' к номеру
           utmData,
           referrer,
-          formType: "second", // Уникальный параметр для первой формы
+          formType: "second",
         }),
       });
 
@@ -93,12 +98,18 @@ export default function Form() {
           />
         </div>
         <div className={styles.inputWrapper}>
-          <InputMask
-            mask="+9 (999) 999-99-99" // Маска для телефона
+          <PhoneInput
+            country={"kz"}
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(phone) => setPhone(phone)}
+            disableSearchIcon={false}
+            // countryCodeEditable={false}
+            // disableDropdown={true}
             placeholder="Номер телефона"
-            className={styles.input}
+            inputClass={styles.input}
+            buttonClass={styles.phoneInputButton}
+            containerClass={styles.phoneInputContainer}
+            specialLabel="" 
           />
         </div>
         <div className={styles.buttonContainer}>
