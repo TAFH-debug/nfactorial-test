@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Background from "@/components/uxui-quiz/Background/Background";
-import Header from "@/components/Header/Header";
+import Header from "@/components/uxui-quiz/Header/Header";
 import Main from "@/components/uxui-quiz/Main/Main";
 import Form from "@/components/uxui-quiz/Form/Form";
 import Badge from "@/components/Badge/Badge";

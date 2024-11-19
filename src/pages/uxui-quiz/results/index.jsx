@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import Result from "@/components/uxui-quiz/Result/Result";
 import Head from "next/head";
-import Header from "@/components/Header/Header";
+import Header from "@/components/uxui-quiz/Header/Header";
 import Background from "@/components/Background_uxui/Background_uxui";
 import CourseRecommendations from "@/components/CourseRecommendations/CourseRecommendations";
 import MainForm from "@/components/MainForm/MainForm";

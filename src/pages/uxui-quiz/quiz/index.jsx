@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Question from "@/components/uxui-quiz/Question/Question";
-import Header from "@/components/Header/Header";
+import Header from "@/components/uxui-quiz/Header/Header";
 import Background from "@/components/uxui-quiz/Background/Background";
 import { useRouter } from "next/router";
 
