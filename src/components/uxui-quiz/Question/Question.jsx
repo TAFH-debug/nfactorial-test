@@ -23,9 +23,13 @@ export default function Question({
 
   useEffect(() => {
     const updateImageSrc = () => {
-      const currentImageSrc = determineImageSrc(question.id);
-      setImageSrc(currentImageSrc);
-      setIsImageLoading(true);
+      const newImageSrc = determineImageSrc(question.id);
+
+      // Only update imageSrc and set isImageLoading if the image source has changed
+      if (newImageSrc !== imageSrc) {
+        setImageSrc(newImageSrc);
+        setIsImageLoading(true);
+      }
 
       if (nextQuestionData) {
         const nextImgSrc = determineImageSrc(nextQuestionData.id);
@@ -40,6 +44,8 @@ export default function Question({
 
     window.addEventListener("resize", updateImageSrc);
     return () => window.removeEventListener("resize", updateImageSrc);
+
+    // Only re-run when question.id or nextQuestionData changes
   }, [question.id, nextQuestionData]);
 
   const handleChoiceClick = (optionId) => {
@@ -65,9 +71,12 @@ export default function Question({
 
   const handleNextQuestion = () => {
     onAnswer(selectedOptionId);
+
+    // Reset states
     setSelectedOptionId(null);
     setFeedbackText("");
     setIsCorrect(null);
+    setIsImageLoading(true); // Set isImageLoading to true when moving to the next question
   };
 
   return (
@@ -82,7 +91,7 @@ export default function Question({
               <Image
                 src={imageSrc}
                 alt={`Вопрос ${currentQuestion}`}
-                layout="fill" /* Use layout="fill" for absolute positioning */
+                layout="fill"
                 objectFit="cover"
                 onLoadingComplete={() => setIsImageLoading(false)}
                 className={

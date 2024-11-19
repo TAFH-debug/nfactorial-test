@@ -173,39 +173,54 @@
   }
 }
 
+/* Adjustments for screens 380px and below */
 @media (max-width: 380px) {
+  .AllComponent {
+    padding: 8px; /* Reduce overall padding */
+  }
+
   .QuestionPart {
-    width: auto;
+    padding: 16px;
+    gap: 12px; /* Reduce the gap between elements */
+    width: 100%;
   }
 
   .QuestionText {
     font-size: 18px;
-    padding: 0 10px;
+    padding: 0 8px;
   }
 
   .imageContainer {
-    max-width: 300px;
+    max-width: 100%; /* Allow image container to take full width */
   }
 
   .imageWrapper {
-    padding-bottom: calc(365 / 328 * 100%);
+    padding-bottom: calc(365 / 328 * 100%); /* Ensure aspect ratio */
   }
 
   .Answer {
     flex-direction: column;
-    gap: 16px;
+    gap: 12px; /* Reduce gap between buttons */
+    width: 100%;
   }
 
   .button {
     width: 100%;
-    max-width: 260px;
+    max-width: none; /* Remove max-width to allow full width */
     font-size: 14px;
     padding: 8px 10px;
   }
 
   .buttonNext {
-    max-width: 260px;
+    max-width: none;
+    width: 100%;
     font-size: 14px;
     padding: 8px;
+  }
+
+  .feedbackCorrect,
+  .feedbackIncorrect {
+    font-size: 14px; /* Reduce font size for feedback text */
+    padding: 12px; /* Reduce padding */
   }
 }
