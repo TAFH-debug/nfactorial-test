@@ -165,6 +165,11 @@
 
 /* Media Queries */
 @media (max-width: 768px) {
+  .QuestionPart {
+    padding: 16px;
+    gap: 12px; /* Reduce the gap between elements */
+    width: fit-content;
+  }
   .imageContainer {
     max-width: 348px;
   }
