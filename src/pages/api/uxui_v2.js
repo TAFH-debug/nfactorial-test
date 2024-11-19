@@ -107,14 +107,14 @@ export default function handler(req, res) {
       {
         id: 9,
         options: [
-          { id: 1, isGoodDesign: true },
-          { id: 2, isGoodDesign: false },
+          { id: 1, isGoodDesign: false },
+          { id: 2, isGoodDesign: true },
         ],
         feedback: {
           correct:
-            "Верно! Похожие элементы лучше объединять в группы.",
+            "Верно! Отображайте визуально статус системы",
           incorrect:
-            "А вот и нет! Похожие элементы лучше объединять в группы.",
+            "Почти) В интерфейсах удобных для пользователей нужно отображать статус системы.",
         },
       },
       {
