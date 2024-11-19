@@ -30,7 +30,7 @@ export default function Question({
       if (nextQuestionData) {
         const nextImgSrc = determineImageSrc(nextQuestionData.id);
 
-        // Предзагрузка следующего изображения
+        // Preload next image
         const img = new window.Image();
         img.src = nextImgSrc;
       }
@@ -45,9 +45,16 @@ export default function Question({
   const handleChoiceClick = (optionId) => {
     if (feedbackText) return;
 
-    const isOptionCorrect = question.options.find(
+    const selectedOption = question.options.find(
       (opt) => opt.id === optionId
-    ).isGoodDesign;
+    );
+
+    if (!selectedOption) {
+      console.error(`Option with id ${optionId} not found.`);
+      return;
+    }
+
+    const isOptionCorrect = selectedOption.isGoodDesign;
 
     setSelectedOptionId(optionId);
     setIsCorrect(isOptionCorrect);
@@ -57,10 +64,10 @@ export default function Question({
   };
 
   const handleNextQuestion = () => {
+    onAnswer(selectedOptionId);
     setSelectedOptionId(null);
     setFeedbackText("");
     setIsCorrect(null);
-    onAnswer(selectedOptionId);
   };
 
   return (
@@ -75,16 +82,17 @@ export default function Question({
               <Image
                 src={imageSrc}
                 alt={`Вопрос ${currentQuestion}`}
-                layout="responsive"
-                width={832}
-                height={470}
+                layout="fill" /* Use layout="fill" for absolute positioning */
+                objectFit="cover"
                 onLoadingComplete={() => setIsImageLoading(false)}
-                className={isImageLoading ? styles.imageHidden : styles.imageVisible}
+                className={
+                  isImageLoading ? styles.imageHidden : styles.imageVisible
+                }
               />
             )}
             {isImageLoading && (
               <div className={styles.skeletonBox}>
-                {/* Скелетон */}
+                {/* Skeleton */}
               </div>
             )}
           </div>

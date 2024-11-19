@@ -1,4 +1,4 @@
-/* Основные стили */
+/* Main Styles */
 .AllComponent {
   display: grid;
   align-items: center;
@@ -31,13 +31,48 @@
 }
 
 .imageContainer {
-  /* display: flex; */
-  justify-content: center;
-  align-items: center;
   width: 100%;
   max-width: 832px;
+  position: relative;
+  overflow: hidden;
 }
 
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: calc(470 / 832 * 100%);
+}
+
+.imageWrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.imageHidden {
+  opacity: 0;
+}
+
+.imageVisible {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.skeletonBox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #e2e2e2;
+  border-radius: 8px;
+  animation: pulse 1.5s infinite;
+}
+
+/* Answer Buttons and Feedback */
 .Answer {
   display: flex;
   flex-direction: row;
@@ -58,6 +93,7 @@
   cursor: pointer;
   border: none;
   transition: background 0.3s;
+  background-color: #f0f0f0;
 }
 
 .button:hover:not([disabled]) {
@@ -69,30 +105,33 @@
   cursor: not-allowed;
 }
 
+.selected {
+  background-color: #d0eaff;
+}
+
 .feedbackCorrect,
 .feedbackIncorrect {
-  padding: 16px; /* Уменьшаем отступы */
+  padding: 16px;
   margin-top: 16px;
   font-size: 16px;
   font-family: "Inter", sans-serif;
   text-align: center;
   width: 100%;
-  max-width: 832px; /* Совпадает с максимальной шириной изображения */
-  box-sizing: border-box; /* Учитываем padding в ширину */
-  border-radius: 24px; /* Уменьшаем скругление */
+  max-width: 832px;
+  box-sizing: border-box;
+  border-radius: 24px;
   color: #333;
-  word-wrap: break-word; /* Переносим слова для избежания переполнения */
-  overflow-wrap: break-word; /* Поддержка переноса длинных слов */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .feedbackCorrect {
-  background-color: #c2f3b5; /* Светло-зеленый для правильного ответа */
+  background-color: #c2f3b5;
 }
 
 .feedbackIncorrect {
-  background-color: #fea7a9; /* Светло-красный для неправильного ответа */
+  background-color: #fea7a9;
 }
-
 
 .buttonNext {
   background: #222222;
@@ -110,41 +149,8 @@
   width: 100%;
   max-width: 832px;
 }
-.imageContainer {
-  width: 100%;
-  max-width: 832px;
-}
 
-.imageWrapper {
-  position: relative;
-  width: 100%;
-}
-
-.imageWrapper :global(img) {
-  width: 100%;
-  height: auto;
-}
-
-.imageHidden {
-  opacity: 0;
-}
-
-.imageVisible {
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.skeletonBox {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding-bottom: calc(470 / 832 * 100%); /* Соотношение сторон для десктопа */
-  background-color: #e2e2e2;
-  border-radius: 8px;
-  animation: pulse 1.5s infinite;
-}
-
+/* Pulse Animation */
 @keyframes pulse {
   0% {
     background-color: #e2e2e2;
@@ -157,26 +163,21 @@
   }
 }
 
-
-/* Адаптация для экранов до 768px */
+/* Media Queries */
 @media (max-width: 768px) {
   .imageContainer {
     max-width: 348px;
   }
-  .QuestionPart {
-    width: auto;
-  }
-  .skeletonBox {
-    padding-bottom: calc(365 / 328 * 100%); /* Aspect ratio for mobile */
+  .imageWrapper {
+    padding-bottom: calc(365 / 328 * 100%);
   }
 }
 
-/* Адаптация для экранов 380px и менее */
 @media (max-width: 380px) {
   .QuestionPart {
     width: auto;
   }
-  
+
   .QuestionText {
     font-size: 18px;
     padding: 0 10px;
@@ -184,6 +185,10 @@
 
   .imageContainer {
     max-width: 300px;
+  }
+
+  .imageWrapper {
+    padding-bottom: calc(365 / 328 * 100%);
   }
 
   .Answer {

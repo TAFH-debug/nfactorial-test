@@ -1,5 +1,3 @@
-// components/uxui-quiz/SkeletonQuestion/SkeletonQuestion.js
-
 import styles from './SkeletonQuestion.module.css';
 
 export default function SkeletonQuestion() {

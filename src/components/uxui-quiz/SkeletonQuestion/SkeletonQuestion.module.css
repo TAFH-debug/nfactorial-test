@@ -1,5 +1,3 @@
-/* components/uxui-quiz/SkeletonQuestion/SkeletonQuestion.module.css */
-
 .AllComponent {
     display: grid;
     align-items: center;
@@ -36,7 +34,7 @@
   
   .skeletonBox {
     width: 100%;
-    padding-bottom: 56.25%; /* Соотношение сторон 16:9 */
+    padding-bottom: calc(470 / 832 * 100%); /* Matching aspect ratio */
     background-color: #e2e2e2;
     border-radius: 8px;
     animation: pulse 1.5s infinite;
@@ -59,7 +57,7 @@
     animation: pulse 1.5s infinite;
   }
   
-  /* Анимация пульсации */
+  /* Pulse Animation */
   @keyframes pulse {
     0% {
       background-color: #e2e2e2;
