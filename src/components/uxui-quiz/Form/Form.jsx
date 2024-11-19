@@ -118,7 +118,7 @@ export default function Form() {
             className={`${styles.button} ${styles.startButton}`}
             disabled={submitting}
           >
-            {submitting ? "Отправка..." : "Вперед!"}
+            {submitting ? "Загружаем тест" : "Вперед!"}
           </button>
         </div>
 
