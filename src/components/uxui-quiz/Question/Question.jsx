@@ -108,7 +108,7 @@ export default function Question({
                 src={imageSrc}
                 alt={`Вопрос ${currentQuestion}`}
                 layout="fill"
-                objectFit="cover"
+                // objectFit="cover"
                 onLoadingComplete={() => setIsImageLoading(false)}
                 className={
                   isImageLoading ? styles.imageHidden : styles.imageVisible
