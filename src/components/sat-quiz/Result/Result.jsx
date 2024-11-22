@@ -1,0 +1,122 @@
+// import React from "react";
+import Image from "next/image";
+import styles from "./Result.module.css";
+import React, { useState, useEffect } from "react";
+
+  const resultDetails = {
+    0: {
+      title: "Первый блин комом, но мы в игре!",
+      text: "Вы только начинаете свой путь подготовки к SAT. Продолжайте практиковаться, и вы обязательно увидите прогресс! В nFactorial School мы предлагаем интенсивную подготовку к SAT с групповыми занятиями и персональным ИИ-тренером, чтобы помочь вам поступить в университет мечты.",
+      images: {
+        desktop: "/images/results/desktop/data_analytics.webp",
+        mobile: "/images/results/desktop/data_analytics.webp",
+      },
+    },
+    1: {
+      title: "Первый блин комом, но мы в игре!",
+      text: "Вы только начинаете свой путь подготовки к SAT. Продолжайте практиковаться, и вы обязательно увидите прогресс! В nFactorial School мы предлагаем интенсивную подготовку к SAT с групповыми занятиями и персональным ИИ-тренером, чтобы помочь вам поступить в университет мечты.",
+      images: {
+        desktop: "/images/results/desktop/data_analytics.webp",
+        mobile: "/images/results/desktop/data_analytics.webp",
+      },
+    },
+    2: {
+      title: "Первые шаги к вершине, где дипломы и слава!",
+      text: "Вы уже делаете успехи, но ещё есть над чем поработать. Продолжайте тренироваться и изучать слабые стороны. В nFactorial School вы можете пройти интенсивную подготовку к SAT, включая групповые уроки и помощь персонального ИИ-тренера. Дарим вам бесплатную консультацию от экспертов!",
+      images: {
+        desktop: "/images/results/desktop/data_analytics.webp",
+        mobile: "/images/results/desktop/data_analytics.webp",
+      },
+    },
+    3: {
+      title: "Тройка — не предел, зато уверенный старт!",
+      text: "Хороший старт! Вы освоили основные концепции, но нужно больше практики для достижения лучшего результата. В nFactorial School у нас есть всё необходимое: интенсивная подготовка к SAT, групповые занятия и персональный ИИ-тренер для поддержки вашего пути к поступлению в университет мечты.",
+      images: {
+        desktop: "/images/results/desktop/data_analytics.webp",
+        mobile: "/images/results/desktop/data_analytics.webp",
+      },
+    },
+    4: {
+      title: "Четвёрка на SAT — это не школа, но уже что-то!",
+      text: "Средний уровень. Вы находитесь на полпути к отличному результату. Важно закрепить изученные материалы и уделить внимание сложным темам. Дарим вам бесплатную консультацию от экспертов, где расскажем, что нужно для идеального результата!",
+      images: {
+        desktop: "/images/results/desktop/data_analytics.webp",
+        mobile: "/images/results/desktop/data_analytics.webp",
+      },
+    },
+    5: {
+      title: "Пятёрка, и мы на пути к великому!",
+      text: "Выше среднего! Вы хорошо подготовились, но есть ещё области, требующие внимания. nFactorial School поможет вам благодаря интенсивной подготовке к SAT, включая групповые занятия и поддержку ИИ-тренера.",
+      images: {
+        desktop: "/images/results/desktop/data_analytics.webp",
+        mobile: "/images/results/desktop/data_analytics.webp",
+      },
+    },
+    6: {
+      title: "Шестёрка? Уже на уровне 'профи в деле'!",
+      text: "Отличный результат! Вы показываете высокий уровень подготовки, осталось совсем немного для максимального результата. Пройдите интенсивную подготовку к SAT в nFactorial School с групповыми занятиями и персональным ИИ-тренером.",
+      images: {
+        desktop: "/images/results/desktop/data_analytics.webp",
+        mobile: "/images/results/desktop/data_analytics.webp",
+      },
+    },
+    7: {
+      title: "Семёрка — уже почти рок-звезда SAT!",
+      text: "Почти идеально! Вы демонстрируете отличные знания и навыки. Сосредоточьтесь на мелочах, чтобы достичь совершенства. Дарим вам бесплатную консультацию от экспертов, где расскажем, что нужно для идеального результата!",
+      images: {
+        desktop: "/images/results/desktop/data_analytics.webp",
+        mobile: "/images/results/desktop/data_analytics.webp",
+      },
+    },
+    8: {
+      title: "Восемь из восьми? Король подготовки к SAT!",
+      text: "Прекрасная работа! Вы достигли максимального результата на этом этапе подготовки к SAT. В nFactorial School мы предлагаем интенсивную программу подготовки к SAT с групповыми занятиями и персональным ИИ-тренером, чтобы сделать поступление в ваш университет мечты реальностью.",
+      images: {
+        desktop: "/images/results/desktop/data_analytics.webp",
+        mobile: "/images/results/desktop/data_analytics.webp",
+      },
+    },
+  };
+  const Result = ({ score }) => {
+    const [isMobile, setIsMobile] = useState(false);
+  
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 768); // Условие для мобильных устройств
+      };
+  
+      handleResize(); // Проверка при загрузке компонента
+      window.addEventListener("resize", handleResize); // Добавляем обработчик изменения размеров окна
+  
+      return () => {
+        window.removeEventListener("resize", handleResize); // Очищаем обработчик при размонтировании компонента
+      };
+    }, []);
+  
+    const result = resultDetails[score];
+  
+    if (!result) {
+      return <p>Результат недоступен. Попробуйте пройти тест снова!</p>;
+    }
+  
+    const imageSrc = isMobile ? result.images.mobile : result.images.desktop;
+  
+    return (
+      <div className={styles.container}>
+        <Image
+          src={imageSrc}
+          alt={`Result for score ${score}`}
+          width={300}
+          height={300}
+          className={styles.image}
+        />
+        <div className={styles.infoContainer}>
+          <h1 className={styles.title}>{result.title}</h1>
+          <p className={styles.text}>{result.text}</p>
+        </div>
+      </div>
+    );
+  };
+  
+  export default Result;
+  

@@ -1,0 +1,147 @@
+/* Container Styles */
+.questionContainer {
+  font-family: "Inter", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Question Title */
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+/* Question Text */
+.questionText {
+  font-size: 18px;
+  font-weight: 400;
+  color: #555;
+  text-align: center;
+  margin-bottom: 24px;
+  font-family: "Inter", sans-serif;
+}
+
+/* Options Container */
+.optionsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Option Button */
+.optionButton {
+  font-family: "Inter", sans-serif;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  background: #f9f9f9;
+  border: 2px solid transparent;
+  border-radius: 34px;
+  cursor: pointer;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.optionButton:hover:not(:disabled) {
+  background: #f0f8ff;
+}
+
+.optionButton:disabled {
+  background: #e9ecef;
+  cursor: not-allowed;
+}
+
+.selectedOption {
+  background: #d1ecf1;
+  border-color: #007bff;
+}
+
+/* Feedback Styles */
+.feedbackCorrect {
+  font-family: "Inter", sans-serif;
+  background: #c2f3b5;
+  color: #155724;
+  padding: 16px;
+  margin: 16px 0px 16px 0px;
+  border-radius: 24px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.feedbackIncorrect {
+  font-family: "Inter", sans-serif;
+  background: #fea7a9;
+  color: #721c24;
+  padding: 16px;
+  margin: 16px 0px 16px 0px;
+  border-radius: 24px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Next Button */
+.nextButton {
+  background: #222222;
+  color: #fff;
+  flex: 1;
+  padding: 12px;
+  border-radius: 34px;
+  font-size: 16px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
+  margin: 5px auto;
+  width: 100%;
+  max-width: 832px;
+}
+.nextButton:hover {
+  background: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .questionContainer {
+    padding: 16px;
+  }
+
+  /* Question Title */
+  .title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 16px;
+  }
+
+  /* Question Text */
+  .questionText {
+    font-size: 16px;
+    font-weight: 400;
+    color: #555;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .optionButton {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .nextButton {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+}

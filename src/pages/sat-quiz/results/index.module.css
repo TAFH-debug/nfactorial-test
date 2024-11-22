@@ -5,6 +5,7 @@
     justify-content: center;
     padding-top: 50px;
     padding-bottom: 50px;
+    flex-direction: column;
 }
 
 .heading {
@@ -16,7 +17,7 @@
     font-weight: 600;
     line-height: 111%; /* 27.75px */
     letter-spacing: -1.25px;
-    max-width: 670px;
+    /* max-width: 670px; */
     justify-content: center;
 }
 

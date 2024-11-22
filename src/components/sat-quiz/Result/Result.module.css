@@ -8,8 +8,25 @@
   overflow: hidden;
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 24px;
   font-family: "Inter", sans-serif;
+}
+
+.buttonNext {
+  background: #222222;
+  color: #fff;
+  flex: 1;
+  padding: 12px;
+  border-radius: 34px;
+  font-size: 16px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
+  margin: 5px auto;
+  width: 100%;
+  max-width: 832px;
 }
 
 .badgeContainer {
@@ -31,8 +48,8 @@
 }
 
 .image {
-  width: 100%;
-  height: auto;
+  /* width: 100%;
+  height: auto; */
   border-radius: 32px;
   object-fit: cover;
 }
@@ -51,7 +68,7 @@
   flex-direction: column;
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 20px;
 }
 
 .title {
@@ -99,7 +116,8 @@
   font-size: 17px;
   font-style: normal;
   font-weight: 400;
-  line-height: 111%;
+  line-height: 125%;
+  letter-spacing: -1.2px;
   word-wrap: break-word;
   text-align: left;
 }
@@ -108,21 +126,21 @@
   .container {
     justify-content: center;
     flex-direction: column;
-    padding: 8px;
+    padding: 16px;
     margin: 16px;
     gap: 15px;
   }
   .infoContainer {
     align-items: center;
-    text-align: center;
+    text-align: left;
   }
   .titleContainer {
     align-items: center;
-    gap: 10px;
+    gap: 16px;
   }
   .image {
-    max-width: 1200px;
-    /* max-height: 150px; */
+    /* max-width: 1200px;
+    max-height: 150px; */
     width: 100%;
     border-radius: 15px;
     box-sizing: border-box;
@@ -137,10 +155,16 @@
   .descriptionText {
     font-size: 14px;
     text-align: left;
+    letter-spacing: -0.6px;
   }
   .imageContainer{
     width: auto;
     max-width: 100%;
+  }
+  .buttonNext {
+    max-width: 260px;
+    font-size: 14px;
+    padding: 8px;
   }
 }
 

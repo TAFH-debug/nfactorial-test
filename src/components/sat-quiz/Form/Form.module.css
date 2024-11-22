@@ -1,9 +1,4 @@
-.input:focus {
-  background: rgba(255, 255, 255, 0.2);
-  outline: none;
-  color: #ffffff; /* Keep text color white on focus */
-}
-
+/* Стили контейнера формы */
 .formContainer {
   display: flex;
   flex-direction: column;
@@ -13,6 +8,7 @@
   height: auto;
 }
 
+/* Стили формы */
 .box {
   display: flex;
   align-items: center;
@@ -20,6 +16,7 @@
   width: 100%;
 }
 
+/* Горизонтальная линия */
 .line {
   width: 100%;
   height: 2px;
@@ -40,16 +37,11 @@
   display: flex; /* Flex для выравнивания */
   align-items: center;
   padding: 24px; /* Центрируем по вертикали */
-  font-family: Inter;
+  font-family: Inter, sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
   line-height: 111%;
-}
-
-.errorIcon {
-  margin-right: 8px; /* Отступ между иконкой и текстом */
-  color: #ff4d4d; /* Красный цвет иконки */
 }
 
 /* Стили для обертки кнопки */
@@ -59,12 +51,12 @@
   width: 100%; /* Ширина на 100% */
 }
 
-/* Остальные стили остаются прежними... */
-
+/* Обертка для полей ввода */
 .inputWrapper {
   flex: 1;
 }
 
+/* Стили для полей ввода */
 .input {
   display: flex;
   align-items: center;
@@ -73,7 +65,7 @@
   font-size: 17px;
   font-family: "Inter", sans-serif;
   height: auto;
-  width: 250px;
+  width: auto;
   margin: 0 auto;
   padding: 15px 20px;
   background: rgba(255, 255, 255, 0.1);
@@ -82,11 +74,43 @@
   color: #ffffff;
 }
 
+/* Стили фокуса для полей ввода */
+.input:focus {
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  color: #ffffff;
+}
+
+/* Стили для компонента PhoneInput */
+.phoneInputContainer {
+  position: relative;
+  width: auto;
+  margin: 0 auto;
+}
+
+/* Скрываем кнопку с флагом */
+.phoneInputButton {
+  display: none !important; /* Используем !important для переопределения стилей библиотеки */
+}
+
+/* Скрываем стандартные стили библиотеки */
+.phoneInputContainer .flag-dropdown {
+  display: none !important;
+}
+
+.phoneInputContainer .form-control {
+  padding-left: 20px; /* Чтобы текст не накладывался на флаг */
+  background: transparent;
+  border: none;
+  color: #ffffff;
+}
+
+/* Стили для кнопки отправки */
 .button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-color: #FFFFFF; /* Ваш цвет для кнопки */
+  background-color: #ffffff; /* Цвет кнопки */
   color: #222222; /* Цвет текста на кнопке */
   width: 100%;
   height: auto;
@@ -100,17 +124,16 @@
   transition: background 0.1s;
 }
 
+/* Стили для состояния кнопки при нажатии и фокусе */
 .button:active,
 .button:focus {
   background-color: #d94444; /* Цвет при нажатии */
   outline: none; /* Убирает стандартное выделение */
-  color: #FFFFFF; /* Цвет текста на кнопке */
+  color: #ffffff; /* Цвет текста на кнопке */
 }
-
 
 /* Мобильные стили */
 @media (max-width: 768px) {
-  
   .formContainer {
     padding: 0;
     margin: 16px;
@@ -136,8 +159,7 @@
     flex: 1;
     width: auto;
   }
-  .line{
+  .line {
     display: none;
   }
-  
 }

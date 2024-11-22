@@ -136,11 +136,11 @@ const Result = ({ score, category = "mob_dev" }) => {
             </div>
           </div>
           <div className={styles.descriptionText}>{feedback}</div>
-        <button 
+        {/* <button 
         onClick={handleRedirect}
         className={styles.buttonNext}>
             Узнать о курсе
-        </button>
+        </button> */}
         </div>
       </div>
     </>
