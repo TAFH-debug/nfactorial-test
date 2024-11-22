@@ -167,6 +167,11 @@
     padding: 8px;
   }
 }
+.score {
+  margin-top: 16px;
+  font-size: 18px;
+  color: #333;
+}
 
 @media (min-width: 601px) and (max-width: 1024px) {
   .container {

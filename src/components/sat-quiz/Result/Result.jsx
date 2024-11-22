@@ -77,7 +77,7 @@ import React, { useState, useEffect } from "react";
       },
     },
   };
-  const Result = ({ score }) => {
+  const Result = ({ score, maxScore }) => {
     const [isMobile, setIsMobile] = useState(false);
   
     useEffect(() => {
@@ -111,6 +111,9 @@ import React, { useState, useEffect } from "react";
           className={styles.image}
         />
         <div className={styles.infoContainer}>
+        <p className={styles.score}>
+          Результат: <strong>{score}</strong> из <strong>{maxScore}</strong>
+        </p>
           <h1 className={styles.title}>{result.title}</h1>
           <p className={styles.text}>{result.text}</p>
         </div>

@@ -10,6 +10,9 @@ const Results = () => {
   const router = useRouter();
   const { score } = router.query;
 
+  // Установите максимальный балл, соответствующий вашему тесту
+  const maxScore = 8;
+
   return (
     <>
       <Head>
@@ -23,18 +26,18 @@ const Results = () => {
       <Background />
       <main className={styles.mainContainer}>
         {score !== undefined ? (
-          <Result score={parseInt(score, 10)} />
+          <Result score={parseInt(score, 10)} maxScore={maxScore} />
         ) : (
           <p>Результат недоступен. Попробуйте пройти тест снова!</p>
         )}
-              <div style={{ maxWidth: "940px", margin: "0 auto", padding: "20px" }}>
-        <div className={styles.text}>
-          <h2 className={styles.heading}>
-            Если ты хочешь поступить в топовые зарубежные вузы и получить бесплатную консультацию, оставь заявку и наши менеджеры с тобой свяжуться.
-          </h2>
-          <MainForm />
+        <div style={{ maxWidth: "940px", margin: "0 auto", padding: "20px" }}>
+          <div className={styles.text}>
+            <h2 className={styles.heading}>
+              Если ты хочешь поступить в топовые зарубежные вузы и получить бесплатную консультацию, оставь заявку и наши менеджеры с тобой свяжуться.
+            </h2>
+            <MainForm />
+          </div>
         </div>
-              </div>
       </main>
     </>
   );
