@@ -96,32 +96,6 @@ export default function handler(req, res) {
           explanation:
             "Choice A is correct. This option succinctly introduces the book and its content to an audience familiar with the Atlantic Monthly, focusing on its relevance without extraneous details.",
         },
-        {
-          id: 7,
-          question:
-            "A car travels at a speed of 60 miles per hour for 2 hours, then 50 miles per hour for 1.5 hours. What is the total distance traveled?",
-          choices: [
-            { text: "175 miles", correct: true },
-            { text: "180 miles", correct: false },
-            { text: "165 miles", correct: false },
-            { text: "185 miles", correct: false },
-          ],
-          explanation:
-            "The correct answer is 175 miles. The car travels 60 × 2 = 120 miles in the first segment and 50 × 1.5 = 75 miles in the second. Adding these gives a total of 175 miles.",
-        },
-        {
-          id: 8,
-          question:
-            "Which of the following sentences uses proper grammar and punctuation?",
-          choices: [
-            { text: "Its raining, so I brought my umbrella.", correct: false },
-            { text: "It's raining, so I brought my umbrella.", correct: true },
-            { text: "Its raining; so I brought my umbrella.", correct: false },
-            { text: "It's raining so I brought my umbrella.", correct: false },
-          ],
-          explanation:
-            "The correct answer is 'It's raining, so I brought my umbrella.' The contraction 'it's' correctly means 'it is,' and the comma appropriately separates the clauses.",
-        },
       ],
     };
   

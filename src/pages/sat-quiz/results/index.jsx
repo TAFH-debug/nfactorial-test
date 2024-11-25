@@ -11,7 +11,7 @@ const Results = () => {
   const { score } = router.query;
 
   // Установите максимальный балл, соответствующий вашему тесту
-  const maxScore = 8;
+  const maxScore = 6;
 
   return (
     <>

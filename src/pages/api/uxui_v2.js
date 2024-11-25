@@ -133,8 +133,8 @@ export default function handler(req, res) {
       {
         id: 11,
         options: [
-          { id: 1, isGoodDesign: true },
-          { id: 2, isGoodDesign: false },
+          { id: 1, isGoodDesign: false   },
+          { id: 2, isGoodDesign: true },
         ],
         feedback: {
           correct:
@@ -146,14 +146,14 @@ export default function handler(req, res) {
       {
         id: 12,
         options: [
-          { id: 1, isGoodDesign: true },
-          { id: 2, isGoodDesign: false },
+          { id: 1, isGoodDesign: false },
+          { id: 2, isGoodDesign: true },
         ],
         feedback: {
           correct:
             "Верно! Тут проблема в соотношениях сторон картинки товара.",
           incorrect:
-            "А вот и нет! Обратите внимание в соотнешениях сторон картинки товара",
+            "А вот и нет! Обратите внимание на соотнешениях сторон картинки товара",
         },
       },
     ];
