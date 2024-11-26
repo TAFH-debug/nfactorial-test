@@ -133,8 +133,8 @@ export default function handler(req, res) {
       {
         id: 11,
         options: [
-          { id: 1, isGoodDesign: false   },
-          { id: 2, isGoodDesign: true },
+          { id: 1, isGoodDesign: true },
+          { id: 2, isGoodDesign: false },
         ],
         feedback: {
           correct:
