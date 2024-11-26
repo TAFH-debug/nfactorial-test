@@ -71,7 +71,7 @@ export default function Uxui() {
   if (loading) {
     return (
       <>
-              <Head>
+        <Head>
         <title>nFactorial School - Пройди тест по Ux/Ui дизайну</title>
         <meta
           name="description"
@@ -105,6 +105,25 @@ export default function Uxui() {
 
   return (
     <>
+            <Head>
+        <title>nFactorial School - Пройди тест по Ux/Ui дизайну</title>
+        <meta
+          name="description"
+          content="Пройди тест и проверь свои навыки Ux/Ui дизайна"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          property="og:title"
+          content="nFactorial School - Пройди тест по Ux/Ui дизайну"
+        />
+        <meta
+          property="og:description"
+          content="Пройди тест и проверь свои навыки Ux/Ui дизайна"
+        />
+        <meta property="og:image" content="/image.svg" />{" "}
+        {/* You can replace this with your image URL */}
+        <meta property="og:type" content="website" />
+      </Head>
       <Header />
       <Background />
       <div>
