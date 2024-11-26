@@ -18,17 +18,19 @@ export default function Question({
 
     setSelectedOptionIndex(optionIndex);
     setIsCorrect(isOptionCorrect);
-    setFeedbackText(
-      isOptionCorrect
-        ? `Правильно! Вот объяснение: ${question.explanation}`
-        : `Неправильно! Вот объяснение: ${question.explanation}`
-    );
+
+    // Устанавливаем текст для правильного/неправильного ответа
+    const feedback = isOptionCorrect
+      ? question.correctExplanation
+      : question.incorrectExplanation;
+
+    setFeedbackText(feedback);
   };
 
   const handleNextQuestion = () => {
     onAnswer(selectedOptionIndex);
 
-    // Reset states for the next question
+    // Сбрасываем состояния для следующего вопроса
     setSelectedOptionIndex(null);
     setFeedbackText("");
     setIsCorrect(null);

@@ -60,7 +60,7 @@
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  /* gap: 20px; */
   align-items: flex-start;
 }
 
@@ -131,7 +131,7 @@
     gap: 15px;
   }
   .infoContainer {
-    align-items: center;
+    /* align-items: center; */
     text-align: left;
   }
   .titleContainer {

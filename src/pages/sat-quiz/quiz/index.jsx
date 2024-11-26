@@ -18,16 +18,18 @@ export default function SatQuiz() {
         const res = await fetch("/api/sat-quiz");
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
-        setQuestions(data.questions); // Убедитесь, что API возвращает объект с массивом questions
+        console.log("Fetched questions:", data.questions); // Log to verify the data
+        setQuestions(data.questions); // Ensure data.questions is an array
       } catch (error) {
         console.error("Error fetching questions:", error);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchQuestions();
   }, []);
+  
 
   const handleAnswer = (selectedOptionIndex) => {
     setAnswers((prevAnswers) => {
