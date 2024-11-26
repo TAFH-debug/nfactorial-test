@@ -4,6 +4,7 @@ import SkeletonQuestion from "@/components/sat-quiz/SkeletonQuestion/SkeletonQue
 import Header from "@/components/sat-quiz/Header/Header";
 import Background from "@/components/sat-quiz/Background/Background";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 export default function SatQuiz() {
   const router = useRouter();
@@ -70,6 +71,25 @@ export default function SatQuiz() {
   if (loading) {
     return (
       <>
+        <Head>
+        <title>nFactorial Admissions - Пройди пробный тест по SAT и узнай свой уровень</title>
+        <meta
+          name="description"
+          content="Пройди тест и узнай готов ли ты к сдаче SAT на 1600 баллов?"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          property="og:title"
+          content="nFactorial Admissions - Пройди пробный тест по SAT и узнай свой уровень"
+        />
+        <meta
+          property="og:description"
+          content="Пройди тест и узнай готов ли ты к сдаче SAT на 1600 баллов?"
+        />
+        <meta property="og:image" content="/image.svg" />{" "}
+        {/* You can replace this with your image URL */}
+        <meta property="og:type" content="website" />
+      </Head>
         <Header />
         <Background />
         <SkeletonQuestion />
