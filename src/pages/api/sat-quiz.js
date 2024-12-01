@@ -5,30 +5,59 @@ export default function handler(req, res) {
     description:
       "Проверь свои знания и получи консультацию от экспертов! Вам будут даны 8 вопросов разной сложности по математике и английскому языку. В конце получите результат и наши рекомендации. Вперед!",
     questions: [
+      // {
+      //   id: 1,
+      //   question: "If 2x + 3 = 9, what is the value of 6x − 16x − 1?",
+      //   choices: [
+      //     { text: "17", correct: true },
+      //     { text: "3", correct: false },
+      //     { text: "4", correct: false },
+      //     { text: "14", correct: false },
+      //   ],
+      //   correctExplanation:
+      //   `
+      //     Правильно! Вот объяснение:
+
+      //     The correct answer is 17. It's given that 2x+3=92x+3=9. Multiplying each side of this equation by 3 yields 3(2x+3) = 3(9)3(2x+3) = 3(9), or 6x+9 = 276x+9=27.
+
+      //     Subtracting 10 from each side of this equation yields 6x+9−10=27−106x+9−10=27−10, or 6x−1=176x−1=17. Therefore, the value of 6x−16x−1 is 17.
+      //     `,
+      //   incorrectExplanation:
+      //   `
+      //   Неправильно! Вот объяснение:
+
+      //   The correct answer is 17. It's given that 2x+3=92x+3=9. Multiplying each side of this equation by 3 yields 3(2x+3) = 3(9)3(2x+3) = 3(9), or 6x+9 = 276x+9=27.
+
+      //   Subtracting 10 from each side of this equation yields 6x+9−10=27−106x+9−10=27−10, or 6x−1=176x−1=17. Therefore, the value of 6x−16x−1 is
+      //   `,
+      // },
       {
         id: 1,
-        question: "If 2x + 3 = 9, what is the value of 6x − 16x − 1?",
+        question:
+          "If \\(2x + 3 = 9\\), what is the value of \\(6x − 16x − 1\\)?",
         choices: [
           { text: "17", correct: true },
           { text: "3", correct: false },
           { text: "4", correct: false },
           { text: "14", correct: false },
         ],
-        correctExplanation: 
-        `
-          Правильно! Вот объяснение: 
-
-          The correct answer is 17. It's given that 2x+3=92x+3=9. Multiplying each side of this equation by 3 yields 3(2x+3) = 3(9)3(2x+3) = 3(9), or 6x+9 = 276x+9=27. 
-
-          Subtracting 10 from each side of this equation yields 6x+9−10=27−106x+9−10=27−10, or 6x−1=176x−1=17. Therefore, the value of 6x−16x−1 is 17.
-          `,
-        incorrectExplanation: 
-        `
-        Неправильно! Вот объяснение: 
-
-        The correct answer is 17. It's given that 2x+3=92x+3=9. Multiplying each side of this equation by 3 yields 3(2x+3) = 3(9)3(2x+3) = 3(9), or 6x+9 = 276x+9=27. 
-
-        Subtracting 10 from each side of this equation yields 6x+9−10=27−106x+9−10=27−10, or 6x−1=176x−1=17. Therefore, the value of 6x−16x−1 is
+        correctExplanation: `
+\\[
+\\begin{align*}
+&\\text{The correct answer is 17. It's given that } 2x + 3 = 9. \\\\
+&\\text{Multiply each sides by 3 yields 3(2x + 3) = 3, \ } 6x + 9 = 27. \\\\
+&\\text{Subtract 10 from each side 6x + 9 + 10 = 27 - 10:\ } 6x - 1 = 17.
+\\end{align*}
+\\]
+        `,
+        incorrectExplanation: `
+\\[
+\\begin{align*}
+&\\text{The correct answer is 17. It's given that } 2x + 3 = 9. \\\\
+&\\text{Multiply each sides by 3 yields 3(2x + 3) = 3, \ } 6x + 9 = 27. \\\\
+&\\text{Subtract 10 from each side 6x + 9 + 10 = 27 - 10:\ } 6x - 1 = 17.
+\\end{align*}
+\\]
         `,
       },
       {
@@ -44,14 +73,12 @@ export default function handler(req, res) {
           },
           { text: "The width of the rectangle, in feet", correct: false },
         ],
-        correctExplanation: 
-          `
+        correctExplanation: `
           Правильно! Вот объяснение: 
 It's given that a rectangle has a length that is 15 times its width. It's also given that the function y=(15w)(w)y=(15w)(w)represents this situation, where yy is the area, in square feet, of the rectangle. The area of a rectangle can be calculated by multiplying the rectangle's length by its width. Since the rectangle has a length that is 15 times its width, it follows that ww represents the width of the rectangle, in feet, and 15w15w represents the length of the rectangle, in feet. Therefore, the best interpretation of 15w15w in this context is that it's the length of the rectangle, in feet.
 
           `,
-        incorrectExplanation: 
-          `
+        incorrectExplanation: `
         Неправильно! Вот объяснение: 
 
 It's given that a rectangle has a length that is 15 times its width. It's also given that the function y=(15w)(w)y=(15w)(w)represents this situation, where yy is the area, in square feet, of the rectangle. The area of a rectangle can be calculated by multiplying the rectangle's length by its width. Since the rectangle has a length that is 15 times its width, it follows that ww represents the width of the rectangle, in feet, and 15w15w represents the length of the rectangle, in feet. Therefore, the best interpretation of 15w15w in this context is that it's the length of the rectangle, in feet.
@@ -68,14 +95,12 @@ It's given that a rectangle has a length that is 15 times its width. It's also g
           { text: "897", correct: false },
           { text: "1,107", correct: false },
         ],
-        correctExplanation: 
-          `
+        correctExplanation: `
           Правильный ответ! Вот объяснение: 
 Choice A is correct. It’s given that the sample is in the shape of a cube with edge lengths of 0.9 meters. Therefore, the volume of the sample is 0.930.93, or 0.729 cubic meters. It’s also given that the sample has a density of 807 kilograms per 1 cubic meter. Therefore, the mass of this sample is 0.729 cubic meters× (807 kilograms / 1 cubic meter), or 588.303 kilograms.
 
           `,
-        incorrectExplanation: 
-          `
+        incorrectExplanation: `
         Вы ошиблись :( Вот объяснение: 
 Choice A is correct. It’s given that the sample is in the shape of a cube with edge lengths of 0.9 meters. Therefore, the volume of the sample is 0.930.93, or 0.729 cubic meters. It’s also given that the sample has a density of 807 kilograms per 1 cubic meter. Therefore, the mass of this sample is 0.729 cubic meters× (807 kilograms / 1 cubic meter), or 588.303 kilograms.
 
@@ -100,14 +125,12 @@ Choice A is correct. It’s given that the sample is in the shape of a cube with
           },
           { text: "Elinor is remarkably mature for her age.", correct: true },
         ],
-        correctExplanation: 
-          `
+        correctExplanation: `
           Ура, правильный ответ! Вот объяснение:
 Choice D is the best answer because it provides a detail about Elinor that is established in the text. The text indicates that although Elinor is “only nineteen,” she gives good advice and exhibits such a high level of understanding and judgment that she serves as “the counsellor of her mother.” Thus, Elinor is mature beyond her years.
 
           `,
-        incorrectExplanation: 
-          `
+        incorrectExplanation: `
         Неправильно! Вот объяснение
 Choice D is the best answer because it provides a detail about Elinor that is established in the text. The text indicates that although Elinor is “only nineteen,” she gives good advice and exhibits such a high level of understanding and judgment that she serves as “the counsellor of her mother.” Thus, Elinor is mature beyond her years.
 
@@ -123,14 +146,12 @@ Choice D is the best answer because it provides a detail about Elinor that is es
           { text: "determined", correct: false },
           { text: "acquired", correct: false },
         ],
-        correctExplanation: 
-          `
+        correctExplanation: `
           Молодец, это правильный ответ! 
 Choice A is the best answer because it most logically completes the text’s discussion of how the flow of information between two regions of the brain may affect the ease of people’s decision making. In this context, "reduced" means decreased. The text presents the finding from a team of neuroeconomists that decision making may be connected to communication between the prefrontal cortex and the parietal cortex. In presenting this finding, the text suggests a contrast between people who tend to be more decisive and people who make decisions more slowly. According to the text, people tend to be more decisive when the flow of information between the two brain regions is intensified, or strengthened. On the other hand, this context suggests that people make choices more slowly when the flow of information between the two brain regions is decreased.
 
           `,
-        incorrectExplanation: 
-          `
+        incorrectExplanation: `
         К сожалению, ответ неверный. Вот объяснение: 
 Choice A is the best answer because it most logically completes the text’s discussion of how the flow of information between two regions of the brain may affect the ease of people’s decision making. In this context, "reduced" means decreased. The text presents the finding from a team of neuroeconomists that decision making may be connected to communication between the prefrontal cortex and the parietal cortex. In presenting this finding, the text suggests a contrast between people who tend to be more decisive and people who make decisions more slowly. According to the text, people tend to be more decisive when the flow of information between the two brain regions is intensified, or strengthened. On the other hand, this context suggests that people make choices more slowly when the flow of information between the two brain regions is decreased.
 
@@ -158,13 +179,11 @@ Choice A is the best answer because it most logically completes the text’s dis
             correct: false,
           },
         ],
-        correctExplanation: 
-          `
+        correctExplanation: `
           Правильно! 
 The sentence effectively introduces Cathryn Halverson’s book to an audience already familiar with the Atlantic Monthly, noting the title of Halverson’s book and describing its content without providing background information about the Atlantic Monthly.
           `,
-        incorrectExplanation: 
-          `
+        incorrectExplanation: `
         Неверно :(
 The sentence effectively introduces Cathryn Halverson’s book to an audience already familiar with the Atlantic Monthly, noting the title of Halverson’s book and describing its content without providing background information about the Atlantic Monthly.
           `,
