@@ -10,28 +10,43 @@ const auth = new google.auth.GoogleAuth({
   scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
 
-// Function to get the current date and time in a readable format
-const getCurrentTimestamp = () => {
+const getCurrentDateComponents = () => {
   const date = new Date();
-  return date.toLocaleString("en-US", { timeZone: "UTC" }); // Adjust timeZone as needed
+
+  // Format the date using Almaty timezone
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Almaty",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+
+  // Extract formatted parts
+  const parts = formatter.formatToParts(date);
+  const year = parts.find(part => part.type === "year").value;
+  const month = parts.find(part => part.type === "month").value;
+  const day = parts.find(part => part.type === "day").value;
+
+  return { year, month, day };
 };
+
 
 async function appendToSheet({ name, phone, utmData, referrer, spreadsheetId, sheetName }) {
   try {
     const sheets = google.sheets({ version: "v4", auth });
 
-    // Prepare the data to append, including the current timestamp
-    const timestamp = getCurrentTimestamp();
+    // Prepare the data to append, including the current date components
+    const { year, month, day } = getCurrentDateComponents();
     const values = [
-      [timestamp, name, phone, referrer, utmData.utm_source, utmData.utm_medium, utmData.utm_campaign, utmData.utm_term, utmData.utm_content]
+      [year, month, day, name, phone, referrer, utmData.utm_source, utmData.utm_medium, utmData.utm_campaign, utmData.utm_term, utmData.utm_content],
     ];
 
     const resource = { values };
 
-    // Append data to the sheet, adding it to columns A to I
+    // Append data to the sheet, adding it to columns A to K
     const result = await sheets.spreadsheets.values.append({
       spreadsheetId,  // Use the dynamically passed spreadsheetId
-      range: `${sheetName}!A:I`, // Use the dynamically passed sheetName
+      range: `${sheetName}!A:K`, // Update range to match new format
       valueInputOption: "RAW",
       resource,
     });
@@ -42,7 +57,6 @@ async function appendToSheet({ name, phone, utmData, referrer, spreadsheetId, sh
     return false;
   }
 }
-
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -95,5 +109,3 @@ const getSheetConfig = (formType) => {
   }
   throw new Error("Unknown form type");
 };
-
-
