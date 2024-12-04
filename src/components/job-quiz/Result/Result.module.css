@@ -1,0 +1,170 @@
+.container {
+  max-width: 940px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  padding: 35px;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  font-family: "Inter", sans-serif;
+}
+
+.badgeContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.imageContainer {
+  width: 100%;
+  max-width: 480px;
+  height: fit-content;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid #414ad200;
+  display: flex;
+  justify-content: center;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  border-radius: 32px;
+  object-fit: cover;
+}
+
+.infoContainer {
+  padding: 35px;
+  background: #f2f2f2;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.titleContainer {
+  flex-direction: column;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.title {
+  color: black;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 111%;
+  letter-spacing: -1px;
+}
+
+.profession {
+  color: black;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 111%;
+  letter-spacing: -2px;
+  text-align: left;
+}
+
+.badge {
+  padding: 5px 9px;
+  background: #414ad2;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.badgeIcon {
+  width: 20px;
+  height: 20px;
+  position: relative;
+}
+
+.badgeText {
+  text-align: left;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 14.43px;
+}
+
+.descriptionText {
+  color: #222222;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 111%;
+  word-wrap: break-word;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .container {
+    justify-content: center;
+    flex-direction: column;
+    padding: 8px;
+    margin: 16px;
+    gap: 15px;
+  }
+  .infoContainer {
+    align-items: center;
+    text-align: center;
+  }
+  .titleContainer {
+    align-items: center;
+    gap: 10px;
+  }
+  .image {
+    max-width: 1200px;
+    /* max-height: 150px; */
+    width: 100%;
+    border-radius: 15px;
+    box-sizing: border-box;
+  }
+  .title {
+    font-size: 18px;
+  }
+  .profession {
+    font-size: 40px;
+    text-align: center;
+  }
+  .descriptionText {
+    font-size: 14px;
+    text-align: left;
+  }
+  .imageContainer{
+    width: auto;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .container {
+    padding: 20px;
+    flex-direction: column;
+  }
+  .title {
+    font-size: 19px;
+  }
+  .profession {
+    font-size: 35px;
+  }
+  .imageContainer {
+    width: 100%;
+    height: auto;
+  }
+  .image {
+    width: 100%;
+    height: auto;
+    max-height: 240px;
+  }
+  .descriptionText {
+    font-size: 16px;
+  }
+}

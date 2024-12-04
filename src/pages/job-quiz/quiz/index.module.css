@@ -1,0 +1,33 @@
+/* Quiz.module.css */
+/* justify-content: center; */
+.text{
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.heading {
+    color: #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 111%; /* 27.75px */
+    letter-spacing: -1.25px;
+    max-width: 670px;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .heading {
+        font-size: 20px; /* Adjust for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .heading {
+        font-size: 18px; /* Further adjust for mobile screens */
+        line-height: 130%; /* Adjust line height if necessary */
+    }
+}
