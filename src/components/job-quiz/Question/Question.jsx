@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import StatusBar from "@/components/StatusBar/StatusBar.jsx";
 import StatusButton from "@/components/StatusButton/StatusButton.jsx";
-import styles from "./Question.module.css";
 import Badge from "@/components/CustomBadge/CustomBadge.jsx";
-import { sendGAEvent } from '@next/third-parties/google'; // GTM отправка событий
 import Image from "next/image";
+import styles from "./Question.module.css";
+import { sendGAEvent } from "@next/third-parties/google";
 
 export default function Question({
   question,
@@ -14,31 +14,23 @@ export default function Question({
   onBack,
 }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [utmTags, setUtmTags] = useState({});
   const [isMobile, setIsMobile] = useState(false);
-  const [utmTags, setUtmTags] = useState({}); // Состояние для хранения UTM-тегов
 
-  // Функция для получения UTM-тегов из URL
+  // Extract UTM tags from the URL
   const getUtmTags = () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const utmSource = urlParams.get("utm_source");
-    const utmMedium = urlParams.get("utm_medium");
-    const utmCampaign = urlParams.get("utm_campaign");
-
     return {
-      utm_source: utmSource || null,
-      utm_medium: utmMedium || null,
-      utm_campaign: utmCampaign || null,
+      utm_source: urlParams.get("utm_source") || null,
+      utm_medium: urlParams.get("utm_medium") || null,
+      utm_campaign: urlParams.get("utm_campaign") || null,
     };
   };
 
-  // Инициализация UTM-тегов при загрузке компонента
+  // Initialize UTM tags and reset selectedCategory on question change
   useEffect(() => {
     setUtmTags(getUtmTags());
-  }, []);
-
-  // Reset selectedCategory whenever currentQuestion changes
-  useEffect(() => {
-    setSelectedCategory(null); // Clear the selection when the question changes
+    setSelectedCategory(null);
   }, [currentQuestion]);
 
   const handleChoiceClick = (category) => {
@@ -48,19 +40,15 @@ export default function Question({
   const handleSubmit = () => {
     if (selectedCategory) {
       onAnswer(selectedCategory);
-
-      // Отправляем событие в Google Analytics через GTM
-      sendGAEvent('form_ended', {
-        event_category: 'Quiz',
-        category: selectedCategory,
+      sendGAEvent("quiz_answer", {
+        event_category: "Quiz",
+        selectedCategory,
         currentQuestion,
         totalQuestions,
-        ...utmTags, // Включаем UTM-теги в событие
+        ...utmTags,
       });
     }
   };
-
-  // Check window size for mobile or desktop
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -71,46 +59,35 @@ export default function Question({
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
   return (
     <div className={styles.AllComponent}>
       <Badge logoSrc="/notify.svg" text="Какая IT-компания вам подходит?" />
       <div className={styles.QuestionPart}>
         <h1 className={styles.QuestionText}>{question.question}</h1>
         <div className={styles.Answer}>
-          {Object.entries(question.choices).map(([category, choice], index) => (
+          {question.choices.map(({ text, category }, index) => (
             <div
-              className={styles.AnswerVariants}
               key={index}
-              style={{ margin: "10px 0" }}
+              className={styles.AnswerVariants}
               onClick={() => handleChoiceClick(category)}
             >
               <div className={styles.checkbox}>
-                <div style={{ width: "15px", height: "15px" }}>
-                  {selectedCategory === category ? (
-                    <Image
-                      src="/quiz/checked-icon.svg" // Укажите путь к активному изображению
-                      alt="Active Icon"
-                      width={15}
-                      height={15}
-                    />
-                  ) : (
-                    <Image
-                      src="/quiz/unchecked-icon.svg" // Укажите путь к неактивному изображению
-                      alt="Inactive Icon"
-                      width={15}
-                      height={15}
-                    />
-                  )}
-                </div>
-                <span>{choice}</span>
+                <Image
+                  src={
+                    selectedCategory === category
+                      ? "/quiz/checked-icon.svg"
+                      : "/quiz/unchecked-icon.svg"
+                  }
+                  alt="Checkbox"
+                  width={15}
+                  height={15}
+                />
               </div>
+              <span className={styles.AnswerText}>{text}</span>
             </div>
           ))}
         </div>
       </div>
-
-      {/* Button and Status Section */}
       <div className={styles.buttonStatusContainer}>
         {isMobile ? (
           <>

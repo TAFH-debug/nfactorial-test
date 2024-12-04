@@ -91,6 +91,7 @@
 .QuestionText {
   width: auto; /* Ensure 100% width */
   max-width: 940px;
+  text-align: center;
   font-family: "Inter", sans-serif;
   color: black;
   font-size: 25px;

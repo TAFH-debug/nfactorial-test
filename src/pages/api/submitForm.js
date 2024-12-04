@@ -106,6 +106,11 @@ const getSheetConfig = (formType) => {
       spreadsheetId: process.env.THIRD_SHEET_ID,
       sheetName: "SatFormLeads",
     };
+  } else if (formType === " ") {
+    return {
+      spreadsheetId: process.env.THIRD_SHEET_ID,
+      sheetName: "SatFormLeads",
+    };
   }
   throw new Error("Unknown form type");
 };
