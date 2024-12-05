@@ -23,29 +23,22 @@ const getCurrentDateComponents = () => {
 
   // Extract formatted parts
   const parts = formatter.formatToParts(date);
-  const year = parts.find(part => part.type === "year").value;
-  const month = parts.find(part => part.type === "month").value;
-  const day = parts.find(part => part.type === "day").value;
+  const year = parts.find((part) => part.type === "year").value;
+  const month = parts.find((part) => part.type === "month").value;
+  const day = parts.find((part) => part.type === "day").value;
 
   return { year, month, day };
 };
 
-
-async function appendToSheet({ name, phone, utmData, referrer, spreadsheetId, sheetName }) {
+async function appendToSheet({ spreadsheetId, sheetName, values }) {
   try {
     const sheets = google.sheets({ version: "v4", auth });
 
-    // Prepare the data to append, including the current date components
-    const { year, month, day } = getCurrentDateComponents();
-    const values = [
-      [year, month, day, name, phone, referrer, utmData.utm_source, utmData.utm_medium, utmData.utm_campaign, utmData.utm_term, utmData.utm_content],
-    ];
-
     const resource = { values };
 
-    // Append data to the sheet, adding it to columns A to K
+    // Append data to the sheet
     const result = await sheets.spreadsheets.values.append({
-      spreadsheetId,  // Use the dynamically passed spreadsheetId
+      spreadsheetId,
       range: `${sheetName}!A:K`, // Update range to match new format
       valueInputOption: "RAW",
       resource,
@@ -58,30 +51,88 @@ async function appendToSheet({ name, phone, utmData, referrer, spreadsheetId, sh
   }
 }
 
+async function appendToBackup({ name, phone, email, utmData, referrer }) {
+  try {
+    const sheets = google.sheets({ version: "v4", auth });
+    const { year, month, day } = getCurrentDateComponents();
+
+    const values = [
+      [
+        "Quiz leads", // Source
+        year,
+        month,
+        day,
+        name,
+        phone,
+        email || "", // Email may be optional
+        referrer,
+        utmData?.utm_source || "",
+        utmData?.utm_medium || "",
+        utmData?.utm_campaign || "",
+        utmData?.utm_term || "",
+        utmData?.utm_content || "",
+      ],
+    ];
+
+    const resource = { values };
+
+    // Append data to the backup sheet
+    const result = await sheets.spreadsheets.values.append({
+      spreadsheetId: process.env.BACKUP_SHEET_ID, // Backup spreadsheet ID from .env
+      range: `${process.env.BACKUP_SHEET_NAME || "BackupLeads"}!A:M`, // Structure matches backup format
+      valueInputOption: "RAW",
+      resource,
+    });
+
+    return result.status === 200;
+  } catch (error) {
+    console.error("Error appending to backup sheet:", error);
+    return false;
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { name, phone, utmData, referrer, formType } = req.body;
+    const { name, phone, email, utmData, referrer, formType } = req.body;
 
     if (!name || !phone) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    // Determine parameters for each form
     const { spreadsheetId, sheetName } = getSheetConfig(formType);
 
     const success = await appendToSheet({
-      name,
-      phone,
-      utmData,
-      referrer,
       spreadsheetId,
       sheetName,
+      values: [
+        [
+          getCurrentDateComponents().year,
+          getCurrentDateComponents().month,
+          getCurrentDateComponents().day,
+          name,
+          phone,
+          referrer,
+          utmData?.utm_source || "",
+          utmData?.utm_medium || "",
+          utmData?.utm_campaign || "",
+          utmData?.utm_term || "",
+          utmData?.utm_content || "",
+        ],
+      ],
     });
 
-    if (success) {
-      return res.status(200).json({ message: "Data successfully submitted" });
+    const backupSuccess = await appendToBackup({
+      name,
+      phone,
+      email,
+      utmData,
+      referrer,
+    });
+
+    if (success && backupSuccess) {
+      return res.status(200).json({ message: "Data successfully submitted and backed up" });
     } else {
-      return res.status(500).json({ error: "Failed to submit data" });
+      return res.status(500).json({ error: "Failed to submit or backup data" });
     }
   } else {
     res.setHeader("Allow", ["POST"]);
@@ -106,9 +157,9 @@ const getSheetConfig = (formType) => {
       spreadsheetId: process.env.THIRD_SHEET_ID,
       sheetName: "SatFormLeads",
     };
-  } else if (formType === " ") {
+  } else if (formType === "job") {
     return {
-      spreadsheetId: process.env.THIRD_SHEET_ID,
+      spreadsheetId: process.env.JOB_SHEET_ID,
       sheetName: "SatFormLeads",
     };
   }
