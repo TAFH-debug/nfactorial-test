@@ -70,7 +70,7 @@ export default function Form() {
       });
 
       if (response.ok) {
-        router.push("/uxui-quiz/quiz");
+        router.push("/job-quiz/quiz");
       } else {
         const result = await response.json();
         setFormError(result.error || "Ошибка при отправке данных");

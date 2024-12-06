@@ -3,3 +3,11 @@
     width: 100%;
     justify-content: center;
 }
+.desktopImageContainer{
+    display: flex;
+    justify-content: center;
+}
+.mobileImageContainer{
+    display: flex;
+    justify-content: center;
+}
