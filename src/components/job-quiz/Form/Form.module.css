@@ -58,6 +58,7 @@
 
 /* Стили для полей ввода */
 .input {
+  -webkit-appearance: none;
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
@@ -73,7 +74,13 @@
   border-radius: 37px;
   color: #ffffff;
 }
+.input::placeholder {
+  color: #fcfcfc; /* Цвет placeholder, когда поле в фокусе */
+}
 
+.input:not(:focus) {
+  color: #ffffff; /* Цвет текста, когда поле не активно (например, серый) */
+}
 /* Стили фокуса для полей ввода */
 .input:focus {
   background: rgba(255, 255, 255, 0.2);

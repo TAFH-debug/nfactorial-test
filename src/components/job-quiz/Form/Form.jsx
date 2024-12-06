@@ -109,7 +109,7 @@ export default function Form() {
             inputClass={styles.input}
             buttonClass={styles.phoneInputButton}
             containerClass={styles.phoneInputContainer}
-            specialLabel="" 
+            specialLabel=""
           />
         </div>
         <div className={styles.buttonContainer}>
