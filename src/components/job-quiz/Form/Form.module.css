@@ -153,6 +153,9 @@
     width: 100%;
     margin: 0;
     box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #ffffff;
   }
 
   .button {

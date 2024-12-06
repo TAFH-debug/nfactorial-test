@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Question from "@/components/job-quiz/Question/Question.jsx";
 import SkeletonQuestion from "@/components/job-quiz/SkeletonQuestion/SkeletonQuestion.jsx";
-import Header from "@/components/Header/Header";
+import Header from "@/components/job-quiz/Header/Header";
 import Background from "@/components/job-quiz/Background/Background.jsx";
 import styles from "./index.module.css";
 

@@ -1,8 +1,9 @@
 .header {
     display: flex;
-    justify-content: center; /* Центрируем контент */
+    justify-content: start; /* Центрируем контент */
     align-items: center;
     padding-top: 20px;
+    margin: 16px;
   }
   
   .headerContent {

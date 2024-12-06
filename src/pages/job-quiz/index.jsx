@@ -12,16 +12,16 @@ import styles from "./index.module.css";
 const Layout = ({ isMobile }) => (
   <div style={{ overflow: "hidden" }}>
     <Head>
-      <title>Какая IT-компания вам подходит?</title>
+      <title>В какой казахстанской IT-компании вы бы работали?</title>
       <meta
         name="description"
-        content="Готовы ли вы к поступлению зарубеж? Проверь свои знания и получи консультацию от экспертов! Вам будут даны 6 вопросов разной сложности по математике и английскому языку. В конце получите результат и наши рекомендации."
+        content="Готовы узнать, какая IT-компания вам идеально подходит? Чей подход из казахстанских айтишников окажется ближе к вашему? Пройдите тест и найдите свою идеальную команду!"
       />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta property="og:title" content="Какая IT-компания вам подходит?" />
+      <meta property="og:title" content="В какой казахстанской IT-компании вы бы работали?" />
       <meta
         property="og:description"
-        content="Готовы ли вы к поступлению зарубеж? Проверь свои знания и получи консультацию от экспертов! Вам будут даны 6 вопросов разной сложности по математике и английскому языку. В конце получите результат и наши рекомендации."
+        content="Готовы узнать, какая IT-компания вам идеально подходит? Чей подход из казахстанских айтишников окажется ближе к вашему? Пройдите тест и найдите свою идеальную команду!"
       />
       <meta property="og:image" content="/image.svg" />
       <meta property="og:type" content="website" />
@@ -33,8 +33,8 @@ const Layout = ({ isMobile }) => (
         <Image
           src="/main.png"
           alt="Описание изображения для ПК"
-          width={724}
-          height={369}
+          width={482}
+          height={246}
           priority
           className={styles.image}
         />
@@ -45,7 +45,7 @@ const Layout = ({ isMobile }) => (
         <Image
           src="/main_mobile.png"
           alt="Описание изображения для мобильного"
-          width={530}
+          width={380}
           height={270}
           priority
           className={styles.image}

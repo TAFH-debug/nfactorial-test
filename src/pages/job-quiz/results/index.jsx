@@ -4,7 +4,7 @@ import Result from "@/components/job-quiz/Result/Result.jsx";
 import CourseRecommendations from "@/components/job-quiz/CourseRecommendations/CourseRecommendations.jsx";
 import MainForm from "@/components/MainForm/MainForm.jsx";
 import styles from "./index.module.css"; // Импортируем стили
-import Header from "@/components/Header/Header"; // Импортируем Header
+import Header from "@/components/job-quiz/Header/Header";
 import Background from "@/components/job-quiz/Background/Background.jsx"; // Импортируем Background
 import Image from "next/image";
 import Head from "next/head";
