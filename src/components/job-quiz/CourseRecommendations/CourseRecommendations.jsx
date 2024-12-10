@@ -54,7 +54,7 @@ const CourseRecommendations = ({ selectedCategory }) => {
   
   return (
     <div className={styles.container}>
-      <div className={styles.title}>Также тебе подойдет:</div>
+      <div className={styles.title}>Тебе подойдет:</div>
       <div className={styles.cardContainer}>
         {coursesToDisplay.map((course) => (
           <div key={course.id} className={styles.card}>
