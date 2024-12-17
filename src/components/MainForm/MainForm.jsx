@@ -55,9 +55,8 @@ export default function MainForm(props) {
   return (
     <>
       <script src="https://unpkg.com/@formspark/formtrack" async></script>
-
       <form
-        action="https://submit-form.com/0CvtQ6co3"
+        action="https://submit-form.com/6bYbeXO9K"
         onSubmit={handleSubmit}
         className={styles.form} // Apply CSS module styles
         data-formtrack

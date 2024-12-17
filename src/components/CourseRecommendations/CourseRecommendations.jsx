@@ -45,13 +45,13 @@ const CourseRecommendations = ({ selectedCategory }) => {
     data_analytics: "nFactorial Data Analytics",
     product_management: "nFactorial Product Manager",
   };
-  
+
   const filteredCourses = courses.filter(
     (course) => course.category !== categoryMap[selectedCategory]
   );
-  
+
   const coursesToDisplay = filteredCourses.length > 3 ? filteredCourses.slice(0, 3) : filteredCourses;
-  
+
   return (
     <div className={styles.container}>
       <div className={styles.title}>Также тебе подойдет:</div>
