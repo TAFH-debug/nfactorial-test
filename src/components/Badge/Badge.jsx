@@ -15,7 +15,7 @@ export default function Badge() {
                     />
                 </div>
             </div>
-            <div className={styles.badgeText}>Тест займет около 10 минут</div>
+            <div className={styles.badgeText}>Тест займет около 5 минут</div>
         </div>
     );
 }
