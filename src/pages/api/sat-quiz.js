@@ -34,7 +34,7 @@ export default function handler(req, res) {
       {
         id: 1,
         question:
-          "If \\(2x + 3 = 9\\), what is the value of \\(6x − 16x − 1\\)?",
+          "If \\(2x + 3 = 9\\), what is the value of \\(6x − 1\\)?",
         choices: [
           { text: "17", correct: true },
           { text: "3", correct: false },
