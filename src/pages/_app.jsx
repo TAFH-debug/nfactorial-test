@@ -1,21 +1,11 @@
 import { GoogleAnalytics } from '@next/third-parties/google'
-import posthog from 'posthog-js';
-
+import { initPostHog } from '@/lib/posthog'; 
+import { useEffect } from 'react';
 
 export default function MyApp({ Component, pageProps }) {
-
   useEffect(() => {
-    if (typeof window !== "undefined" && process.env.NEXT_PUBLIC_POSTHOG_API_KEY) {
-      posthog.init(process.env.NEXT_PUBLIC_POSTHOG_API_KEY, {
-        api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://app.posthog.com',
-        autocapture: true, // Автоматический сбор событий
-      });
-
-      // Опционально: Отправка кастомного события
-      posthog.capture('page_loaded', { path: window.location.pathname });
-    }
+    initPostHog(); // Инициализируем PostHog только на клиенте
   }, []);
-
   return (
     <>
       <Component {...pageProps} />
