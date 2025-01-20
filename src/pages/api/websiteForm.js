@@ -52,7 +52,7 @@ async function appendToSheet({ spreadsheetId, sheetName, values }) {
 
 export default async function handler(req, res) {
   // Добавление заголовков CORS
-  res.setHeader("Access-Control-Allow-Origin", "https://nfactorial.school");
+  res.setHeader("Access-Control-Allow-Origin", "https://www.nfactorial.school");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
