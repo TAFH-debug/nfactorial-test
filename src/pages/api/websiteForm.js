@@ -28,6 +28,7 @@ const getCurrentFormattedDate = () => {
     .replace(",", ""); // Убираем запятую, если есть
 };
 
+// Функция для добавления данных в Google Sheets
 async function appendToSheet({ spreadsheetId, sheetName, values }) {
   try {
     const sheets = google.sheets({ version: "v4", auth });
@@ -50,6 +51,16 @@ async function appendToSheet({ spreadsheetId, sheetName, values }) {
 }
 
 export default async function handler(req, res) {
+  // Добавление заголовков CORS
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+
   if (req.method === "POST") {
     const { name, phone, email, utmData, referrer } = req.body;
 
@@ -67,7 +78,7 @@ export default async function handler(req, res) {
       sheetName,
       values: [
         [
-          formattedDate, // Дата и время
+          formattedDate,
           name,
           phone,
           email || "",
@@ -87,7 +98,7 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: "Failed to submit data" });
     }
   } else {
-    res.setHeader("Allow", ["POST"]);
+    res.setHeader("Allow", ["POST", "OPTIONS"]);
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
