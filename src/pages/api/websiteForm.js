@@ -1,5 +1,4 @@
 import { google } from "googleapis";
-import fetch from "node-fetch";
 
 const auth = new google.auth.GoogleAuth({
   credentials: {
@@ -50,43 +49,12 @@ async function appendToSheet({ spreadsheetId, sheetName, values }) {
   }
 }
 
-async function verifyRecaptcha(token) {
-  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
-  const url = "https://www.google.com/recaptcha/api/siteverify";
-
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `secret=${secretKey}&response=${token}`,
-    });
-
-    const data = await response.json();
-
-    if (!data.success) {
-      console.error("reCAPTCHA verification failed:", data);
-      return false;
-    }
-
-    return true;
-  } catch (error) {
-    console.error("reCAPTCHA verification error:", error);
-    return false;
-  }
-}
-
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { name, phone, email, utmData, referrer, recaptchaToken } = req.body;
+    const { name, phone, email, utmData, referrer } = req.body;
 
-    if (!name || !phone || !recaptchaToken) {
-      return res.status(400).json({ error: "Missing required fields or reCAPTCHA token" });
-    }
-
-    // Verify reCAPTCHA
-    const isRecaptchaValid = await verifyRecaptcha(recaptchaToken);
-    if (!isRecaptchaValid) {
-      return res.status(400).json({ error: "reCAPTCHA verification failed" });
+    if (!name || !phone) {
+      return res.status(400).json({ error: "Missing required fields" });
     }
 
     const spreadsheetId = process.env.WEBSITE_SHEET_ID;
