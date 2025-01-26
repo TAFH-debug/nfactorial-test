@@ -12,6 +12,7 @@
     "@formspark/use-formspark": "^0.1.39",
     "@next/font": "^14.2.13",
     "@next/third-parties": "^14.2.14",
+    "@notionhq/client": "^2.2.15",
     "better-react-mathjax": "^2.0.4-beta1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
