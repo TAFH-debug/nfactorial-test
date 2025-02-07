@@ -126,7 +126,7 @@ export default async function handler(req, res) {
             const courseSheetSuccess = await appendToSheet(courseSheetId, rowData);
 
             // Write to backup sheet
-            const backupSheetSuccess = await appendToSheet(process.env.BACKUP_SHEET_ID, rowData);
+            const backupSheetSuccess = await appendToSheet(process.env.BACKUP_SHEET_MINI_ID, rowData);
 
             if (courseSheetSuccess && backupSheetSuccess) {
                 return res.status(200).json({ message: "Data successfully submitted" });
