@@ -49,7 +49,7 @@ async function appendToSheet(spreadsheetId, values) {
         const sheets = google.sheets({ version: "v4", auth });
         const result = await sheets.spreadsheets.values.append({
             spreadsheetId,
-            range: "Sheet1!A:K", // Using standard range for all sheets
+            range: "FreeCourses!A:K", // Using standard range for all sheets
             valueInputOption: "RAW",
             resource: { values: [values] },
         });
