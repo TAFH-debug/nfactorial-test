@@ -1,7 +1,8 @@
+// freeLesson.js (API Route)
 import { google } from "googleapis";
 import rateLimit from "express-rate-limit";
 
-// Google API Authentication setup
+// Google Sheets API setup
 const auth = new google.auth.GoogleAuth({
     credentials: {
         client_email: process.env.GOOGLE_CLIENT_EMAIL,
@@ -11,15 +12,23 @@ const auth = new google.auth.GoogleAuth({
     scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
 
-// Sheet ID mapping
-const SHEET_IDS = {
-    PROGRAMMING_SHEET_ID: process.env.PROGRAMMING_SHEET_ID,
-    PRODUCT_SHEET_ID: process.env.PRODUCT_SHEET_ID,
-    QA_SHEET_ID: process.env.QA_SHEET_ID,
-    DATA_SHEET_ID: process.env.DATA_SHEET_ID,
-    BACKUP_SHEET_ID: process.env.BACKUP_SHEET_MINI_ID // Add backup sheet ID
+// Mapping course names to sheet IDs
+const SHEET_MAPPING = {
+    "Основы программирования": process.env.PROGRAMMING_SHEET_ID,
+    "Продакт-менеджер": process.env.PRODUCT_SHEET_ID,
+    "QA-инженер": process.env.QA_SHEET_ID,
+    "Дата-аналитик": process.env.DATA_SHEET_ID
 };
 
+// Rate limiter setup
+const limiter = rateLimit({
+    windowMs: 24 * 60 * 60 * 1000,
+    max: 100,
+    message: { error: "Too many requests, please try again tomorrow." },
+    headers: true,
+});
+
+// Get current date in Almaty timezone
 const getCurrentFormattedDate = () => {
     const date = new Date();
     const options = {
@@ -34,65 +43,28 @@ const getCurrentFormattedDate = () => {
     return new Intl.DateTimeFormat("en-GB", options).format(date).replace(",", "");
 };
 
-const limiter = rateLimit({
-    windowMs: 24 * 60 * 60 * 1000,
-    max: 100,
-    message: { error: "Too many requests, please try again tomorrow." },
-    headers: true,
-});
-
-async function appendToSheet({ spreadsheetId, values }) {
+// Function to append data to a specific sheet
+async function appendToSheet(spreadsheetId, values) {
     try {
         const sheets = google.sheets({ version: "v4", auth });
-        const resource = { values };
         const result = await sheets.spreadsheets.values.append({
             spreadsheetId,
-            range: `FreeCourses!A:K`,
+            range: "Sheet1!A:K", // Using standard range for all sheets
             valueInputOption: "RAW",
-            resource,
+            resource: { values: [values] },
         });
         return result.status === 200;
     } catch (error) {
-        console.error("Error appending to sheet:", error);
+        console.error(`Error appending to sheet ${spreadsheetId}:`, error);
         return false;
     }
 }
 
-async function appendToMultipleSheets(data, courseSheetId) {
-    const formattedDate = getCurrentFormattedDate();
-    const rowData = [
-        formattedDate,
-        data.name,
-        data.phone,
-        data.email || "",
-        data.course,
-        data.referrer || "",
-        data.utmData?.utm_source || "",
-        data.utmData?.utm_medium || "",
-        data.utmData?.utm_campaign || "",
-        data.utmData?.utm_term || "",
-        data.utmData?.utm_content || "",
-    ];
-
-    // Write to course-specific sheet
-    const courseSheetSuccess = await appendToSheet({
-        spreadsheetId: courseSheetId,
-        values: [rowData],
-    });
-
-    // Write to backup sheet
-    const backupSheetSuccess = await appendToSheet({
-        spreadsheetId: SHEET_IDS.BACKUP_SHEET_ID,
-        values: [rowData],
-    });
-
-    return courseSheetSuccess && backupSheetSuccess;
-}
-
 export default async function handler(req, res) {
-    // CORS protection
-    const allowedOrigins = ["https://www.nfactorial.school"];
+    // CORS setup
+    const allowedOrigins = ["https://www.nfactorial.school", "https://test.nfactorial.school"];
     const origin = req.headers.origin;
+
     if (!allowedOrigins.includes(origin)) {
         return res.status(403).json({ error: "Access denied by CORS policy" });
     }
@@ -102,51 +74,71 @@ export default async function handler(req, res) {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
     if (req.method === "OPTIONS") {
-        res.status(200).end();
-        return;
+        return res.status(200).end();
     }
 
-    // Apply rate limiting
-    await new Promise((resolve, reject) => {
-        limiter(req, res, (result) => 
-            result instanceof Error ? reject(result) : resolve(result)
-        );
-    });
-
-    // User-Agent check
-    const userAgent = req.headers["user-agent"] || "";
-    const blockedAgents = ["curl", "wget", "PostmanRuntime", "Python", "bot", "crawl", "spider"];
-    if (blockedAgents.some((agent) => userAgent.toLowerCase().includes(agent))) {
-        return res.status(403).json({ error: "Access denied: suspicious activity detected" });
+    // Rate limiting
+    try {
+        await new Promise((resolve, reject) => {
+            limiter(req, res, (result) => {
+                if (result instanceof Error) {
+                    reject(result);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    } catch (error) {
+        return res.status(429).json({ error: "Too many requests" });
     }
 
     if (req.method === "POST") {
-        const { name, phone, email, course, sheetId, utmData, referrer } = req.body;
+        try {
+            const { name, phone, email, course, utmData, referrer } = req.body;
 
-        // Validation
-        if (!name || !phone || !course || !sheetId) {
-            return res.status(400).json({ error: "Missing required fields" });
-        }
+            // Validation
+            if (!name || !phone || !course) {
+                return res.status(400).json({ error: "Missing required fields" });
+            }
 
-        // Get the actual sheet ID from environment variables
-        const actualSheetId = SHEET_IDS[sheetId];
-        if (!actualSheetId) {
-            return res.status(400).json({ error: "Invalid sheet ID" });
-        }
+            // Get correct sheet ID for the course
+            const courseSheetId = SHEET_MAPPING[course];
+            if (!courseSheetId) {
+                return res.status(400).json({ error: "Invalid course selected" });
+            }
 
-        // Write to both course-specific and backup sheets
-        const success = await appendToMultipleSheets(
-            { name, phone, email, course, utmData, referrer },
-            actualSheetId
-        );
+            const formattedDate = getCurrentFormattedDate();
+            const rowData = [
+                formattedDate,
+                name,
+                phone,
+                email || "",
+                course,
+                referrer || "",
+                utmData?.utm_source || "",
+                utmData?.utm_medium || "",
+                utmData?.utm_campaign || "",
+                utmData?.utm_term || "",
+                utmData?.utm_content || "",
+            ];
 
-        if (success) {
-            return res.status(200).json({ message: "Data successfully submitted" });
-        } else {
-            return res.status(500).json({ error: "Failed to submit data" });
+            // Write to course-specific sheet
+            const courseSheetSuccess = await appendToSheet(courseSheetId, rowData);
+
+            // Write to backup sheet
+            const backupSheetSuccess = await appendToSheet(process.env.BACKUP_SHEET_ID, rowData);
+
+            if (courseSheetSuccess && backupSheetSuccess) {
+                return res.status(200).json({ message: "Data successfully submitted" });
+            } else {
+                throw new Error("Failed to write to one or both sheets");
+            }
+        } catch (error) {
+            console.error("Error processing request:", error);
+            return res.status(500).json({ error: "Internal server error" });
         }
     } else {
         res.setHeader("Allow", ["POST", "OPTIONS"]);
-        res.status(405).end(`Method ${req.method} Not Allowed`);
+        return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
     }
 }
