@@ -1,8 +1,8 @@
 import React from "react";
-import Image from "next/image";
 import styles from "./Result.module.css";
 import Badge from "@/components/CustomBadge/CustomBadge";
-
+import ImageWithLoader from "@/components/ImageLoader/ImageLoader";
+import Image from "next/image";
 const Result = ({ category, description }) => {
   const categoryDetails = {
     kaspi: {
@@ -46,14 +46,14 @@ const Result = ({ category, description }) => {
       </div>
       <div className={styles.container}>
         <div className={styles.imageContainer}>
-          <Image
+          <ImageWithLoader
             src={
               isMobile
                 ? categoryDetails[category]?.mobileImageSrc
                 : categoryDetails[category]?.imageSrc
             }
             alt={`${category} image`}
-            width={206}
+            width={480}
             height={240}
             className={styles.image}
             priority={1}
