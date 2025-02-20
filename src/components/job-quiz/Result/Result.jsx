@@ -3,6 +3,8 @@ import styles from "./Result.module.css";
 import Badge from "@/components/CustomBadge/CustomBadge";
 import ImageWithLoader from "@/components/ImageLoader/ImageLoader";
 import Image from "next/image";
+import Link from "next/link";
+
 const Result = ({ category, description }) => {
   const categoryDetails = {
     kaspi: {
@@ -74,6 +76,14 @@ const Result = ({ category, description }) => {
             </div>
           </div>
           <div className={styles.descriptionText}>{description.text}</div>
+          <div className={styles.Cta}>
+          <Image className={styles.instagramIcon}src="/instagram.png" alt="alt" width={24} height={24} />
+          <p className={styles.descriptionText}>
+          Делитесь результатом в Stories с отметкой <Link className={styles.link} href="https://www.instagram.com/nfactorial.school/">@nfactorial.school</Link>
+          </p>
+        </div>
+          </div>
+        <div>
         </div>
       </div>
     </>
