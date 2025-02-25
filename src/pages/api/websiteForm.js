@@ -60,7 +60,10 @@ async function appendToSheet({ spreadsheetId, sheetName, values }) {
 // API-обработчик с защитой
 export default async function handler(req, res) {
   // CORS защита - разрешен доступ только с вашего сайта
-  const allowedOrigins = ["https://www.nfactorial.school"];
+  const allowedOrigins = [
+    "https://www.nfactorial.school", 
+    "https://nfactorial.school"
+  ];
   const origin = req.headers.origin;
 
   if (!allowedOrigins.includes(origin)) {
