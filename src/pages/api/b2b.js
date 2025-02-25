@@ -1,5 +1,6 @@
 import { google } from "googleapis";
 
+// Настройка аутентификации Google API
 const auth = new google.auth.GoogleAuth({
   credentials: {
     client_email: process.env.GOOGLE_CLIENT_EMAIL,
@@ -12,7 +13,6 @@ const auth = new google.auth.GoogleAuth({
 // Функция для получения текущей отформатированной даты и времени
 const getCurrentFormattedDate = () => {
   const date = new Date();
-
   // Форматируем дату и время
   const options = {
     timeZone: "Asia/Almaty",
@@ -23,7 +23,6 @@ const getCurrentFormattedDate = () => {
     minute: "2-digit",
     second: "2-digit",
   };
-
   return new Intl.DateTimeFormat("en-GB", options)
     .format(date)
     .replace(",", ""); // Убираем запятую, если есть
@@ -35,9 +34,8 @@ async function appendToSheet({ values }) {
     const sheets = google.sheets({ version: "v4", auth });
     const spreadsheetId = process.env.COMPANY_SHEET_ID;
     const sheetName = process.env.COMPANY_SHEET_NAME || "Leads";
-    
     const resource = { values };
-
+    
     // Append data to the sheet
     const result = await sheets.spreadsheets.values.append({
       spreadsheetId,
@@ -45,7 +43,6 @@ async function appendToSheet({ values }) {
       valueInputOption: "RAW",
       resource,
     });
-
     return result.status === 200;
   } catch (error) {
     console.error("Error appending to sheet:", error);
@@ -56,14 +53,14 @@ async function appendToSheet({ values }) {
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { name, phone, email, company, utmData, referrer } = req.body;
-
+    
     // Проверка обязательных полей
     if (!name || !phone) {
       return res.status(400).json({ error: "Missing required fields" });
     }
-
+    
     const formattedDate = getCurrentFormattedDate();
-
+    
     // Добавляем запись в Google Sheets
     const success = await appendToSheet({
       values: [
@@ -72,7 +69,7 @@ export default async function handler(req, res) {
           name,
           phone,
           email || "",
-          company || "", // Новое поле для компании
+          company || "", // Поле для компании
           referrer || "",
           utmData?.utm_source || "",
           utmData?.utm_medium || "",
@@ -82,7 +79,7 @@ export default async function handler(req, res) {
         ],
       ],
     });
-
+    
     if (success) {
       return res.status(200).json({ message: "Data successfully submitted" });
     } else {
