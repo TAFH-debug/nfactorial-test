@@ -1,20 +1,17 @@
 import { google } from "googleapis";
 import rateLimit from "express-rate-limit";
 
-// Настройка аутентификации Google API
 const auth = new google.auth.GoogleAuth({
   credentials: {
     client_email: process.env.GOOGLE_CLIENT_EMAIL,
-    private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"), // Replacing escaped newlines
+    private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
   },
   projectId: process.env.GOOGLE_PROJECT_ID,
   scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
 
-// Функция для получения текущей отформатированной даты и времени
 const getCurrentFormattedDate = () => {
   const date = new Date();
-  // Форматируем дату и время
   const options = {
     timeZone: "Asia/Almaty",
     day: "2-digit",
@@ -26,18 +23,16 @@ const getCurrentFormattedDate = () => {
   };
   return new Intl.DateTimeFormat("en-GB", options)
     .format(date)
-    .replace(",", ""); // Убираем запятую, если есть
+    .replace(",", "");
 };
 
-// Rate limiting - ограничение до 100 запросов в день с одного IP
 const limiter = rateLimit({
-  windowMs: 24 * 60 * 60 * 1000, // 1 день
-  max: 100, // Максимум 100 запросов в день
+  windowMs: 24 * 60 * 60 * 1000,
+  max: 100,
   message: { error: "Too many requests, please try again tomorrow." },
-  headers: true, // Добавляет заголовки с информацией о лимите
+  headers: true,
 });
 
-// Функция для добавления данных в Google Sheets
 async function appendToSheet({ values }) {
   try {
     const sheets = google.sheets({ version: "v4", auth });
@@ -45,10 +40,9 @@ async function appendToSheet({ values }) {
     const sheetName = process.env.COMPANY_SHEET_NAME || "Leads";
     const resource = { values };
     
-    // Append data to the sheet
     const result = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: `${sheetName}!A:J`, // Расширенный диапазон для включения компании
+      range: `${sheetName}!A:J`,
       valueInputOption: "RAW",
       resource,
     });
@@ -60,17 +54,21 @@ async function appendToSheet({ values }) {
 }
 
 export default async function handler(req, res) {
-  // CORS защита - разрешен доступ только с вашего сайта
-  const allowedOrigins = ["https://www.nfactorial.school"];
+  // Расширенный список разрешенных доменов
+  const allowedOrigins = [
+    "https://www.nfactorial.school", 
+    "https://nfactorial.school",
+  ];
+  
   const origin = req.headers.origin;
   
-  if (!allowedOrigins.includes(origin)) {
-    return res.status(403).json({ error: "Access denied by CORS policy" });
+  // Проверка CORS с динамическим разрешением
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader("Access-Control-Allow-Credentials", "true"); // ВАЖНО!
   }
-  
-  res.setHeader("Access-Control-Allow-Origin", origin);
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   
   if (req.method === "OPTIONS") {
     res.status(200).end();
@@ -82,16 +80,10 @@ export default async function handler(req, res) {
     limiter(req, res, (result) => (result instanceof Error ? reject(result) : resolve(result)));
   });
   
-  // Проверка заголовка User-Agent
   const userAgent = req.headers["user-agent"] || "";
   const blockedAgents = [
-    "curl",
-    "wget",
-    "PostmanRuntime",
-    "Python",
-    "bot",
-    "crawl",
-    "spider",
+    "curl", "wget", "PostmanRuntime", 
+    "Python", "bot", "crawl", "spider"
   ];
   
   if (blockedAgents.some((agent) => userAgent.toLowerCase().includes(agent))) {
@@ -101,22 +93,20 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     const { name, phone, email, company, utmData, referrer } = req.body;
     
-    // Проверка обязательных полей
     if (!name || !phone) {
       return res.status(400).json({ error: "Missing required fields" });
     }
     
     const formattedDate = getCurrentFormattedDate();
     
-    // Добавляем запись в Google Sheets
     const success = await appendToSheet({
       values: [
         [
-          formattedDate, // Дата и время
+          formattedDate,
           name,
           phone,
           email || "",
-          company || "", // Поле для компании
+          company || "",
           referrer || "",
           utmData?.utm_source || "",
           utmData?.utm_medium || "",
