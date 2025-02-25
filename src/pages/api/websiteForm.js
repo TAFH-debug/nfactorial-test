@@ -1,7 +1,6 @@
 import { google } from "googleapis";
 import rateLimit from "express-rate-limit";
 
-// Настройка аутентификации Google API
 const auth = new google.auth.GoogleAuth({
   credentials: {
     client_email: process.env.GOOGLE_CLIENT_EMAIL,
@@ -11,10 +10,8 @@ const auth = new google.auth.GoogleAuth({
   scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
 
-// Функция получения текущей даты и времени
 const getCurrentFormattedDate = () => {
   const date = new Date();
-
   const options = {
     timeZone: "Asia/Almaty",
     day: "2-digit",
@@ -24,32 +21,31 @@ const getCurrentFormattedDate = () => {
     minute: "2-digit",
     second: "2-digit",
   };
-
-  return new Intl.DateTimeFormat("en-GB", options).format(date).replace(",", "");
+  return new Intl.DateTimeFormat("en-GB", options)
+    .format(date)
+    .replace(",", "");
 };
 
-// Rate limiting - ограничение до 100 запросов в день с одного IP
 const limiter = rateLimit({
-  windowMs: 24 * 60 * 60 * 1000, // 1 день
-  max: 100, // Максимум 100 запросов в день
+  windowMs: 24 * 60 * 60 * 1000,
+  max: 100,
   message: { error: "Too many requests, please try again tomorrow." },
-  headers: true, // Добавляет заголовки с информацией о лимите
+  headers: true,
 });
 
-// Функция добавления данных в Google Sheets
-async function appendToSheet({ spreadsheetId, sheetName, values }) {
+async function appendToSheet({ values }) {
   try {
     const sheets = google.sheets({ version: "v4", auth });
-
+    const spreadsheetId = process.env.COMPANY_SHEET_ID;
+    const sheetName = process.env.COMPANY_SHEET_NAME || "Leads";
     const resource = { values };
-
+    
     const result = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: `${sheetName}!A:H`,
+      range: `${sheetName}!A:J`,
       valueInputOption: "RAW",
       resource,
     });
-
     return result.status === 200;
   } catch (error) {
     console.error("Error appending to sheet:", error);
@@ -57,71 +53,60 @@ async function appendToSheet({ spreadsheetId, sheetName, values }) {
   }
 }
 
-// API-обработчик с защитой
 export default async function handler(req, res) {
-  // CORS защита - разрешен доступ только с вашего сайта
+  // Расширенный список разрешенных доменов
   const allowedOrigins = [
     "https://www.nfactorial.school", 
-    "https://nfactorial.school"
+    "https://nfactorial.school",
   ];
+  
   const origin = req.headers.origin;
-
-  if (!allowedOrigins.includes(origin)) {
-    return res.status(403).json({ error: "Access denied by CORS policy" });
+  
+  // Проверка CORS с динамическим разрешением
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader("Access-Control-Allow-Credentials", "true"); // ВАЖНО!
   }
-
-  res.setHeader("Access-Control-Allow-Origin", origin);
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
+  
   if (req.method === "OPTIONS") {
     res.status(200).end();
     return;
   }
-
+  
   // Rate limiting
   await new Promise((resolve, reject) => {
     limiter(req, res, (result) => (result instanceof Error ? reject(result) : resolve(result)));
   });
-
-  // Проверка заголовка User-Agent
+  
   const userAgent = req.headers["user-agent"] || "";
-
   const blockedAgents = [
-    "curl",
-    "wget",
-    "PostmanRuntime",
-    "Python",
-    "bot",
-    "crawl",
-    "spider",
+    "curl", "wget", "PostmanRuntime", 
+    "Python", "bot", "crawl", "spider"
   ];
-
+  
   if (blockedAgents.some((agent) => userAgent.toLowerCase().includes(agent))) {
     return res.status(403).json({ error: "Access denied: suspicious activity detected" });
   }
-
+  
   if (req.method === "POST") {
-    const { name, phone, email, utmData, referrer } = req.body;
-
+    const { name, phone, email, company, utmData, referrer } = req.body;
+    
     if (!name || !phone) {
       return res.status(400).json({ error: "Missing required fields" });
     }
-
-    const spreadsheetId = process.env.WEBSITE_SHEET_ID;
-    const sheetName = process.env.WEBSITE_SHEET_NAME || "FormLeads";
-
+    
     const formattedDate = getCurrentFormattedDate();
-
+    
     const success = await appendToSheet({
-      spreadsheetId,
-      sheetName,
       values: [
         [
           formattedDate,
           name,
           phone,
           email || "",
+          company || "",
           referrer || "",
           utmData?.utm_source || "",
           utmData?.utm_medium || "",
@@ -131,7 +116,7 @@ export default async function handler(req, res) {
         ],
       ],
     });
-
+    
     if (success) {
       return res.status(200).json({ message: "Data successfully submitted" });
     } else {
