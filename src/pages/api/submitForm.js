@@ -85,21 +85,6 @@ async function appendToBackup({ name, phone, email, utmData, referrer }) {
 }
 
 export default async function handler(req, res) {
-  // Set CORS headers for nfactorial.school
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', 'https://nfactorial.school');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  );
-
-  // Handle OPTIONS method for preflight requests
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  }
-
   if (req.method === "POST") {
     const { name, phone, email, utmData, referrer, formType } = req.body;
 
@@ -147,7 +132,7 @@ export default async function handler(req, res) {
         .json({ error: "Failed to submit or backup data" });
     }
   } else {
-    res.setHeader("Allow", ["POST", "OPTIONS"]);
+    res.setHeader("Allow", ["POST"]);
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
