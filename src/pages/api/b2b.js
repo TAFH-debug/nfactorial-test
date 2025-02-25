@@ -1,4 +1,5 @@
 import { google } from "googleapis";
+
 const auth = new google.auth.GoogleAuth({
   credentials: {
     client_email: process.env.GOOGLE_CLIENT_EMAIL,
@@ -7,6 +8,8 @@ const auth = new google.auth.GoogleAuth({
   projectId: process.env.GOOGLE_PROJECT_ID,
   scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
+
+// Функция для получения текущей отформатированной даты и времени
 const getCurrentFormattedDate = () => {
   const date = new Date();
 
@@ -26,16 +29,19 @@ const getCurrentFormattedDate = () => {
     .replace(",", ""); // Убираем запятую, если есть
 };
 
-async function appendToSheet({ spreadsheetId, sheetName, values }) {
+// Функция для добавления данных в Google Sheets
+async function appendToSheet({ values }) {
   try {
     const sheets = google.sheets({ version: "v4", auth });
-
+    const spreadsheetId = process.env.COMPANY_SHEET_ID;
+    const sheetName = process.env.COMPANY_SHEET_NAME || "Leads";
+    
     const resource = { values };
 
     // Append data to the sheet
     const result = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: `${sheetName}!A:H`, // Подогнать диапазон
+      range: `${sheetName}!A:J`, // Расширенный диапазон для включения компании
       valueInputOption: "RAW",
       resource,
     });
@@ -47,79 +53,27 @@ async function appendToSheet({ spreadsheetId, sheetName, values }) {
   }
 }
 
-async function appendToBackup({ name, phone, email, utmData, referrer }) {
-  try {
-    const sheets = google.sheets({ version: "v4", auth });
-
-    const formattedDate = getCurrentFormattedDate();
-
-    const values = [
-      [
-        formattedDate, // Дата и время
-        name,
-        phone,
-        referrer,
-        utmData?.utm_source || "",
-        utmData?.utm_medium || "",
-        utmData?.utm_campaign || "",
-        utmData?.utm_term || "",
-        utmData?.utm_content || "",
-      ],
-    ];
-
-    const resource = { values };
-
-    // Append data to the backup sheet
-    const result = await sheets.spreadsheets.values.append({
-      spreadsheetId: process.env.BACKUP_SHEET_ID, // Backup spreadsheet ID from .env
-      range: `${process.env.BACKUP_SHEET_NAME || "BackupLeads"}!A:I`, // Подогнать диапазон
-      valueInputOption: "RAW",
-      resource,
-    });
-
-    return result.status === 200;
-  } catch (error) {
-    console.error("Error appending to backup sheet:", error);
-    return false;
-  }
-}
-
 export default async function handler(req, res) {
-  // Set CORS headers for nfactorial.school
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', 'https://nfactorial.school');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  );
-
-  // Handle OPTIONS method for preflight requests
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  }
-
   if (req.method === "POST") {
-    const { name, phone, email, utmData, referrer, formType } = req.body;
+    const { name, phone, email, company, utmData, referrer } = req.body;
 
+    // Проверка обязательных полей
     if (!name || !phone) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    const { spreadsheetId, sheetName } = getSheetConfig(formType);
-
     const formattedDate = getCurrentFormattedDate();
 
+    // Добавляем запись в Google Sheets
     const success = await appendToSheet({
-      spreadsheetId,
-      sheetName,
       values: [
         [
           formattedDate, // Дата и время
           name,
           phone,
-          referrer,
+          email || "",
+          company || "", // Новое поле для компании
+          referrer || "",
           utmData?.utm_source || "",
           utmData?.utm_medium || "",
           utmData?.utm_campaign || "",
@@ -129,51 +83,13 @@ export default async function handler(req, res) {
       ],
     });
 
-    const backupSuccess = await appendToBackup({
-      name,
-      phone,
-      email,
-      utmData,
-      referrer,
-    });
-
-    if (success && backupSuccess) {
-      return res
-        .status(200)
-        .json({ message: "Data successfully submitted and backed up" });
+    if (success) {
+      return res.status(200).json({ message: "Data successfully submitted" });
     } else {
-      return res
-        .status(500)
-        .json({ error: "Failed to submit or backup data" });
+      return res.status(500).json({ error: "Failed to submit data" });
     }
   } else {
-    res.setHeader("Allow", ["POST", "OPTIONS"]);
+    res.setHeader("Allow", ["POST"]);
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
-
-// Helper function to get the right spreadsheetId and sheetName
-const getSheetConfig = (formType) => {
-  if (formType === "first") {
-    return {
-      spreadsheetId: process.env.FIRST_SHEET_ID,
-      sheetName: "QuizFormLeads",
-    };
-  } else if (formType === "second") {
-    return {
-      spreadsheetId: process.env.SECOND_SHEET_ID,
-      sheetName: "UxuiFormLeads",
-    };
-  } else if (formType === "third") {
-    return {
-      spreadsheetId: process.env.THIRD_SHEET_ID,
-      sheetName: "SatFormLeads",
-    };
-  } else if (formType === "job") {
-    return {
-      spreadsheetId: process.env.JOB_SHEET_ID,
-      sheetName: "JobsQuizFormLeads",
-    };
-  }
-  throw new Error("Unknown form type");
-};
