@@ -1,4 +1,5 @@
 import { google } from "googleapis";
+import rateLimit from "express-rate-limit";
 
 // Настройка аутентификации Google API
 const auth = new google.auth.GoogleAuth({
@@ -28,6 +29,14 @@ const getCurrentFormattedDate = () => {
     .replace(",", ""); // Убираем запятую, если есть
 };
 
+// Rate limiting - ограничение до 100 запросов в день с одного IP
+const limiter = rateLimit({
+  windowMs: 24 * 60 * 60 * 1000, // 1 день
+  max: 100, // Максимум 100 запросов в день
+  message: { error: "Too many requests, please try again tomorrow." },
+  headers: true, // Добавляет заголовки с информацией о лимите
+});
+
 // Функция для добавления данных в Google Sheets
 async function appendToSheet({ values }) {
   try {
@@ -51,6 +60,44 @@ async function appendToSheet({ values }) {
 }
 
 export default async function handler(req, res) {
+  // CORS защита - разрешен доступ только с вашего сайта
+  const allowedOrigins = ["https://www.nfactorial.school"];
+  const origin = req.headers.origin;
+  
+  if (!allowedOrigins.includes(origin)) {
+    return res.status(403).json({ error: "Access denied by CORS policy" });
+  }
+  
+  res.setHeader("Access-Control-Allow-Origin", origin);
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+  
+  // Rate limiting
+  await new Promise((resolve, reject) => {
+    limiter(req, res, (result) => (result instanceof Error ? reject(result) : resolve(result)));
+  });
+  
+  // Проверка заголовка User-Agent
+  const userAgent = req.headers["user-agent"] || "";
+  const blockedAgents = [
+    "curl",
+    "wget",
+    "PostmanRuntime",
+    "Python",
+    "bot",
+    "crawl",
+    "spider",
+  ];
+  
+  if (blockedAgents.some((agent) => userAgent.toLowerCase().includes(agent))) {
+    return res.status(403).json({ error: "Access denied: suspicious activity detected" });
+  }
+  
   if (req.method === "POST") {
     const { name, phone, email, company, utmData, referrer } = req.body;
     
@@ -86,7 +133,7 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: "Failed to submit data" });
     }
   } else {
-    res.setHeader("Allow", ["POST"]);
+    res.setHeader("Allow", ["POST", "OPTIONS"]);
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
