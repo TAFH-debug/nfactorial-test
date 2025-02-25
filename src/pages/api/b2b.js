@@ -30,12 +30,48 @@ async function appendToSheet({ spreadsheetId, sheetName, values }) {
   try {
     const sheets = google.sheets({ version: "v4", auth });
 
+    // Проверим существование листа и создадим его, если нужно
+    try {
+      // Получаем информацию о листах
+      const sheetsInfo = await sheets.spreadsheets.get({
+        spreadsheetId,
+        fields: 'sheets.properties.title',
+      });
+      
+      // Проверяем, существует ли наш лист
+      const sheetExists = sheetsInfo.data.sheets.some(
+        sheet => sheet.properties.title === sheetName
+      );
+      
+      // Если лист не существует, создаем его
+      if (!sheetExists) {
+        await sheets.spreadsheets.batchUpdate({
+          spreadsheetId,
+          resource: {
+            requests: [
+              {
+                addSheet: {
+                  properties: {
+                    title: sheetName,
+                  },
+                },
+              },
+            ],
+          },
+        });
+        console.log(`Created new sheet: ${sheetName}`);
+      }
+    } catch (checkError) {
+      console.error("Error checking/creating sheet:", checkError);
+      // Продолжаем работу, возможно лист уже существует
+    }
+
     const resource = { values };
 
     // Append data to the sheet
     const result = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: `${sheetName}!A:I`, // Updated range to include company column
+      range: `${sheetName}!A:K`, // Обновленный диапазон для включения столбца компании
       valueInputOption: "RAW",
       resource,
     });
@@ -50,6 +86,44 @@ async function appendToSheet({ spreadsheetId, sheetName, values }) {
 async function appendToBackup({ name, phone, email, company, utmData, referrer }) {
   try {
     const sheets = google.sheets({ version: "v4", auth });
+    const sheetName = process.env.BACKUP_SHEET_NAME || "BackupLeads";
+    const spreadsheetId = process.env.BACKUP_SHEET_ID;
+
+    // Проверим существование листа и создадим его, если нужно
+    try {
+      // Получаем информацию о листах
+      const sheetsInfo = await sheets.spreadsheets.get({
+        spreadsheetId,
+        fields: 'sheets.properties.title',
+      });
+      
+      // Проверяем, существует ли наш лист
+      const sheetExists = sheetsInfo.data.sheets.some(
+        sheet => sheet.properties.title === sheetName
+      );
+      
+      // Если лист не существует, создаем его
+      if (!sheetExists) {
+        await sheets.spreadsheets.batchUpdate({
+          spreadsheetId,
+          resource: {
+            requests: [
+              {
+                addSheet: {
+                  properties: {
+                    title: sheetName,
+                  },
+                },
+              },
+            ],
+          },
+        });
+        console.log(`Created new sheet: ${sheetName}`);
+      }
+    } catch (checkError) {
+      console.error("Error checking/creating sheet:", checkError);
+      // Продолжаем работу, возможно лист уже существует
+    }
 
     const formattedDate = getCurrentFormattedDate();
 
@@ -73,8 +147,8 @@ async function appendToBackup({ name, phone, email, company, utmData, referrer }
 
     // Append data to the backup sheet
     const result = await sheets.spreadsheets.values.append({
-      spreadsheetId: process.env.BACKUP_SHEET_ID, // Backup spreadsheet ID from .env
-      range: `${process.env.BACKUP_SHEET_NAME || "BackupLeads"}!A:K`, // Updated range for company field
+      spreadsheetId,
+      range: `${sheetName}!A:K`, // Updated range for company field
       valueInputOption: "RAW",
       resource,
     });
@@ -90,6 +164,44 @@ async function appendToBackup({ name, phone, email, company, utmData, referrer }
 async function appendToCompanySheet({ name, phone, email, company, utmData, referrer }) {
   try {
     const sheets = google.sheets({ version: "v4", auth });
+    const sheetName = process.env.COMPANY_SHEET_NAME || "CompanyLeads";
+    const spreadsheetId = process.env.COMPANY_SHEET_ID;
+
+    // Проверим существование листа и создадим его, если нужно
+    try {
+      // Получаем информацию о листах
+      const sheetsInfo = await sheets.spreadsheets.get({
+        spreadsheetId,
+        fields: 'sheets.properties.title',
+      });
+      
+      // Проверяем, существует ли наш лист
+      const sheetExists = sheetsInfo.data.sheets.some(
+        sheet => sheet.properties.title === sheetName
+      );
+      
+      // Если лист не существует, создаем его
+      if (!sheetExists) {
+        await sheets.spreadsheets.batchUpdate({
+          spreadsheetId,
+          resource: {
+            requests: [
+              {
+                addSheet: {
+                  properties: {
+                    title: sheetName,
+                  },
+                },
+              },
+            ],
+          },
+        });
+        console.log(`Created new sheet: ${sheetName}`);
+      }
+    } catch (checkError) {
+      console.error("Error checking/creating sheet:", checkError);
+      // Продолжаем работу, возможно лист уже существует
+    }
 
     const formattedDate = getCurrentFormattedDate();
 
@@ -99,7 +211,7 @@ async function appendToCompanySheet({ name, phone, email, company, utmData, refe
         name,
         phone,
         email || "",
-        company,
+        company, // Company name
         referrer,
         utmData?.utm_source || "",
         utmData?.utm_medium || "",
@@ -113,8 +225,8 @@ async function appendToCompanySheet({ name, phone, email, company, utmData, refe
 
     // Append data to the company sheet
     const result = await sheets.spreadsheets.values.append({
-      spreadsheetId: process.env.COMPANY_SHEET_ID, // New environment variable for company sheet
-      range: `${process.env.COMPANY_SHEET_NAME || "b2b_leads"}!A:K`,
+      spreadsheetId,
+      range: `${sheetName}!A:K`,
       valueInputOption: "RAW",
       resource,
     });
@@ -128,66 +240,37 @@ async function appendToCompanySheet({ name, phone, email, company, utmData, refe
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { name, phone, email, company, utmData, referrer, formType } = req.body;
+    try {
+      const { name, phone, email, company, utmData, referrer, formType = "company" } = req.body;
 
-    if (!name || !phone) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
+      if (!name || !phone) {
+        return res.status(400).json({ error: "Missing required fields" });
+      }
 
-    const { spreadsheetId, sheetName } = getSheetConfig(formType);
-
-    const formattedDate = getCurrentFormattedDate();
-
-    const success = await appendToSheet({
-      spreadsheetId,
-      sheetName,
-      values: [
-        [
-          formattedDate, // Дата и время
-          name,
-          phone,
-          email || "",
-          company || "", // Added company field
-          referrer,
-          utmData?.utm_source || "",
-          utmData?.utm_medium || "",
-          utmData?.utm_campaign || "",
-          utmData?.utm_term || "",
-          utmData?.utm_content || "",
-        ],
-      ],
-    });
-
-    const backupSuccess = await appendToBackup({
-      name,
-      phone,
-      email,
-      company,
-      utmData,
-      referrer,
-    });
-
-    // Only append to company sheet if company name is provided
-    let companySheetSuccess = true;
-    if (company) {
-      companySheetSuccess = await appendToCompanySheet({
+      // Всегда записываем в company sheet
+      const success = await appendToCompanySheet({
         name,
         phone,
-        email,
-        company,
+        email, 
+        company: company || "", // Компания может быть пустой, но параметр всегда присутствует
         utmData,
         referrer,
       });
-    }
 
-    if (success && backupSuccess && companySheetSuccess) {
-      return res
-        .status(200)
-        .json({ message: "Data successfully submitted and backed up" });
-    } else {
+      if (success) {
+        return res
+          .status(200)
+          .json({ message: "Data successfully submitted" });
+      } else {
+        return res
+          .status(500)
+          .json({ error: "Failed to submit data" });
+      }
+    } catch (error) {
+      console.error("Unexpected error in handler:", error);
       return res
         .status(500)
-        .json({ error: "Failed to submit or backup data" });
+        .json({ error: "Server error", message: error.message });
     }
   } else {
     res.setHeader("Allow", ["POST"]);
@@ -197,31 +280,42 @@ export default async function handler(req, res) {
 
 // Helper function to get the right spreadsheetId and sheetName
 const getSheetConfig = (formType) => {
+  // Для b2b API по умолчанию используем COMPANY_SHEET_ID
+  const defaultSpreadsheetId = process.env.COMPANY_SHEET_ID || process.env.BACKUP_SHEET_ID;
+  
+  if (!defaultSpreadsheetId) {
+    throw new Error("No spreadsheet ID configured. Please set COMPANY_SHEET_ID or BACKUP_SHEET_ID in your environment variables.");
+  }
+
   if (formType === "first") {
     return {
-      spreadsheetId: process.env.FIRST_SHEET_ID,
+      spreadsheetId: process.env.FIRST_SHEET_ID || defaultSpreadsheetId,
       sheetName: "QuizFormLeads",
     };
   } else if (formType === "second") {
     return {
-      spreadsheetId: process.env.SECOND_SHEET_ID,
+      spreadsheetId: process.env.SECOND_SHEET_ID || defaultSpreadsheetId,
       sheetName: "UxuiFormLeads",
     };
   } else if (formType === "third") {
     return {
-      spreadsheetId: process.env.THIRD_SHEET_ID,
+      spreadsheetId: process.env.THIRD_SHEET_ID || defaultSpreadsheetId,
       sheetName: "SatFormLeads",
     };
   } else if (formType === "job") {
     return {
-      spreadsheetId: process.env.JOB_SHEET_ID,
+      spreadsheetId: process.env.JOB_SHEET_ID || defaultSpreadsheetId,
       sheetName: "JobsQuizFormLeads",
     };
-  } else if (formType === "company") { // New form type for company leads
+  } else if (formType === "company" || formType === "b2b") { // New form types for company leads
     return {
-      spreadsheetId: process.env.COMPANY_SHEET_ID,
-      sheetName: process.env.COMPANY_SHEET_NAME || "CompanyLeads",
+      spreadsheetId: process.env.COMPANY_SHEET_ID || defaultSpreadsheetId,
+      sheetName: process.env.COMPANY_SHEET_NAME || "B2BLeads",
+    };
+  } else { // Default case
+    return {
+      spreadsheetId: defaultSpreadsheetId,
+      sheetName: "B2BLeads",
     };
   }
-  throw new Error("Unknown form type");
 };
