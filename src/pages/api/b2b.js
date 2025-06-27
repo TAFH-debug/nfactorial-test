@@ -91,7 +91,7 @@ export default async function handler(req, res) {
   }
   
   if (req.method === "POST") {
-    const { name, phone, email, company, utmData, referrer } = req.body;
+    const { name, phone, company, utmData, referrer } = req.body;
     
     if (!name || !phone) {
       return res.status(400).json({ error: "Missing required fields" });
@@ -105,7 +105,6 @@ export default async function handler(req, res) {
           formattedDate,
           name,
           phone,
-          email || "",
           company || "",
           referrer || "",
           utmData?.utm_source || "",
