@@ -14,7 +14,6 @@ const auth = new google.auth.GoogleAuth({
 // Функция получения текущей даты и времени
 const getCurrentFormattedDate = () => {
   const date = new Date();
-
   const options = {
     timeZone: "Asia/Almaty",
     day: "2-digit",
@@ -24,7 +23,6 @@ const getCurrentFormattedDate = () => {
     minute: "2-digit",
     second: "2-digit",
   };
-
   return new Intl.DateTimeFormat("en-GB", options).format(date).replace(",", "");
 };
 
@@ -40,16 +38,13 @@ const limiter = rateLimit({
 async function appendToSheet({ spreadsheetId, sheetName, values }) {
   try {
     const sheets = google.sheets({ version: "v4", auth });
-
     const resource = { values };
-
     const result = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: `${sheetName}!A:H`,
+      range: `${sheetName}!A:D`, // Изменено на A:D для 4 колонок
       valueInputOption: "RAW",
       resource,
     });
-
     return result.status === 200;
   } catch (error) {
     console.error("Error appending to sheet:", error);
@@ -62,11 +57,9 @@ export default async function handler(req, res) {
   // CORS защита - разрешен доступ только с вашего сайта
   const allowedOrigins = ["https://www.nfactorial.school"];
   const origin = req.headers.origin;
-
   if (!allowedOrigins.includes(origin)) {
     return res.status(403).json({ error: "Access denied by CORS policy" });
   }
-
   res.setHeader("Access-Control-Allow-Origin", origin);
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -83,7 +76,6 @@ export default async function handler(req, res) {
 
   // Проверка заголовка User-Agent
   const userAgent = req.headers["user-agent"] || "";
-
   const blockedAgents = [
     "curl",
     "wget",
@@ -93,20 +85,27 @@ export default async function handler(req, res) {
     "crawl",
     "spider",
   ];
-
   if (blockedAgents.some((agent) => userAgent.toLowerCase().includes(agent))) {
     return res.status(403).json({ error: "Access denied: suspicious activity detected" });
   }
 
   if (req.method === "POST") {
-    const { name, phone, email, utmData, referrer } = req.body;
+    const { name, phone, email } = req.body;
 
-    if (!name || !phone) {
-      return res.status(400).json({ error: "Missing required fields" });
+    // Проверка обязательных полей
+    if (!name || !phone || !email) {
+      return res.status(400).json({ error: "Missing required fields: name, phone, email" });
     }
 
-    const spreadsheetId = process.env.ANALYTICS_SHEET_ID;
-    const sheetName = process.env.ANALYTICS_SHEET_NAME || "FormLeads";
+    // Базовая валидация email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: "Invalid email format" });
+    }
+
+    // Фиксированный ID таблицы
+    const spreadsheetId = "1ieCp5oVmqbLYbrjcm2ZuV3fJ870AmAAJyM4dUs_gK7g";
+    const sheetName = "Leads"; // Можно изменить на нужное имя листа
 
     const formattedDate = getCurrentFormattedDate();
 
@@ -118,13 +117,7 @@ export default async function handler(req, res) {
           formattedDate,
           name,
           phone,
-          email || "",
-          referrer || "",
-          utmData?.utm_source || "",
-          utmData?.utm_medium || "",
-          utmData?.utm_campaign || "",
-          utmData?.utm_term || "",
-          utmData?.utm_content || "",
+          email,
         ],
       ],
     });
