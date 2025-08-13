@@ -11,7 +11,7 @@ const auth = new google.auth.GoogleAuth({
     scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
 
-// Функция получения текущей даты и времени
+// Функция получения текущей даты и времени в читаемом формате
 const getCurrentFormattedDate = () => {
     const date = new Date();
     const options = {
@@ -24,6 +24,28 @@ const getCurrentFormattedDate = () => {
         second: "2-digit",
     };
     return new Intl.DateTimeFormat("en-GB", options).format(date).replace(",", "");
+};
+
+// Функция форматирования timestamp в читаемую дату
+const formatTimestamp = (timestamp) => {
+    if (!timestamp) return "";
+    
+    try {
+        const date = new Date(timestamp);
+        if (isNaN(date.getTime())) return "";
+        
+        const options = {
+            timeZone: "Asia/Almaty",
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        };
+        return new Intl.DateTimeFormat("en-GB", options).format(date).replace(",", "");
+    } catch (e) {
+        return "";
+    }
 };
 
 // Rate limiting - ограничение до 100 запросов в день с одного IP
@@ -41,7 +63,7 @@ async function appendToSheet({ spreadsheetId, sheetName, values }) {
         const resource = { values };
         const result = await sheets.spreadsheets.values.append({
             spreadsheetId,
-            range: `${sheetName}!A:Z`, // Расширяем диапазон для всех колонок
+            range: `${sheetName}!A:Y`, // 25 колонок (A-Y)
             valueInputOption: "RAW",
             resource,
         });
@@ -55,14 +77,17 @@ async function appendToSheet({ spreadsheetId, sheetName, values }) {
 // API-обработчик с защитой
 export default async function handler(req, res) {
     // CORS защита - разрешен доступ только с вашего сайта
-    const allowedOrigins = ["https://www.nfactorial.school", "https://test.nfactorial.school"];
+    const allowedOrigins = [
+        "https://www.nfactorial.school", 
+        "https://test.nfactorial.school",
+        "http://localhost:3000" // для локальной разработки
+    ];
     const origin = req.headers.origin;
     
-    if (!allowedOrigins.includes(origin)) {
-        return res.status(403).json({ error: "Access denied by CORS policy" });
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader("Access-Control-Allow-Origin", origin);
     }
     
-    res.setHeader("Access-Control-Allow-Origin", origin);
     res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     
@@ -98,9 +123,9 @@ export default async function handler(req, res) {
             name, 
             phone, 
             email,
-            date,
+            date, // Игнорируем ISO date из фронтенда
             
-            // UTM параметры
+            // UTM параметры (проверяем оба варианта)
             utm_source,
             utm_medium,
             utm_campaign,
@@ -137,40 +162,54 @@ export default async function handler(req, res) {
         } = req.body;
         
         if (!name || !phone) {
-            return res.status(400).json({ error: "Missing required fields" });
+            return res.status(400).json({ error: "Missing required fields: name and phone" });
         }
         
         const spreadsheetId = process.env.WEBSITE_SHEET_ID;
         const sheetName = process.env.WEBSITE_SHEET_NAME || "FormLeads";
-        const formattedDate = date || getCurrentFormattedDate();
+        
+        // Используем читаемый формат даты вместо ISO
+        const formattedDate = getCurrentFormattedDate();
+        
+        // Определяем правильный attribution_type если он неверный
+        let finalAttributionType = attribution_type;
+        if (fbclid && (!attribution_type || attribution_type === 'direct')) {
+            finalAttributionType = 'click';
+        } else if (gclid && (!attribution_type || attribution_type === 'direct')) {
+            finalAttributionType = 'click';
+        } else if (utm_source && !attribution_type) {
+            finalAttributionType = 'utm';
+        } else if (!attribution_type) {
+            finalAttributionType = 'direct';
+        }
         
         // Формируем строку для Google Sheets в правильном порядке колонок
         const rowData = [
-            formattedDate,                                    // Date
-            name,                                             // Name
-            phone,                                            // Phone
-            email || "",                                      // Email
-            utm_referrer || referrer || "",                  // utm_referrer
-            utm_source || utmData?.utm_source || "",         // utm_source
-            utm_medium || utmData?.utm_medium || "",         // utm_medium
-            utm_campaign || utmData?.utm_campaign || "",     // utm_campaign
-            utm_term || utmData?.utm_term || "",             // utm_term
-            utm_content || utmData?.utm_content || "",       // utm_content
-            fbclid || "",                                     // fbclid
-            gclid || "",                                      // gclid
-            yclid || "",                                      // yclid
-            landing_page || "",                               // Landing_Page
-            attribution_type || "",                           // Attribution_Type
-            browser_id || "",                                 // Browser_ID
-            session_id || "",                                 // Session_ID
-            page_view_count || "",                            // Page_View_Count
-            attribution_timestamp || "",                      // Attribution_Timestamp
-            form_page_url || "",                              // Form_Page_URL
-            device_type || "",                                // Device_Type
-            attribution_window || "",                         // Attribution_Window
-            screen_resolution || "",                          // Screen_Resolution
-            timezone || "",                                   // Timezone
-            language || ""                                    // Language
+            formattedDate,                                    // A: Date (читаемый формат)
+            name,                                             // B: Name
+            phone,                                            // C: Phone
+            email || "",                                      // D: Email
+            utm_referrer || referrer || "",                  // E: utm_referrer
+            utm_source || utmData?.utm_source || "",         // F: utm_source
+            utm_medium || utmData?.utm_medium || "",         // G: utm_medium
+            utm_campaign || utmData?.utm_campaign || "",     // H: utm_campaign
+            utm_term || utmData?.utm_term || "",             // I: utm_term
+            utm_content || utmData?.utm_content || "",       // J: utm_content
+            fbclid || "",                                     // K: fbclid
+            gclid || "",                                      // L: gclid
+            yclid || "",                                      // M: yclid
+            landing_page || "",                               // N: Landing_Page
+            finalAttributionType,                             // O: Attribution_Type (исправленный)
+            browser_id || "",                                 // P: Browser_ID
+            session_id || "",                                 // Q: Session_ID
+            page_view_count || "1",                           // R: Page_View_Count
+            formatTimestamp(attribution_timestamp),           // S: Attribution_Timestamp (читаемый формат)
+            form_page_url || "",                              // T: Form_Page_URL
+            device_type || "",                                // U: Device_Type
+            attribution_window || "",                         // V: Attribution_Window
+            screen_resolution || "",                          // W: Screen_Resolution (если добавите колонку)
+            timezone || "",                                   // X: Timezone (если добавите колонку)
+            language || ""                                    // Y: Language (если добавите колонку)
         ];
         
         const success = await appendToSheet({
@@ -180,22 +219,22 @@ export default async function handler(req, res) {
         });
         
         if (success) {
-            // Логируем успешную отправку (опционально)
-            if (process.env.NODE_ENV === 'development') {
-                console.log('Lead saved:', {
-                    name,
-                    phone,
-                    utm_source: utm_source || utmData?.utm_source,
-                    attribution_type,
-                    device_type
-                });
-            }
+            // Логируем для отладки
+            console.log('✅ Lead saved:', {
+                name,
+                phone,
+                utm_source: utm_source || utmData?.utm_source || 'none',
+                attribution_type: finalAttributionType,
+                browser_id: browser_id ? 'present' : 'missing',
+                session_id: session_id ? 'present' : 'missing'
+            });
             
             return res.status(200).json({ 
                 message: "Data successfully submitted",
                 leadId: `${Date.now()}-${Math.random().toString(36).substring(7)}`
             });
         } else {
+            console.error('❌ Failed to save lead');
             return res.status(500).json({ error: "Failed to submit data" });
         }
     } else {
