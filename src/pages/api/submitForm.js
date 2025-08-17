@@ -34,11 +34,11 @@ async function appendToSheet({ spreadsheetId, sheetName, values }) {
 
     // Append data to the sheet
     const result = await sheets.spreadsheets.values.append({
-      spreadsheetId,
-      range: `${sheetName}!A:H`, // Подогнать диапазон
-      valueInputOption: "RAW",
-      resource,
-    });
+  spreadsheetId,
+  range: `${sheetName}!A:Y`, // Changed from A:H to A:Y (25 columns)
+  valueInputOption: "RAW",
+  resource,
+});
 
     return result.status === 200;
   } catch (error) {
@@ -86,12 +86,12 @@ async function appendToBackup({ name, phone, email, utmData, referrer }) {
     const resource = { values };
 
     // Append data to the backup sheet
-    const result = await sheets.spreadsheets.values.append({
-      spreadsheetId: process.env.BACKUP_SHEET_ID, // Backup spreadsheet ID from .env
-      range: `${process.env.BACKUP_SHEET_NAME || "BackupLeads"}!A:I`, // Подогнать диапазон
-      valueInputOption: "RAW",
-      resource,
-    });
+const result = await sheets.spreadsheets.values.append({
+  spreadsheetId: process.env.BACKUP_SHEET_ID,
+  range: `${process.env.BACKUP_SHEET_NAME || "BackupLeads"}!A:Y`, // Changed from A:I to A:Y
+  valueInputOption: "RAW",
+  resource,
+});
 
     return result.status === 200;
   } catch (error) {

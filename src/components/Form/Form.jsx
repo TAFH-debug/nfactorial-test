@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import InputMask from "react-input-mask"; // Импортируем InputMask
+import InputMask from "react-input-mask";
 import styles from "./Form.module.css";
-import { sendGAEvent } from "@next/third-parties/google"; // GTM отправка событий
+import { sendGAEvent } from "@next/third-parties/google";
 
 export default function Form() {
   const [name, setName] = useState("");
@@ -31,11 +31,13 @@ export default function Form() {
   };
 
   const getCompleteAttributionData = () => {
-    const stored = window.getStoredAttribution
-      ? window.getStoredAttribution()
-      : {};
+    // Get stored data
+    const stored = window.getStoredAttribution ? window.getStoredAttribution() : {};
+    
+    // IMPORTANT: Also check current URL params (fresh UTMs have priority)
     const currentParams = new URLSearchParams(window.location.search);
-
+    
+    // Merge UTM data - current params override stored
     const utmData = {
       utm_source: currentParams.get("utm_source") || stored.utm_source || "",
       utm_medium: currentParams.get("utm_medium") || stored.utm_medium || "",
@@ -43,30 +45,29 @@ export default function Form() {
       utm_term: currentParams.get("utm_term") || stored.utm_term || "",
       utm_content: currentParams.get("utm_content") || stored.utm_content || "",
     };
-
+    
+    // Click IDs - check both current and stored
     const clickIds = {
       fbclid: currentParams.get("fbclid") || stored.fbclid || "",
       gclid: currentParams.get("gclid") || stored.gclid || "",
       yclid: currentParams.get("yclid") || stored.yclid || "",
     };
-
+    
     const pageData = {
-      landing_page: stored.landing_page || "",
+      landing_page: stored.landing_page || window.location.href,
       form_page_url: window.location.href,
       utm_referrer: stored.referrer || document.referrer || "",
     };
-
+    
     const attributionData = {
       attribution_type: stored.attribution_type || "direct",
-      attribution_timestamp: stored.captured_at
-        ? new Date(stored.captured_at).toISOString()
-        : "",
+      attribution_timestamp: stored.captured_at ? new Date(stored.captured_at).toISOString() : "",
       attribution_window: calculateAttributionWindow(stored.captured_at),
       browser_id: stored.browser_id || "",
       session_id: stored.session_id || "",
       page_view_count: stored.page_view_count || 1,
     };
-
+    
     const techData = {
       device_type: getDeviceType(),
       user_agent: navigator.userAgent,
@@ -74,7 +75,7 @@ export default function Form() {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       language: navigator.language || navigator.userLanguage,
     };
-
+    
     return {
       ...utmData,
       ...clickIds,
@@ -87,6 +88,7 @@ export default function Form() {
   const validateName = (name) => /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(name);
   const validatePhone = (phone) =>
     /^\+([1-9]) \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(phone);
+
   const handleStart = async (e) => {
     e.preventDefault();
     setFormError("");
@@ -108,6 +110,46 @@ export default function Form() {
 
     try {
       const attributionData = getCompleteAttributionData();
+      
+      // Fire GTM/GA events
+      if (typeof window !== 'undefined' && window.dataLayer) {
+        window.dataLayer.push({
+          event: 'form_submit',
+          formName: 'quiz_form_first',
+          utm_source: attributionData.utm_source,
+          utm_medium: attributionData.utm_medium,
+          utm_campaign: attributionData.utm_campaign,
+          fbclid: attributionData.fbclid,
+          gclid: attributionData.gclid
+        });
+      }
+      
+      // Send GA event
+      sendGAEvent('form_submission', {
+        form_type: 'first',
+        utm_source: attributionData.utm_source,
+        device_type: attributionData.device_type
+      });
+      
+      // Fire PostHog event
+      if (typeof posthog !== 'undefined') {
+        posthog.capture('form_submitted', {
+          form_name: 'quiz_form_first',
+          utm_source: attributionData.utm_source,
+          utm_campaign: attributionData.utm_campaign,
+          device_type: attributionData.device_type
+        });
+      }
+      
+      // Fire Facebook Pixel event
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead', {
+          content_name: 'quiz_form_first',
+          utm_source: attributionData.utm_source,
+          utm_campaign: attributionData.utm_campaign
+        });
+      }
+      
       const response = await fetch("/api/submitForm", {
         method: "POST",
         headers: {
@@ -117,13 +159,28 @@ export default function Form() {
         body: JSON.stringify({
           name,
           phone,
-          utmData: attributionData,
+          ...attributionData, // Send all attribution fields directly
+          utmData: attributionData, // Also keep this for backward compatibility
           referrer: attributionData.utm_referrer,
-          formType: "first", // Уникальный параметр для первой формы
+          formType: "first",
         }),
       });
 
       if (response.ok) {
+        // Fire success events
+        if (typeof window !== 'undefined' && window.dataLayer) {
+          window.dataLayer.push({
+            event: 'form_success',
+            formName: 'quiz_form_first'
+          });
+        }
+        
+        if (typeof posthog !== 'undefined') {
+          posthog.capture('form_success', {
+            form_name: 'quiz_form_first'
+          });
+        }
+        
         router.push("/quiz");
       } else {
         const result = await response.json();
@@ -132,6 +189,14 @@ export default function Form() {
     } catch (error) {
       console.error("Ошибка при отправке данных:", error);
       setFormError("Ошибка при отправке данных");
+      
+      // Track error
+      if (typeof posthog !== 'undefined') {
+        posthog.capture('form_error', {
+          form_name: 'quiz_form_first',
+          error: error.message
+        });
+      }
     } finally {
       setSubmitting(false);
     }
@@ -153,7 +218,7 @@ export default function Form() {
         </div>
         <div className={styles.inputWrapper}>
           <InputMask
-            mask="+9 (999) 999-99-99" // Маска для телефона
+            mask="+9 (999) 999-99-99"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="Номер телефона"
