@@ -1,34 +1,73 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
-// Удаляем импорт InputMask
-// import InputMask from "react-input-mask";
 import PhoneInput from "react-phone-input-2";
-// Удаляем импорт стилей библиотеки
-// import "react-phone-input-2/lib/style.css";
 import styles from "./Form.module.css";
-import { parsePhoneNumberFromString } from "libphonenumber-js"; // Импортируем для валидации номера
+import { parsePhoneNumberFromString } from "libphonenumber-js";
+import { sendGAEvent } from "@next/third-parties/google";
 
 export default function Form() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [formError, setFormError] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [utmData, setUtmData] = useState({});
-  const [referrer, setReferrer] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
-    const query = router.query;
-    const utmParams = {
-      utm_source: query.utm_source || "",
-      utm_medium: query.utm_medium || "",
-      utm_campaign: query.utm_campaign || "",
-      utm_term: query.utm_term || "",
-      utm_content: query.utm_content || "",
+  const getDeviceType = () => {
+    const ua = navigator.userAgent;
+    if (/Mobile|Android|iPhone/i.test(ua)) return "mobile";
+    if (/iPad|Tablet/i.test(ua)) return "tablet";
+    return "desktop";
+  };
+
+  const calculateAttributionWindow = (firstVisitTimestamp) => {
+    if (!firstVisitTimestamp) return "same_session";
+    const days = Math.floor(
+      (Date.now() - firstVisitTimestamp) / (1000 * 60 * 60 * 24)
+    );
+    if (days === 0) return "same_day";
+    if (days === 1) return "1_day";
+    if (days <= 3) return "2-3_days";
+    if (days <= 7) return "4-7_days";
+    return "over_7_days";
+  };
+
+  const getCompleteAttributionData = () => {
+    const stored = window.getStoredAttribution ? window.getStoredAttribution() : {};
+    const currentParams = new URLSearchParams(window.location.search);
+    const utmData = {
+      utm_source: currentParams.get("utm_source") || stored.utm_source || "",
+      utm_medium: currentParams.get("utm_medium") || stored.utm_medium || "",
+      utm_campaign: currentParams.get("utm_campaign") || stored.utm_campaign || "",
+      utm_term: currentParams.get("utm_term") || stored.utm_term || "",
+      utm_content: currentParams.get("utm_content") || stored.utm_content || "",
     };
-    setUtmData(utmParams);
-    setReferrer(document.referrer || "");
-  }, [router.query]);
+    const clickIds = {
+      fbclid: currentParams.get("fbclid") || stored.fbclid || "",
+      gclid: currentParams.get("gclid") || stored.gclid || "",
+      yclid: currentParams.get("yclid") || stored.yclid || "",
+    };
+    const pageData = {
+      landing_page: stored.landing_page || window.location.href,
+      form_page_url: window.location.href,
+      utm_referrer: stored.referrer || document.referrer || "",
+    };
+    const attributionData = {
+      attribution_type: stored.attribution_type || "direct",
+      attribution_timestamp: stored.captured_at ? new Date(stored.captured_at).toISOString() : "",
+      attribution_window: calculateAttributionWindow(stored.captured_at),
+      browser_id: stored.browser_id || "",
+      session_id: stored.session_id || "",
+      page_view_count: stored.page_view_count || 1,
+    };
+    const techData = {
+      device_type: getDeviceType(),
+      user_agent: navigator.userAgent,
+      screen_resolution: `${window.screen.width}x${window.screen.height}`,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      language: navigator.language || navigator.userLanguage,
+    };
+    return { ...utmData, ...clickIds, ...pageData, ...attributionData, ...techData };
+  };
 
   const validateName = (name) => /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(name);
 
@@ -55,21 +94,46 @@ export default function Form() {
     }
 
     try {
+      const attributionData = getCompleteAttributionData();
+
+      if (typeof window !== 'undefined' && window.dataLayer) {
+        window.dataLayer.push({
+          event: 'form_submit',
+          formName: 'quiz_form_job',
+          ...attributionData
+        });
+      }
+      sendGAEvent('form_submission', { form_type: 'job-quiz', ...attributionData });
+      if (typeof posthog !== 'undefined') {
+        posthog.capture('form_submitted', { form_name: 'quiz_form_job', ...attributionData });
+      }
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead', { content_name: 'quiz_form_job', ...attributionData });
+      }
+
       const response = await fetch("/api/submitForm", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           name,
-          phone: "+" + phone, // Добавляем '+' к номеру
-          utmData,
-          referrer,
+          phone: "+" + phone,
+          ...attributionData,
+          utmData: attributionData,
+          referrer: attributionData.utm_referrer,
           formType: "job-quiz",
         }),
       });
 
       if (response.ok) {
+        if (typeof window !== 'undefined' && window.dataLayer) {
+          window.dataLayer.push({ event: 'form_success', formName: 'quiz_form_job' });
+        }
+        if (typeof posthog !== 'undefined') {
+          posthog.capture('form_success', { form_name: 'quiz_form_job' });
+        }
         router.push("/job-quiz/quiz");
       } else {
         const result = await response.json();
@@ -78,6 +142,9 @@ export default function Form() {
     } catch (error) {
       console.error("Ошибка при отправке данных:", error);
       setFormError("Ошибка при отправке данных");
+      if (typeof posthog !== 'undefined') {
+        posthog.capture('form_error', { form_name: 'quiz_form_job', error: error.message });
+      }
     } finally {
       setSubmitting(false);
     }
