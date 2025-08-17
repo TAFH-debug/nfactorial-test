@@ -112,6 +112,12 @@ export default async function handler(req, res) {
           utmData?.utm_campaign || "",
           utmData?.utm_term || "",
           utmData?.utm_content || "",
+          utmData?.attribution_type || "",
+          utmData?.captured_at || "",
+          utmData?.landing_page || "",
+          utmData?.browser_id || "",
+          utmData?.session_id || "",
+          utmData?.page_view_count || "",
         ],
       ],
     });

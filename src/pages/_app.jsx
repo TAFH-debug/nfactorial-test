@@ -1,6 +1,7 @@
 import { GoogleAnalytics } from '@next/third-parties/google'
-import { initPostHog } from '@/lib/posthog'; 
+import { initPostHog } from '@/lib/posthog';
 import { useEffect } from 'react';
+import '@/lib/attribution';
 
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {

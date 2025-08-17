@@ -55,15 +55,31 @@ async function appendToBackup({ name, phone, email, utmData, referrer }) {
 
     const values = [
       [
-        formattedDate, // Дата и время
+        formattedDate,
         name,
         phone,
-        referrer,
+        email || "",
+        utmData?.utm_referrer || referrer || "",
         utmData?.utm_source || "",
         utmData?.utm_medium || "",
         utmData?.utm_campaign || "",
         utmData?.utm_term || "",
         utmData?.utm_content || "",
+        utmData?.fbclid || "",
+        utmData?.gclid || "",
+        utmData?.yclid || "",
+        utmData?.landing_page || "",
+        utmData?.attribution_type || "",
+        utmData?.browser_id || "",
+        utmData?.session_id || "",
+        utmData?.page_view_count || "",
+        utmData?.attribution_timestamp || "",
+        utmData?.form_page_url || "",
+        utmData?.device_type || "",
+        utmData?.attribution_window || "",
+        utmData?.screen_resolution || "",
+        utmData?.timezone || "",
+        utmData?.language || "",
       ],
     ];
 
@@ -85,6 +101,16 @@ async function appendToBackup({ name, phone, email, utmData, referrer }) {
 }
 
 export default async function handler(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS,PATCH,DELETE,POST,PUT");
+  res.setHeader("Access-Control-Allow-Headers", "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+
   if (req.method === "POST") {
     const { name, phone, email, utmData, referrer, formType } = req.body;
 
@@ -101,15 +127,31 @@ export default async function handler(req, res) {
       sheetName,
       values: [
         [
-          formattedDate, // Дата и время
+          formattedDate,
           name,
           phone,
-          referrer,
+          email || "",
+          utmData?.utm_referrer || referrer || "",
           utmData?.utm_source || "",
           utmData?.utm_medium || "",
           utmData?.utm_campaign || "",
           utmData?.utm_term || "",
           utmData?.utm_content || "",
+          utmData?.fbclid || "",
+          utmData?.gclid || "",
+          utmData?.yclid || "",
+          utmData?.landing_page || "",
+          utmData?.attribution_type || "",
+          utmData?.browser_id || "",
+          utmData?.session_id || "",
+          utmData?.page_view_count || "",
+          utmData?.attribution_timestamp || "",
+          utmData?.form_page_url || "",
+          utmData?.device_type || "",
+          utmData?.attribution_window || "",
+          utmData?.screen_resolution || "",
+          utmData?.timezone || "",
+          utmData?.language || "",
         ],
       ],
     });
