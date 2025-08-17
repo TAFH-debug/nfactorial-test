@@ -65,7 +65,7 @@ export default function Form() {
           phone: "+" + phone, // Добавляем '+' к номеру
           utmData,
           referrer,
-          formType: "job",
+          formType: "job-quiz",
         }),
       });
 

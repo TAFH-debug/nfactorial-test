@@ -35,7 +35,7 @@ async function appendToSheet({ spreadsheetId, sheetName, values }) {
     // Append data to the sheet
     const result = await sheets.spreadsheets.values.append({
   spreadsheetId,
-  range: `${sheetName}!A:Y`, // Changed from A:H to A:Y (25 columns)
+  range: `${sheetName}!A:Z`, // Changed from A:Y to A:Z (26 columns)
   valueInputOption: "RAW",
   resource,
 });
@@ -47,7 +47,7 @@ async function appendToSheet({ spreadsheetId, sheetName, values }) {
   }
 }
 
-async function appendToBackup({ name, phone, email, utmData, referrer }) {
+async function appendToBackup({ name, phone, email, utmData, referrer, formType }) {
   try {
     const sheets = google.sheets({ version: "v4", auth });
 
@@ -80,6 +80,7 @@ async function appendToBackup({ name, phone, email, utmData, referrer }) {
         utmData?.screen_resolution || "",
         utmData?.timezone || "",
         utmData?.language || "",
+        formType || "",
       ],
     ];
 
@@ -88,7 +89,7 @@ async function appendToBackup({ name, phone, email, utmData, referrer }) {
     // Append data to the backup sheet
 const result = await sheets.spreadsheets.values.append({
   spreadsheetId: process.env.BACKUP_SHEET_ID,
-  range: `${process.env.BACKUP_SHEET_NAME || "BackupLeads"}!A:Y`, // Changed from A:I to A:Y
+  range: `${process.env.BACKUP_SHEET_NAME || "BackupLeads"}!A:Z`, // Changed from A:Y to A:Z
   valueInputOption: "RAW",
   resource,
 });
@@ -118,7 +119,8 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    const { spreadsheetId, sheetName } = getSheetConfig(formType);
+    const spreadsheetId = process.env.FIRST_SHEET_ID;
+    const sheetName = "QuizFormLeads";
 
     const formattedDate = getCurrentFormattedDate();
 
@@ -152,6 +154,7 @@ export default async function handler(req, res) {
           utmData?.screen_resolution || "",
           utmData?.timezone || "",
           utmData?.language || "",
+          formType || "",
         ],
       ],
     });
@@ -162,6 +165,7 @@ export default async function handler(req, res) {
       email,
       utmData,
       referrer,
+      formType,
     });
 
     if (success && backupSuccess) {
@@ -179,28 +183,3 @@ export default async function handler(req, res) {
   }
 }
 
-// Helper function to get the right spreadsheetId and sheetName
-const getSheetConfig = (formType) => {
-  if (formType === "first") {
-    return {
-      spreadsheetId: process.env.FIRST_SHEET_ID,
-      sheetName: "QuizFormLeads",
-    };
-  } else if (formType === "second") {
-    return {
-      spreadsheetId: process.env.SECOND_SHEET_ID,
-      sheetName: "UxuiFormLeads",
-    };
-  } else if (formType === "third") {
-    return {
-      spreadsheetId: process.env.THIRD_SHEET_ID,
-      sheetName: "SatFormLeads",
-    };
-  } else if (formType === "job") {
-    return {
-      spreadsheetId: process.env.JOB_SHEET_ID,
-      sheetName: "JobsQuizFormLeads",
-    };
-  }
-  throw new Error("Unknown form type");
-};

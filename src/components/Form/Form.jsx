@@ -162,7 +162,7 @@ export default function Form() {
           ...attributionData, // Send all attribution fields directly
           utmData: attributionData, // Also keep this for backward compatibility
           referrer: attributionData.utm_referrer,
-          formType: "first",
+          formType: "b2b",
         }),
       });
 
