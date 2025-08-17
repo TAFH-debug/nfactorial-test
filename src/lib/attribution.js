@@ -67,7 +67,6 @@ if (typeof window !== 'undefined') {
         let newAttribution = {};
         let shouldSave = false;
 
-        // Собираем UTM
         const utmParams = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
         utmParams.forEach(key => {
           const val = params.get(key);
@@ -77,7 +76,6 @@ if (typeof window !== 'undefined') {
           }
         });
 
-        // Click IDs
         if (params.get('fbclid')) {
           newAttribution.fbclid = params.get('fbclid');
           newAttribution.utm_source = newAttribution.utm_source || 'facebook';
@@ -100,7 +98,6 @@ if (typeof window !== 'undefined') {
           newAttribution.attribution_type = 'utm';
         }
 
-        // Organic traffic
         if (!shouldSave && document.referrer) {
           const ref = document.referrer.toLowerCase();
           if (ref.includes('facebook.com') || ref.includes('instagram.com')) {
@@ -117,10 +114,8 @@ if (typeof window !== 'undefined') {
           }
         }
 
-        // Тип по умолчанию
         if (!newAttribution.attribution_type) newAttribution.attribution_type = shouldSave ? 'utm' : 'direct';
 
-        // Логика перезаписи
         const canOverwrite = !existing || isExpired || 
           (newAttribution.attribution_type === 'utm' && ['direct','organic'].includes(existing.attribution_type)) ||
           newAttribution.attribution_type === 'click';
@@ -177,7 +172,14 @@ if (typeof window !== 'undefined') {
         return null;
       },
 
-      getAttribution: function () { return this.getStoredData() || {attribution_type:'direct', browser_id:this.getCookie('nf_browser_id'), session_id:sessionStorage.getItem('nf_session_id'), page_view_count:1}; },
+      getAttribution: function () {
+        return this.getStoredData() || {
+          attribution_type:'direct',
+          browser_id:this.getCookie('nf_browser_id'),
+          session_id:sessionStorage.getItem('nf_session_id'),
+          page_view_count:1
+        };
+      },
 
       setCookie: function (name,value,days) {
         const expires = new Date(Date.now()+days*24*60*60*1000);
