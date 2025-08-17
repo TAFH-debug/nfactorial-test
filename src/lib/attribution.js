@@ -1,3 +1,4 @@
+// lib/attribution.js - Исправленная версия для Next.js
 if (typeof window !== 'undefined') {
   (function () {
     const CONFIG = {
@@ -153,13 +154,30 @@ if (typeof window !== 'undefined') {
 
       saveToStorage: function (data) {
         const str = JSON.stringify(data);
-        try { localStorage.setItem(CONFIG.storage_key, str); } catch(e){}
-        try { sessionStorage.setItem(CONFIG.storage_key+'_session', str); } catch(e){}
-        try { this.setCookie(CONFIG.storage_key, str, Math.ceil((data.expires_at - Date.now())/(24*60*60*1000))); } catch(e){}
+        const expiryDays = Math.ceil((data.expires_at - Date.now())/(24*60*60*1000));
+        
+        // ВАЖНО: Сохраняем во все хранилища
+        try { 
+          this.setCookie(CONFIG.storage_key, str, expiryDays); 
+        } catch(e){}
+        
+        try { 
+          localStorage.setItem(CONFIG.storage_key, str); 
+        } catch(e){}
+        
+        try { 
+          sessionStorage.setItem(CONFIG.storage_key+'_session', str); 
+        } catch(e){}
       },
 
       getStoredData: function () {
-        const sources = [() => sessionStorage.getItem(CONFIG.storage_key+'_session'), () => localStorage.getItem(CONFIG.storage_key), () => this.getCookie(CONFIG.storage_key)];
+        // ИСПРАВЛЕНО: Сначала проверяем cookies (работают между доменами)
+        const sources = [
+          () => this.getCookie(CONFIG.storage_key),  // Cookies первые!
+          () => localStorage.getItem(CONFIG.storage_key),
+          () => sessionStorage.getItem(CONFIG.storage_key+'_session')
+        ];
+        
         for (let f of sources) {
           try {
             const data = f();
@@ -183,6 +201,7 @@ if (typeof window !== 'undefined') {
 
       setCookie: function (name,value,days) {
         const expires = new Date(Date.now()+days*24*60*60*1000);
+        // ВАЖНО: domain=.nfactorial.school для работы между поддоменами
         let domain = window.location.hostname.includes('nfactorial.school') ? '; domain=.nfactorial.school' : '';
         document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires.toUTCString()}; path=/${domain}; SameSite=Lax`;
       },
