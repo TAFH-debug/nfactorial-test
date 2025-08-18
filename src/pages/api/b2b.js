@@ -45,7 +45,7 @@ async function appendToSheet({ values }) {
         const resource = { values };
         const result = await sheets.spreadsheets.values.append({
             spreadsheetId,
-            range: `${sheetName}!A:P`, // Расширено до 16 колонок (A-P)
+            range: `${sheetName}!A:O`, // Сокращено до 15 колонок (A-O)
             valueInputOption: "RAW",
             resource,
         });
@@ -101,7 +101,6 @@ export default async function handler(req, res) {
             name, 
             phone, 
             company,
-            email,
             
             // UTM параметры из cookies
             utm_source,
@@ -154,18 +153,17 @@ export default async function handler(req, res) {
             name,                                             // B: Name
             phone,                                            // C: Phone
             company || "",                                    // D: Company
-            email || "",                                      // E: Email
-            utm_referrer || referrer || "",                  // F: Referrer
-            utm_source || utmData?.utm_source || "",         // G: UTM_Source
-            utm_medium || utmData?.utm_medium || "",         // H: UTM_Medium
-            utm_campaign || utmData?.utm_campaign || "",     // I: UTM_Campaign
-            utm_term || utmData?.utm_term || "",             // J: UTM_Term
-            utm_content || utmData?.utm_content || "",       // K: UTM_Content
-            gclid || "",                                      // L: GCLID
-            fbclid || "",                                     // M: FBCLID
-            yclid || "",                                      // N: YCLID
-            attribution_type,                                 // O: Attribution_Type
-            timestamp ? new Date(timestamp).toISOString() : "" // P: Timestamp
+            utm_referrer || referrer || "",                  // E: Referrer
+            utm_source || utmData?.utm_source || "",         // F: UTM_Source
+            utm_medium || utmData?.utm_medium || "",         // G: UTM_Medium
+            utm_campaign || utmData?.utm_campaign || "",     // H: UTM_Campaign
+            utm_term || utmData?.utm_term || "",             // I: UTM_Term
+            utm_content || utmData?.utm_content || "",       // J: UTM_Content
+            gclid || "",                                      // K: GCLID
+            fbclid || "",                                     // L: FBCLID
+            yclid || "",                                      // M: YCLID
+            attribution_type,                                 // N: Attribution_Type
+            timestamp ? new Date(timestamp).toISOString() : "" // O: Timestamp
         ];
         
         const success = await appendToSheet({
