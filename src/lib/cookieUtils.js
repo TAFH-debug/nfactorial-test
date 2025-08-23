@@ -1,14 +1,13 @@
-export const getUtmDataFromCookies = () => {
+export const getDataFromCookies = () => {
   const cookies = document.cookie.split('; ');
-  const utmData = {};
-  const utmParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+  const data = {};
 
   for (const cookie of cookies) {
     const [name, value] = cookie.split('=');
-    if (utmParams.includes(name)) {
-      utmData[name] = decodeURIComponent(value);
+    if (name && value) {
+      data[name] = decodeURIComponent(value);
     }
   }
 
-  return utmData;
+  return data;
 };

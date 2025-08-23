@@ -3,8 +3,7 @@ import { useRouter } from "next/router";
 import PhoneInput from "react-phone-input-2";
 import styles from "./Form.module.css";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
-import { sendGAEvent } from "@next/third-parties/google";
-import { getUtmDataFromCookies } from '../../../lib/cookieUtils';
+import { getDataFromCookies } from '../../../lib/cookieUtils';
 
 export default function Form() {
   const [name, setName] = useState("");
@@ -13,62 +12,29 @@ export default function Form() {
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
 
-  const getDeviceType = () => {
-    const ua = navigator.userAgent;
-    if (/Mobile|Android|iPhone/i.test(ua)) return "mobile";
-    if (/iPad|Tablet/i.test(ua)) return "tablet";
-    return "desktop";
-  };
-
-  const calculateAttributionWindow = (firstVisitTimestamp) => {
-    if (!firstVisitTimestamp) return "same_session";
-    const days = Math.floor(
-      (Date.now() - firstVisitTimestamp) / (1000 * 60 * 60 * 24)
-    );
-    if (days === 0) return "same_day";
-    if (days === 1) return "1_day";
-    if (days <= 3) return "2-3_days";
-    if (days <= 7) return "4-7_days";
-    return "over_7_days";
-  };
 
   const getCompleteAttributionData = () => {
     const stored = window.getStoredAttribution ? window.getStoredAttribution() : {};
     const currentParams = new URLSearchParams(window.location.search);
-    const utmDataFromCookies = getUtmDataFromCookies();
-    const utmData = {
-      utm_source: currentParams.get("utm_source") || utmDataFromCookies.utm_source || stored.utm_source || "",
-      utm_medium: currentParams.get("utm_medium") || utmDataFromCookies.utm_medium || stored.utm_medium || "",
-      utm_campaign: currentParams.get("utm_campaign") || utmDataFromCookies.utm_campaign || stored.utm_campaign || "",
-      utm_term: currentParams.get("utm_term") || utmDataFromCookies.utm_term || stored.utm_term || "",
-      utm_content: currentParams.get("utm_content") || utmDataFromCookies.utm_content || stored.utm_content || "",
+    const dataFromCookies = getDataFromCookies();
+
+    const getAttributionValue = (key) => {
+      return currentParams.get(key) || dataFromCookies[key] || stored[key] || "";
     };
-    const clickIds = {
-      fbclid: currentParams.get("fbclid") || stored.fbclid || "",
-      gclid: currentParams.get("gclid") || stored.gclid || "",
-      yclid: currentParams.get("yclid") || stored.yclid || "",
-    };
-    const pageData = {
+
+    return {
+      utm_source: getAttributionValue("utm_source"),
+      utm_medium: getAttributionValue("utm_medium"),
+      utm_campaign: getAttributionValue("utm_campaign"),
+      utm_term: getAttributionValue("utm_term"),
+      utm_content: getAttributionValue("utm_content"),
+      fbclid: getAttributionValue("fbclid"),
+      gclid: getAttributionValue("gclid"),
+      yclid: getAttributionValue("yclid"),
       landing_page: stored.landing_page || window.location.href,
       form_page_url: window.location.href,
       utm_referrer: stored.referrer || document.referrer || "",
     };
-    const attributionData = {
-      attribution_type: stored.attribution_type || "direct",
-      attribution_timestamp: stored.captured_at ? new Date(stored.captured_at).toISOString() : "",
-      attribution_window: calculateAttributionWindow(stored.captured_at),
-      browser_id: stored.browser_id || "",
-      session_id: stored.session_id || "",
-      page_view_count: stored.page_view_count || 1,
-    };
-    const techData = {
-      device_type: getDeviceType(),
-      user_agent: navigator.userAgent,
-      screen_resolution: `${window.screen.width}x${window.screen.height}`,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      language: navigator.language || navigator.userLanguage,
-    };
-    return { ...utmData, ...clickIds, ...pageData, ...attributionData, ...techData };
   };
 
   const validateName = (name) => /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(name);
@@ -98,18 +64,6 @@ export default function Form() {
     try {
       const attributionData = getCompleteAttributionData();
 
-      if (typeof window !== 'undefined' && window.dataLayer) {
-        window.dataLayer.push({
-          event: 'form_submit',
-          formName: 'quiz_form_uxui',
-          ...attributionData
-        });
-      }
-      sendGAEvent('form_submission', { form_type: 'uxui-quiz', ...attributionData });
-      if (typeof posthog !== 'undefined') {
-        posthog.capture('form_submitted', { form_name: 'quiz_form_uxui', ...attributionData });
-      }
-
       const response = await fetch("/api/submitForm", {
         method: "POST",
         headers: {
@@ -119,20 +73,12 @@ export default function Form() {
         body: JSON.stringify({
           name,
           phone: "+" + phone,
-          ...attributionData,
-          utmData: attributionData,
-          referrer: attributionData.utm_referrer,
           formType: "uxui-quiz",
+          ...attributionData,
         }),
       });
 
       if (response.ok) {
-        if (typeof window !== 'undefined' && window.dataLayer) {
-          window.dataLayer.push({ event: 'form_success', formName: 'quiz_form_uxui' });
-        }
-        if (typeof posthog !== 'undefined') {
-          posthog.capture('form_success', { form_name: 'quiz_form_uxui' });
-        }
         router.push("/uxui-quiz/quiz");
       } else {
         const result = await response.json();
@@ -141,9 +87,6 @@ export default function Form() {
     } catch (error) {
       console.error("Ошибка при отправке данных:", error);
       setFormError("Ошибка при отправке данных");
-      if (typeof posthog !== 'undefined') {
-        posthog.capture('form_error', { form_name: 'quiz_form_uxui', error: error.message });
-      }
     } finally {
       setSubmitting(false);
     }

@@ -3,8 +3,7 @@ import { useRouter } from "next/router";
 import PhoneInput from "react-phone-input-2";
 import styles from "./Form.module.css";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
-import { sendGAEvent } from "@next/third-parties/google";
-import { getUtmDataFromCookies } from '../../../lib/cookieUtils';
+import { getDataFromCookies } from '../../../lib/cookieUtils';
 
 export default function Form() {
   const [name, setName] = useState("");
@@ -35,18 +34,18 @@ export default function Form() {
   const getCompleteAttributionData = () => {
     const stored = window.getStoredAttribution ? window.getStoredAttribution() : {};
     const currentParams = new URLSearchParams(window.location.search);
-    const utmDataFromCookies = getUtmDataFromCookies();
+    const dataFromCookies = getDataFromCookies();
     const utmData = {
-      utm_source: currentParams.get("utm_source") || utmDataFromCookies.utm_source || stored.utm_source || "",
-      utm_medium: currentParams.get("utm_medium") || utmDataFromCookies.utm_medium || stored.utm_medium || "",
-      utm_campaign: currentParams.get("utm_campaign") || utmDataFromCookies.utm_campaign || stored.utm_campaign || "",
-      utm_term: currentParams.get("utm_term") || utmDataFromCookies.utm_term || stored.utm_term || "",
-      utm_content: currentParams.get("utm_content") || utmDataFromCookies.utm_content || stored.utm_content || "",
+      utm_source: currentParams.get("utm_source") || dataFromCookies.utm_source || stored.utm_source || "",
+      utm_medium: currentParams.get("utm_medium") || dataFromCookies.utm_medium || stored.utm_medium || "",
+      utm_campaign: currentParams.get("utm_campaign") || dataFromCookies.utm_campaign || stored.utm_campaign || "",
+      utm_term: currentParams.get("utm_term") || dataFromCookies.utm_term || stored.utm_term || "",
+      utm_content: currentParams.get("utm_content") || dataFromCookies.utm_content || stored.utm_content || "",
     };
     const clickIds = {
-      fbclid: currentParams.get("fbclid") || stored.fbclid || "",
-      gclid: currentParams.get("gclid") || stored.gclid || "",
-      yclid: currentParams.get("yclid") || stored.yclid || "",
+      fbclid: currentParams.get("fbclid") || dataFromCookies.fbclid || stored.fbclid || "",
+      gclid: currentParams.get("gclid") || dataFromCookies.gclid || stored.gclid || "",
+      yclid: currentParams.get("yclid") || dataFromCookies.yclid || stored.yclid || "",
     };
     const pageData = {
       landing_page: stored.landing_page || window.location.href,
@@ -98,18 +97,6 @@ export default function Form() {
     try {
       const attributionData = getCompleteAttributionData();
 
-      if (typeof window !== 'undefined' && window.dataLayer) {
-        window.dataLayer.push({
-          event: 'form_submit',
-          formName: 'quiz_form_job',
-          ...attributionData
-        });
-      }
-      sendGAEvent('form_submission', { form_type: 'job-quiz', ...attributionData });
-      if (typeof posthog !== 'undefined') {
-        posthog.capture('form_submitted', { form_name: 'quiz_form_job', ...attributionData });
-      }
-
       const response = await fetch("/api/submitForm", {
         method: "POST",
         headers: {
@@ -119,20 +106,12 @@ export default function Form() {
         body: JSON.stringify({
           name,
           phone: "+" + phone,
-          ...attributionData,
-          utmData: attributionData,
-          referrer: attributionData.utm_referrer,
           formType: "job-quiz",
+          ...attributionData,
         }),
       });
 
       if (response.ok) {
-        if (typeof window !== 'undefined' && window.dataLayer) {
-          window.dataLayer.push({ event: 'form_success', formName: 'quiz_form_job' });
-        }
-        if (typeof posthog !== 'undefined') {
-          posthog.capture('form_success', { form_name: 'quiz_form_job' });
-        }
         router.push("/job-quiz/quiz");
       } else {
         const result = await response.json();
@@ -141,9 +120,6 @@ export default function Form() {
     } catch (error) {
       console.error("Ошибка при отправке данных:", error);
       setFormError("Ошибка при отправке данных");
-      if (typeof posthog !== 'undefined') {
-        posthog.capture('form_error', { form_name: 'quiz_form_job', error: error.message });
-      }
     } finally {
       setSubmitting(false);
     }
