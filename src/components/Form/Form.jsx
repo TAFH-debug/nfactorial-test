@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import InputMask from "react-input-mask";
 import styles from "./Form.module.css";
 import { sendGAEvent } from "@next/third-parties/google";
+import { getUtmDataFromCookies } from "../../lib/cookieUtils";
 
 export default function Form() {
   const [name, setName] = useState("");
@@ -38,12 +39,13 @@ export default function Form() {
     const currentParams = new URLSearchParams(window.location.search);
     
     // Merge UTM data - current params override stored
+    const utmDataFromCookies = getUtmDataFromCookies();
     const utmData = {
-      utm_source: currentParams.get("utm_source") || stored.utm_source || "",
-      utm_medium: currentParams.get("utm_medium") || stored.utm_medium || "",
-      utm_campaign: currentParams.get("utm_campaign") || stored.utm_campaign || "",
-      utm_term: currentParams.get("utm_term") || stored.utm_term || "",
-      utm_content: currentParams.get("utm_content") || stored.utm_content || "",
+      utm_source: currentParams.get("utm_source") || utmDataFromCookies.utm_source || stored.utm_source || "",
+      utm_medium: currentParams.get("utm_medium") || utmDataFromCookies.utm_medium || stored.utm_medium || "",
+      utm_campaign: currentParams.get("utm_campaign") || utmDataFromCookies.utm_campaign || stored.utm_campaign || "",
+      utm_term: currentParams.get("utm_term") || utmDataFromCookies.utm_term || stored.utm_term || "",
+      utm_content: currentParams.get("utm_content") || utmDataFromCookies.utm_content || stored.utm_content || "",
     };
     
     // Click IDs - check both current and stored
@@ -141,14 +143,6 @@ export default function Form() {
         });
       }
       
-      // Fire Facebook Pixel event
-      if (typeof fbq !== 'undefined') {
-        fbq('track', 'Lead', {
-          content_name: 'quiz_form_first',
-          utm_source: attributionData.utm_source,
-          utm_campaign: attributionData.utm_campaign
-        });
-      }
       
       const response = await fetch("/api/submitForm", {
         method: "POST",
