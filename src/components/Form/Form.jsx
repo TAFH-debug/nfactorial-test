@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import InputMask from "react-input-mask";
 import styles from "./Form.module.css";
@@ -65,7 +65,7 @@ export default function Form() {
 
   const validateName = (name) => /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(name);
   const validatePhone = (phone) =>
-    /^\+([1-9]) \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(phone);
+    /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(phone);
 
   const handleStart = async (e) => {
     e.preventDefault();
@@ -133,7 +133,7 @@ export default function Form() {
         </div>
         <div className={styles.inputWrapper}>
           <InputMask
-            mask="+9 (999) 999-99-99"
+            mask="+7 (999) 999-99-99"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="Номер телефона"

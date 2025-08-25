@@ -132,6 +132,11 @@
   color: #ffffff; /* Цвет текста на кнопке */
 }
 
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 /* Мобильные стили */
 @media (max-width: 768px) {
   .formContainer {

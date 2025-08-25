@@ -37,7 +37,7 @@ export default function Form() {
     };
   };
 
-  const validateName = (name) => /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(name);
+  const validateName = (name) => name && name.trim() && /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(name);
 
   const validatePhone = (phone) => {
     const phoneNumber = parsePhoneNumberFromString("+" + phone);
@@ -94,7 +94,7 @@ export default function Form() {
 
   return (
     <div className={styles.formContainer}>
-      <form onSubmit={handleStart} className={styles.box}>
+      <form className={styles.box}>
         <div className={styles.line} />
 
         <div className={styles.inputWrapper}>
@@ -123,8 +123,9 @@ export default function Form() {
         </div>
         <div className={styles.buttonContainer}>
           <button
-            type="submit"
-            className={`${styles.button} ${styles.startButton}`}
+            type="button"
+            onClick={handleStart}
+            className={styles.button}
             disabled={submitting || !validateName(name) || !validatePhone(phone)}
           >
             {submitting ? "Загружаем тест" : "Вперед!"}

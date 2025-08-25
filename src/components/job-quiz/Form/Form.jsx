@@ -127,7 +127,7 @@ export default function Form() {
 
   return (
     <div className={styles.formContainer}>
-      <form onSubmit={handleStart} className={styles.box}>
+      <form className={styles.box}>
         <div className={styles.line} />
 
         <div className={styles.inputWrapper}>
@@ -156,9 +156,10 @@ export default function Form() {
         </div>
         <div className={styles.buttonContainer}>
           <button
-            type="submit"
+            type="button"
+            onClick={handleStart}
             className={`${styles.button} ${styles.startButton}`}
-            disabled={submitting || !validateName(name) || !validatePhone(phone)}
+            disabled={submitting || !validateName(name.trim()) || !validatePhone(phone)}
           >
             {submitting ? "Загружаем тест" : "Вперед!"}
           </button>
