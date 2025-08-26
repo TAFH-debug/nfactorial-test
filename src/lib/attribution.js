@@ -14,6 +14,7 @@ if (typeof window !== 'undefined') {
         this.initBrowserId();
         this.initSessionId();
         this.captureAndSaveUTM();
+        this.sanitizeURL();
         this.trackPageView();
         this.propagateUTMLinks();
 
@@ -117,9 +118,7 @@ if (typeof window !== 'undefined') {
 
         if (!newAttribution.attribution_type) newAttribution.attribution_type = shouldSave ? 'utm' : 'direct';
 
-        const canOverwrite = !existing || isExpired || 
-          (newAttribution.attribution_type === 'utm' && ['direct','organic'].includes(existing.attribution_type)) ||
-          newAttribution.attribution_type === 'click';
+        const canOverwrite = !existing || isExpired;
 
         if (shouldSave && canOverwrite) {
           newAttribution.captured_at = Date.now();
@@ -132,6 +131,33 @@ if (typeof window !== 'undefined') {
           newAttribution.expires_at = Date.now() + (expiryDays*24*60*60*1000);
           this.saveToStorage(newAttribution);
           if (CONFIG.debug_mode) console.log('💾 Attribution saved:', newAttribution);
+        }
+      },
+
+      sanitizeURL: function() {
+        const params = new URLSearchParams(window.location.search);
+        const trackingParams = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content', 'gclid', 'fbclid', 'msclkid', 'yclid'];
+        let needsSanitization = false;
+
+        trackingParams.forEach(param => {
+            if (params.has(param)) {
+                params.delete(param);
+                needsSanitization = true;
+            }
+        });
+
+        if (needsSanitization) {
+            let newUrl = window.location.pathname;
+            const newParamsString = params.toString();
+            if (newParamsString) {
+                newUrl += '?' + newParamsString;
+            }
+            newUrl += window.location.hash;
+            
+            history.replaceState(null, '', newUrl);
+            if (CONFIG.debug_mode) {
+                console.log('🧹 URL sanitized.');
+            }
         }
       },
 

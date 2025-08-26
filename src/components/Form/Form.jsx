@@ -32,19 +32,16 @@ export default function Form() {
 
   const getCompleteAttributionData = () => {
     const stored = window.getStoredAttribution ? window.getStoredAttribution() : {};
-    const currentParams = new URLSearchParams(window.location.search);
-    const dataFromCookies = getDataFromCookies();
-
     const attributionData = {
-      utm_source: currentParams.get("utm_source") || dataFromCookies.utm_source || stored.utm_source || "",
-      utm_medium: currentParams.get("utm_medium") || dataFromCookies.utm_medium || stored.utm_medium || "",
-      utm_campaign: currentParams.get("utm_campaign") || dataFromCookies.utm_campaign || stored.utm_campaign || "",
-      utm_term: currentParams.get("utm_term") || dataFromCookies.utm_term || stored.utm_term || "",
-      utm_content: currentParams.get("utm_content") || dataFromCookies.utm_content || stored.utm_content || "",
-      fbclid: currentParams.get("fbclid") || dataFromCookies.fbclid || stored.fbclid || "",
-      gclid: currentParams.get("gclid") || dataFromCookies.gclid || stored.gclid || "",
-      yclid: currentParams.get("yclid") || dataFromCookies.yclid || stored.yclid || "",
-      landing_page: stored.landing_page || window.location.href,
+      utm_source: stored.utm_source || "",
+      utm_medium: stored.utm_medium || "",
+      utm_campaign: stored.utm_campaign || "",
+      utm_term: stored.utm_term || "",
+      utm_content: stored.utm_content || "",
+      fbclid: stored.fbclid || "",
+      gclid: stored.gclid || "",
+      yclid: stored.yclid || "",
+      landing_page: stored.landing_page || "",
       form_page_url: window.location.href,
       utm_referrer: stored.referrer || document.referrer || "",
       attribution_type: stored.attribution_type || "direct",
