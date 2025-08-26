@@ -1,31 +1,45 @@
-// lib/attribution.js - Исправленная версия для Next.js
 if (typeof window !== 'undefined') {
-  (function () {
+  (function() {
     const CONFIG = {
       click_attribution_days: 7,
       utm_preservation_days: 7,
       browser_id_days: 90,
       debug_mode: true,
-      storage_key: 'nf_attribution'
+      storage_key: 'nf_attribution',
+      disable_auto_events: true  // NEW: Disable automatic event firing
     };
 
     window.AttributionTracker = {
-      init: function () {
+      init: function() {
+        // Prevent multiple initializations
+        if (window._attributionTrackerInitialized) {
+          if (CONFIG.debug_mode) {
+            console.log('⚠️ Attribution Tracker already initialized, skipping');
+          }
+          return;
+        }
+        window._attributionTrackerInitialized = true;
+        
         this.initBrowserId();
         this.initSessionId();
         this.captureAndSaveUTM();
-        this.sanitizeURL();
         this.trackPageView();
+        
+        // Only propagate links, don't observe DOM changes to prevent loops
         this.propagateUTMLinks();
-
+        
+        // Remove or comment out the DOM observer to prevent duplicate events
+        // this.observeDOMChanges();  // DISABLED to prevent duplicates
+        
         window.getStoredAttribution = this.getAttribution.bind(this);
 
         if (CONFIG.debug_mode) {
-          console.log('✅ Tracker ready', this.getAttribution());
+          console.log('🚀 Attribution Tracker v3.0 ready (no auto-events)');
+          console.log('📊 Current attribution:', this.getAttribution());
         }
       },
 
-      initBrowserId: function () {
+      initBrowserId: function() {
         let browserId = this.getCookie('nf_browser_id');
         if (!browserId) {
           browserId = `nf.1.${Date.now()}.${Math.random().toString(36).substring(2, 15)}`;
@@ -34,7 +48,7 @@ if (typeof window !== 'undefined') {
         return browserId;
       },
 
-      initSessionId: function () {
+      initSessionId: function() {
         let sessionId = sessionStorage.getItem('nf_session_id');
         if (!sessionId) {
           sessionId = `sess.${Date.now()}.${Math.random().toString(36).substring(2, 9)}`;
@@ -43,202 +57,282 @@ if (typeof window !== 'undefined') {
         return sessionId;
       },
 
-      trackPageView: function () {
-        const existing = this.getStoredData();
-        const count = (existing?.page_view_count || 0) + 1;
-        if (existing) {
-          existing.page_view_count = count;
-          existing.last_page_view = Date.now();
-          this.saveToStorage(existing);
+      trackPageView: function() {
+        const existingData = this.getStoredData();
+        const pageViewCount = (existingData?.page_view_count || 0) + 1;
+        if (existingData) {
+          existingData.page_view_count = pageViewCount;
+          existingData.last_page_view = Date.now();
+          this.saveToStorage(existingData);
         }
       },
 
-      isAttributionExpired: function (data) {
-        if (!data || !data.captured_at) return true;
-        const age = (Date.now() - data.captured_at) / (24*60*60*1000);
-        if (data.attribution_type === 'click') return age >= CONFIG.click_attribution_days;
-        if (data.utm_source || data.utm_medium || data.utm_campaign) return age >= CONFIG.utm_preservation_days;
-        return false;
+      isAttributionExpired: function(existingData) {
+        if (!existingData || !existingData.captured_at) return true;
+        const ageInDays = (Date.now() - existingData.captured_at) / (24 * 60 * 60 * 1000);
+        
+        if (existingData.attribution_type === 'click') {
+          return ageInDays >= CONFIG.click_attribution_days;
+        }
+        if (existingData.utm_source || existingData.utm_medium || existingData.utm_campaign) {
+          return ageInDays >= CONFIG.utm_preservation_days;
+        }
+        return true;
       },
 
-      captureAndSaveUTM: function () {
+      captureAndSaveUTM: function() {
         const params = new URLSearchParams(window.location.search);
-        let existing = this.getStoredData();
-        const isExpired = this.isAttributionExpired(existing);
+        const existingData = this.getStoredData();
+        const isExpired = this.isAttributionExpired(existingData);
 
-        let newAttribution = {};
+        if (existingData && !isExpired) {
+          if (CONFIG.debug_mode) {
+            console.log('📌 Preserving existing attribution (not expired):', existingData);
+          }
+          return;
+        }
+
+        if (existingData && isExpired && CONFIG.debug_mode) {
+          console.log('⏰ Attribution expired, capturing new data...');
+        }
+
         let shouldSave = false;
+        const attribution = {};
 
-        const utmParams = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
-        utmParams.forEach(key => {
-          const val = params.get(key);
-          if (val) {
-            newAttribution[key] = val;
+        // UTM parameters
+        ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(param => {
+          const value = params.get(param);
+          if (value) {
+            attribution[param] = value;
             shouldSave = true;
           }
         });
 
+        // Click IDs
         if (params.get('fbclid')) {
-          newAttribution.fbclid = params.get('fbclid');
-          newAttribution.utm_source = newAttribution.utm_source || 'facebook';
-          newAttribution.utm_medium = newAttribution.utm_medium || 'paid';
-          newAttribution.attribution_type = 'click';
+          attribution.fbclid = params.get('fbclid');
+          attribution.utm_source = attribution.utm_source || 'facebook';
+          attribution.utm_medium = attribution.utm_medium || 'paid';
+          attribution.attribution_type = 'click';
           shouldSave = true;
         } else if (params.get('gclid')) {
-          newAttribution.gclid = params.get('gclid');
-          newAttribution.utm_source = newAttribution.utm_source || 'google';
-          newAttribution.utm_medium = newAttribution.utm_medium || 'cpc';
-          newAttribution.attribution_type = 'click';
+          attribution.gclid = params.get('gclid');
+          attribution.utm_source = attribution.utm_source || 'google';
+          attribution.utm_medium = attribution.utm_medium || 'cpc';
+          attribution.attribution_type = 'click';
           shouldSave = true;
         } else if (params.get('yclid')) {
-          newAttribution.yclid = params.get('yclid');
-          newAttribution.utm_source = newAttribution.utm_source || 'yandex';
-          newAttribution.utm_medium = newAttribution.utm_medium || 'cpc';
-          newAttribution.attribution_type = 'click';
+          attribution.yclid = params.get('yclid');
+          attribution.utm_source = attribution.utm_source || 'yandex';
+          attribution.utm_medium = attribution.utm_medium || 'cpc';
+          attribution.attribution_type = 'click';
           shouldSave = true;
         } else if (shouldSave) {
-          newAttribution.attribution_type = 'utm';
+          attribution.attribution_type = 'utm';
         }
 
+        // Referrer check
         if (!shouldSave && document.referrer) {
           const ref = document.referrer.toLowerCase();
           if (ref.includes('facebook.com') || ref.includes('instagram.com')) {
-            newAttribution.utm_source = 'facebook';
-            newAttribution.utm_medium = 'referral';
-            newAttribution.utm_campaign = 'organic_social';
-            newAttribution.attribution_type = 'view';
+            attribution.utm_source = 'facebook';
+            attribution.utm_medium = 'referral';
+            attribution.utm_campaign = 'organic_social';
+            attribution.attribution_type = 'view';
             shouldSave = true;
           } else if (ref.includes('google.')) {
-            newAttribution.utm_source = 'google';
-            newAttribution.utm_medium = 'organic';
-            newAttribution.attribution_type = 'organic';
+            attribution.utm_source = 'google';
+            attribution.utm_medium = 'organic';
+            attribution.attribution_type = 'organic';
             shouldSave = true;
           }
         }
 
-        if (!newAttribution.attribution_type) newAttribution.attribution_type = shouldSave ? 'utm' : 'direct';
+        if (!attribution.attribution_type) {
+          attribution.attribution_type = shouldSave ? 'utm' : 'direct';
+        }
 
-        const canOverwrite = !existing || isExpired;
+        // Save new data
+        if (shouldSave || !existingData || isExpired) {
+          attribution.captured_at = Date.now();
+          attribution.landing_page = window.location.href;
+          attribution.referrer = document.referrer;
+          attribution.browser_id = this.getCookie('nf_browser_id');
+          attribution.session_id = sessionStorage.getItem('nf_session_id');
+          attribution.page_view_count = existingData?.page_view_count || 1;
 
-        if (shouldSave && canOverwrite) {
-          newAttribution.captured_at = Date.now();
-          newAttribution.landing_page = window.location.href;
-          newAttribution.referrer = document.referrer;
-          newAttribution.browser_id = this.getCookie('nf_browser_id');
-          newAttribution.session_id = sessionStorage.getItem('nf_session_id');
-          newAttribution.page_view_count = existing?.page_view_count || 1;
-          const expiryDays = newAttribution.attribution_type === 'click' ? CONFIG.click_attribution_days : CONFIG.utm_preservation_days;
-          newAttribution.expires_at = Date.now() + (expiryDays*24*60*60*1000);
-          this.saveToStorage(newAttribution);
-          if (CONFIG.debug_mode) console.log('💾 Attribution saved:', newAttribution);
+          const expiryDays = attribution.attribution_type === 'click' ? 
+            CONFIG.click_attribution_days : CONFIG.utm_preservation_days;
+          
+          attribution.expires_at = Date.now() + (expiryDays * 24 * 60 * 60 * 1000);
+          
+          this.saveToStorage(attribution);
+          
+          // IMPORTANT: Only fire analytics events if not disabled
+          if (!CONFIG.disable_auto_events) {
+            this.fireAnalyticsEvents(attribution);
+          }
+          
+          if (CONFIG.debug_mode) {
+            console.log('💾 New attribution saved (auto-events disabled):', attribution);
+          }
         }
       },
 
-      sanitizeURL: function() {
-        const params = new URLSearchParams(window.location.search);
-        const trackingParams = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content', 'gclid', 'fbclid', 'msclkid', 'yclid'];
-        let needsSanitization = false;
-
-        trackingParams.forEach(param => {
-            if (params.has(param)) {
-                params.delete(param);
-                needsSanitization = true;
-            }
-        });
-
-        if (needsSanitization) {
-            let newUrl = window.location.pathname;
-            const newParamsString = params.toString();
-            if (newParamsString) {
-                newUrl += '?' + newParamsString;
-            }
-            newUrl += window.location.hash;
-            
-            history.replaceState(null, '', newUrl);
-            if (CONFIG.debug_mode) {
-                console.log('🧹 URL sanitized.');
-            }
-        }
-      },
-
-      propagateUTMLinks: function () {
+      propagateUTMLinks: function() {
         const data = this.getStoredData();
-        if (!data) return;
+        if (!data) {
+          if (CONFIG.debug_mode) {
+            console.log('⚠️ No attribution data to propagate');
+          }
+          return;
+        }
 
-        const utmKeys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','fbclid','gclid','yclid'];
-        document.querySelectorAll('a[href]').forEach(a => {
+        const utmParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid', 'yclid'];
+        const links = document.querySelectorAll('a[href]');
+        let updatedCount = 0;
+
+        links.forEach(link => {
           try {
-            const url = new URL(a.href);
-            if (!url.hostname.includes('nfactorial.school')) return;
-            utmKeys.forEach(k => {
-              if (data[k] && !url.searchParams.get(k)) url.searchParams.set(k,data[k]);
-            });
-            a.href = url.toString();
-          } catch(e){return;}
+            const url = new URL(link.href);
+            
+            if (url.hostname.includes('nfactorial.school')) {
+              let paramsAdded = false;
+              
+              utmParams.forEach(param => {
+                if (data[param] && !url.searchParams.has(param)) {
+                  url.searchParams.set(param, data[param]);
+                  paramsAdded = true;
+                }
+              });
+              
+              if (paramsAdded) {
+                link.href = url.toString();
+                updatedCount++;
+              }
+            }
+          } catch(e) {
+            // Ignore invalid URLs
+          }
         });
+
+        if (CONFIG.debug_mode && updatedCount > 0) {
+          console.log(`✅ Updated ${updatedCount} links with UTM parameters`);
+        }
       },
 
-      saveToStorage: function (data) {
-        const str = JSON.stringify(data);
-        const expiryDays = Math.ceil((data.expires_at - Date.now())/(24*60*60*1000));
+      saveToStorage: function(data) {
+        const dataStr = JSON.stringify(data);
         
-        // ВАЖНО: Сохраняем во все хранилища
-        try { 
-          this.setCookie(CONFIG.storage_key, str, expiryDays); 
-        } catch(e){}
+        try {
+          const expires = new Date(data.expires_at);
+          document.cookie = `${CONFIG.storage_key}=${encodeURIComponent(dataStr)}; expires=${expires.toUTCString()}; path=/; domain=.nfactorial.school; SameSite=Lax`;
+        } catch(e) {
+          console.error('Cookie save error:', e);
+        }
         
-        try { 
-          localStorage.setItem(CONFIG.storage_key, str); 
-        } catch(e){}
+        try {
+          localStorage.setItem(CONFIG.storage_key, dataStr);
+        } catch(e) {
+          console.error('localStorage save error:', e);
+        }
         
-        try { 
-          sessionStorage.setItem(CONFIG.storage_key+'_session', str); 
-        } catch(e){}
+        try {
+          sessionStorage.setItem(CONFIG.storage_key + '_session', dataStr);
+        } catch(e) {
+          console.error('sessionStorage save error:', e);
+        }
       },
 
-      getStoredData: function () {
-        // ИСПРАВЛЕНО: Сначала проверяем cookies (работают между доменами)
+      getStoredData: function() {
         const sources = [
-          () => this.getCookie(CONFIG.storage_key),  // Cookies первые!
+          () => this.getCookie(CONFIG.storage_key),
           () => localStorage.getItem(CONFIG.storage_key),
-          () => sessionStorage.getItem(CONFIG.storage_key+'_session')
+          () => sessionStorage.getItem(CONFIG.storage_key + '_session')
         ];
         
-        for (let f of sources) {
+        for (let getSource of sources) {
           try {
-            const data = f();
+            const data = getSource();
             if (data) {
               const parsed = JSON.parse(data);
-              if (!this.isAttributionExpired(parsed)) return parsed;
+              if (!this.isAttributionExpired(parsed)) {
+                return parsed;
+              }
             }
-          } catch(e){ continue; }
+          } catch(e) {
+            continue;
+          }
         }
+        
         return null;
       },
 
-      getAttribution: function () {
-        return this.getStoredData() || {
-          attribution_type:'direct',
-          browser_id:this.getCookie('nf_browser_id'),
-          session_id:sessionStorage.getItem('nf_session_id'),
-          page_view_count:1
-        };
+      getAttribution: function() {
+        const stored = this.getStoredData();
+        if (!stored) {
+          return {
+            attribution_type: 'direct',
+            browser_id: this.getCookie('nf_browser_id') || '',
+            session_id: sessionStorage.getItem('nf_session_id') || '',
+            page_view_count: 1
+          };
+        }
+        
+        stored.browser_id = this.getCookie('nf_browser_id') || stored.browser_id;
+        stored.session_id = sessionStorage.getItem('nf_session_id') || stored.session_id;
+        
+        return stored;
       },
 
-      setCookie: function (name,value,days) {
-        const expires = new Date(Date.now()+days*24*60*60*1000);
-        // ВАЖНО: domain=.nfactorial.school для работы между поддоменами
-        let domain = window.location.hostname.includes('nfactorial.school') ? '; domain=.nfactorial.school' : '';
-        document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires.toUTCString()}; path=/${domain}; SameSite=Lax`;
+      fireAnalyticsEvents: function(data) {
+        if (CONFIG.debug_mode) {
+          console.log('🚫 Analytics events disabled in Attribution Tracker (fired from form only)');
+        }
       },
 
-      getCookie: function (name) {
-        const m = document.cookie.match(new RegExp('(^| )'+name+'=([^;]+)'));
-        return m ? decodeURIComponent(m[2]) : null;
+      setCookie: function(name, value, days) {
+        const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000);
+        document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires.toUTCString()}; path=/; domain=.nfactorial.school; SameSite=Lax`;
+      },
+
+      getCookie: function(name) {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? decodeURIComponent(match[2]) : null;
+      },
+
+      deleteCookie: function(name) {
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=.nfactorial.school; SameSite=Lax`;
       }
     };
 
-    if (document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>AttributionTracker.init());
-    else AttributionTracker.init();
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        if (!window._attributionTrackerInitialized) {
+          AttributionTracker.init();
+        }
+      });
+    } else {
+      if (!window._attributionTrackerInitialized) {
+        AttributionTracker.init();
+      }
+    }
+
+    if (CONFIG.debug_mode) {
+      window.nfDebug = {
+        getAttribution: () => AttributionTracker.getAttribution(),
+        clearAttribution: () => {
+          AttributionTracker.deleteCookie(CONFIG.storage_key);
+          localStorage.removeItem(CONFIG.storage_key);
+          sessionStorage.removeItem(CONFIG.storage_key + '_session');
+          window._attributionTrackerInitialized = false;
+          console.log('🗑️ Attribution cleared');
+        },
+        updateLinks: () => {
+          AttributionTracker.propagateUTMLinks();
+          console.log('🔄 Links updated');
+        }
+      };
+    }
   })();
 }
