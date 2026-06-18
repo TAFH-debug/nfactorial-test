@@ -14,7 +14,6 @@ export default function Question({
   onBack,
 }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [utmTags, setUtmTags] = useState({});
   const [isMobile, setIsMobile] = useState(false);
 
   // Extract UTM tags from the URL
@@ -26,12 +25,6 @@ export default function Question({
       utm_campaign: urlParams.get("utm_campaign") || null,
     };
   };
-
-  // Initialize UTM tags and reset selectedCategory on question change
-  useEffect(() => {
-    setUtmTags(getUtmTags());
-    setSelectedCategory(null);
-  }, [currentQuestion]);
 
   const handleChoiceClick = (category) => {
     setSelectedCategory(category === selectedCategory ? null : category);
@@ -45,7 +38,7 @@ export default function Question({
         selectedCategory,
         currentQuestion,
         totalQuestions,
-        ...utmTags,
+        ...getUtmTags(),
       });
     }
   };

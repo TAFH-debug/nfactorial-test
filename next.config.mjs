@@ -2,11 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['www.facebook.com'], // Add any external domains if needed
-    formats: ['image/avif', 'image/webp'], // If you want to support specific image formats
-  },
-  experimental: {
-    googleAnalytics: true, // Corrected spelling
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.facebook.com',
+      },
+    ],
+    formats: ['image/avif', 'image/webp'],
   },
 };
 

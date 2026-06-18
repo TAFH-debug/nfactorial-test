@@ -65,11 +65,7 @@ const Results = () => {
               description={categoryDescriptions[category]}
               style={{ marginBottom: "50px" }}
             />
-            <CourseRecommendations
-              selectedCategory={category}
-              topCategories={[category]} // Передаем только одну категорию в topCategories
-              style={{ marginBottom: "50px" }}
-            />
+            <CourseRecommendations />
             <div
               style={{ maxWidth: "940px", margin: "0 auto", padding: "20px" }}
             >

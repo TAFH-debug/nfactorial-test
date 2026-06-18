@@ -45,6 +45,7 @@ export default function Quiz() {
           <SkeletonQuestion />
         ) : (
           <Question
+            key={currentQuestionIndex}
             question={questions[currentQuestionIndex]}
             totalQuestions={questions.length}
             currentQuestion={currentQuestionIndex + 1}

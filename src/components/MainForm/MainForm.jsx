@@ -17,9 +17,10 @@ export default function MainForm(props) {
   });
 
   useEffect(() => {
-
-    // Capture UTM parameters from the URL
+    // UTM params come from window.location, which is only available on the
+    // client, so they must be read in an effect rather than during render.
     const urlParams = new URLSearchParams(window.location.search);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setUtmParams({
       utm_source: urlParams.get("utm_source") || "",
       utm_medium: urlParams.get("utm_medium") || "",

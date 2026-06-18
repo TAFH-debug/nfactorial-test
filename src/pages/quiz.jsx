@@ -82,6 +82,7 @@ export default function Quiz() {
       <div style={{ textAlign: "center" }}>
         {!loading ? (
           <Question
+            key={currentQuestionIndex}
             question={questions[currentQuestionIndex]}
             totalQuestions={questions.length}
             currentQuestion={currentQuestionIndex + 1}

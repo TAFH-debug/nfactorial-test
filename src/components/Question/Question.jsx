@@ -15,7 +15,6 @@ export default function Question({
 }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [utmTags, setUtmTags] = useState({}); // Состояние для хранения UTM-тегов
 
   // Функция для получения UTM-тегов из URL
   const getUtmTags = () => {
@@ -31,16 +30,6 @@ export default function Question({
     };
   };
 
-  // Инициализация UTM-тегов при загрузке компонента
-  useEffect(() => {
-    setUtmTags(getUtmTags());
-  }, []);
-
-  // Reset selectedCategory whenever currentQuestion changes
-  useEffect(() => {
-    setSelectedCategory(null); // Clear the selection when the question changes
-  }, [currentQuestion]);
-
   const handleChoiceClick = (category) => {
     setSelectedCategory(category === selectedCategory ? null : category);
   };
@@ -55,7 +44,7 @@ export default function Question({
         category: selectedCategory,
         currentQuestion,
         totalQuestions,
-        ...utmTags, // Включаем UTM-теги в событие
+        ...getUtmTags(), // Включаем UTM-теги в событие
       });
     }
   };

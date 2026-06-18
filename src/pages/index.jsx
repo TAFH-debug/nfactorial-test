@@ -27,25 +27,24 @@ export default function Home() {
 
   // Запрос данных через 5 секунд
   useEffect(() => {
+    const fetchQuizData = async () => {
+      try {
+        const res = await fetch("/api/questions");
+        const data = await res.json();
+        setQuizData(data);
+        // Сохраняем данные в localStorage для последующего использования
+        localStorage.setItem("quizData", JSON.stringify(data));
+      } catch (error) {
+        console.error("Error fetching quiz data:", error);
+      }
+    };
+
     const timer = setTimeout(() => {
       fetchQuizData();
     }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
-
-  // Функция для запроса данных квиза
-  const fetchQuizData = async () => {
-    try {
-      const res = await fetch("/api/questions");
-      const data = await res.json();
-      setQuizData(data);
-      // Сохраняем данные в localStorage для последующего использования
-      localStorage.setItem("quizData", JSON.stringify(data));
-    } catch (error) {
-      console.error("Error fetching quiz data:", error);
-    }
-  };
 
   return (
     <div style={{ height: "100%", overflow: "hidden" }}>
